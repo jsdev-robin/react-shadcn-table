@@ -7,5 +7,5 @@ export interface GridProps<T extends RowData> {
     total: number;
   };
   columns: ColumnDef<AppFeatures, T>[];
-  name: string;
+  name?: string;
 }

@@ -13,7 +13,7 @@ export const GridContextProvider = <TableData extends RowData>({
   children,
   columns,
   payload,
-  name,
+  name = 'munza',
 }: GridContextProviderProps<TableData>) => {
   const table = useTable(
     {
