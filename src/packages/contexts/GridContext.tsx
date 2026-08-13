@@ -11,7 +11,7 @@ import {
 import React, { createContext } from 'react';
 
 const features = tableFeatures({});
-type AppFeatures = typeof features;
+export type AppFeatures = typeof features;
 
 export interface GridContextProps<TableData extends RowData = RowData> {
   table: ReactTable<AppFeatures, TableData, TableState<AppFeatures>>;
