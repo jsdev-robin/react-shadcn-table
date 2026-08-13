@@ -39,7 +39,6 @@ const GridTable = () => {
 };
 
 const Grid = <T extends RowData>({ payload, columns, key }: GridProps<T>) => {
-  'use no memo';
   return (
     <GridContextProvider payload={payload} columns={columns} key={key}>
       <GridTable />
