@@ -1,6 +1,7 @@
 import type { RowData } from '@tanstack/react-table';
 import { useContext } from 'react';
-import { GridContext, type GridContextProps } from './GridContext';
+import { GridContext } from './GridContext';
+import type { GridContextProps } from './types';
 
 export function useGridContext<TData extends RowData = RowData>() {
   const ctx = useContext(GridContext);

@@ -299,7 +299,7 @@ const App = () => {
           total: 99,
         }}
         columns={columns}
-        key="dfdfd"
+        name="dfdfd"
       />
     </div>
   );

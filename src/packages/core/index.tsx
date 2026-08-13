@@ -1,7 +1,7 @@
 'use client';
 
 import type { RowData } from '@tanstack/react-table';
-import { GridContextProvider } from '../contexts/GridContext';
+import { GridContextProvider } from '../contexts/grid/GridContext';
 import { useGridContext } from '../contexts/useGridContext';
 import type { GridProps } from '../types';
 
