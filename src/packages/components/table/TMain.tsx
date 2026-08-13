@@ -1,5 +1,6 @@
 import { useGridContext } from '@/packages/contexts/grid/useGridContext';
 import React from 'react';
+import TopToolbar from '../toolbar/top';
 import TBody from './TBody';
 import THeader from './THeader';
 
@@ -8,6 +9,7 @@ const TMain = () => {
 
   return (
     <React.Fragment>
+      <TopToolbar />
       <div
         style={{
           width: '100%',

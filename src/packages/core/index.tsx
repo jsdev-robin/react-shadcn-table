@@ -24,7 +24,7 @@ const GridInner = () => {
         style={{
           display: 'flex',
           alignItems: 'flex-start',
-          borderRadius: '12px',
+          borderRadius: '8px',
           overflow: 'hidden',
           width: '100%',
           background: 'color-mix(in srgb, var(--muted) 40%, transparent)',
