@@ -1,9 +1,13 @@
+import { useGridContext } from '@/packages/contexts/grid/useGridContext';
+import React from 'react';
 import TBody from './TBody';
 import THeader from './THeader';
 
 const TMain = () => {
+  const { paneRef1, paneRef2 } = useGridContext();
+
   return (
-    <div>
+    <React.Fragment>
       <div
         style={{
           width: '100%',
@@ -11,6 +15,7 @@ const TMain = () => {
           overflowX: 'hidden',
           scrollbarColor: 'transparent transparent',
         }}
+        ref={paneRef1}
       >
         <THeader />
       </div>
@@ -18,11 +23,13 @@ const TMain = () => {
         style={{
           width: '100%',
           height: '65vh',
+          overflow: 'scroll',
         }}
+        ref={paneRef2}
       >
         <TBody />
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

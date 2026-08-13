@@ -5,12 +5,23 @@ const THeader = () => {
   const { table } = useGridContext();
 
   return (
-    <Table>
+    <Table
+      style={{
+        width: table.getCenterTotalSize(),
+      }}
+    >
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <TableHead key={header.id}>
+              <TableHead
+                key={header.id}
+                style={{
+                  width: header.getSize(),
+                  minWidth: header.getSize(),
+                  maxWidth: header.getSize(),
+                }}
+              >
                 {header.isPlaceholder ? null : (
                   <table.FlexRender header={header} />
                 )}

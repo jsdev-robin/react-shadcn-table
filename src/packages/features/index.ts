@@ -1,6 +1,8 @@
 'use client';
 
-import { tableFeatures } from '@tanstack/react-table';
+import { columnSizingFeature, tableFeatures } from '@tanstack/react-table';
 
-export const features = tableFeatures({});
+export const features = tableFeatures({
+  columnSizingFeature,
+});
 export type AppFeatures = typeof features;
