@@ -23,6 +23,8 @@ const TBody = () => {
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
                   textOverflow: 'ellipsis',
+                  borderRight: '1px solid',
+                  borderColor: 'var(--border)',
                 }}
               >
                 <table.FlexRender cell={cell} />

@@ -20,6 +20,8 @@ const THeader = () => {
                   width: header.getSize(),
                   minWidth: header.getSize(),
                   maxWidth: header.getSize(),
+                  borderRight: '1px solid',
+                  borderColor: 'var(--border)',
                 }}
               >
                 {header.isPlaceholder ? null : (
