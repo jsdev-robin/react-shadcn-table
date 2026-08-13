@@ -18,5 +18,5 @@ export interface GridContextProviderProps<TableData extends RowData> {
     total: number;
   };
   columns: ColumnDef<AppFeatures, TableData>[];
-  name: string;
+  name?: string;
 }

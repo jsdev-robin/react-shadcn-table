@@ -292,7 +292,11 @@ const App = () => {
   );
 
   return (
-    <div>
+    <div
+      style={{
+        padding: 10,
+      }}
+    >
       <Grid
         payload={{
           data: dummyVehicles,

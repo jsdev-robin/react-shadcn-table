@@ -1,48 +1,47 @@
 'use client';
 
 import type { RowData } from '@tanstack/react-table';
+import TMain from '../components/table/TMain';
 import { GridContextProvider } from '../contexts/grid/GridContext';
-import { useGridContext } from '../contexts/useGridContext';
 import type { GridProps } from '../types';
 
-const GridTable = () => {
-  const { table } = useGridContext();
-
+const Grid = <T extends RowData>({ payload, columns, name }: GridProps<T>) => {
   return (
-    <table>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>
-                {header.isPlaceholder ? null : (
-                  <table.FlexRender header={header} />
-                )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getAllCells().map((cell) => (
-              <td key={cell.id}>
-                <table.FlexRender cell={cell} />
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <GridContextProvider payload={payload} columns={columns} name={name}>
+      <GridInner />
+    </GridContextProvider>
   );
 };
 
-const Grid = <T extends RowData>({ payload, columns, key }: GridProps<T>) => {
+const GridInner = () => {
   return (
-    <GridContextProvider payload={payload} columns={columns} key={key}>
-      <GridTable />
-    </GridContextProvider>
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: 1,
+          borderColor: 'divider',
+          width: '100%',
+          background: 'color-mix(in srgb, var(--muted) 50%, transparent)',
+        }}
+      >
+        <div
+          style={{
+            overflow: 'hidden',
+            flex: 1,
+          }}
+        >
+          <TMain />
+        </div>
+      </div>
+    </div>
   );
 };
 
