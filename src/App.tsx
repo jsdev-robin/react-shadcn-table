@@ -1,8 +1,8 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { dummyVehicles, type Vehicle } from './data/dummyData';
-import type { AppFeatures } from './packages/contexts/GridContext';
 import { Grid } from './packages/core';
+import type { AppFeatures } from './packages/features';
 
 const App = () => {
   const columns = useMemo<ColumnDef<AppFeatures, Vehicle, unknown>[]>(

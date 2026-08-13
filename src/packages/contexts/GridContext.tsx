@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  tableFeatures,
   useTable,
   type ColumnDef,
   type ReactTable,
@@ -9,9 +8,7 @@ import {
   type TableState,
 } from '@tanstack/react-table';
 import React, { createContext } from 'react';
-
-const features = tableFeatures({});
-export type AppFeatures = typeof features;
+import { features, type AppFeatures } from '../features';
 
 export interface GridContextProps<TableData extends RowData = RowData> {
   table: ReactTable<AppFeatures, TableData, TableState<AppFeatures>>;
@@ -37,12 +34,15 @@ export const GridContextProvider = <TableData extends RowData>({
   payload,
   key,
 }: GridContextProviderProps<TableData>) => {
-  const table = useTable({
-    data: payload?.data ?? [],
-    key: key,
-    features: features,
-    columns: columns,
-  });
+  const table = useTable(
+    {
+      data: payload?.data ?? [],
+      key: key,
+      features: features,
+      columns: columns,
+    },
+    (state) => state,
+  );
 
   return (
     <GridContext.Provider value={{ table } as unknown as GridContextProps<any>}>
