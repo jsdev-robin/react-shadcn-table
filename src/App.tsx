@@ -305,7 +305,7 @@ const App = () => {
       <Grid
         payload={{
           data: dummyVehicles,
-          total: 99,
+          total: 40,
         }}
         columns={columns}
         name="dfdfd"
