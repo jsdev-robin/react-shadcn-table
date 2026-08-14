@@ -36,7 +36,7 @@ const HeaderFilter = ({
       {filterVariant === 'range' ? (
         <div style={{ display: 'flex', gap: '4px' }}>
           <DebouncedInput
-            className="h-7"
+            style={{ height: '28px' }}
             type="number"
             value={(columnFilterValue as [number, number])?.[0] ?? ''}
             onChange={(value) =>
@@ -48,7 +48,7 @@ const HeaderFilter = ({
             placeholder={`Min`}
           />
           <DebouncedInput
-            className="h-7"
+            style={{ height: '28px' }}
             type="number"
             value={(columnFilterValue as [number, number])?.[1] ?? ''}
             onChange={(value) =>
@@ -67,7 +67,7 @@ const HeaderFilter = ({
             column.setFilterValue(value === 'all' ? undefined : value)
           }
         >
-          <SelectTrigger className="w-full" size="sm">
+          <SelectTrigger style={{ width: '100%' }} size="sm">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -96,14 +96,14 @@ const HeaderFilter = ({
           'search',
         ].includes(filterVariant) ? (
         <DebouncedInput
-          className="h-7"
+          style={{ height: '28px' }}
           onChange={(value) => column.setFilterValue(value)}
           placeholder="Search..."
           type={filterVariant}
           value={(columnFilterValue ?? '') as string}
         />
       ) : (
-        <div style={{ height: 28, opacity: 0, visibility: 'hidden' }} />
+        <div style={{ height: '28px', opacity: 0, visibility: 'hidden' }} />
       )}
     </div>
   ) : null;
