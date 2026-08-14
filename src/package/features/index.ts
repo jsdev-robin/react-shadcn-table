@@ -1,7 +1,11 @@
 import {
+  columnFacetingFeature,
   columnFilteringFeature,
   columnSizingFeature,
   columnVisibilityFeature,
+  createFacetedMinMaxValues,
+  createFacetedRowModel,
+  createFacetedUniqueValues,
   createFilteredRowModel,
   createPaginatedRowModel,
   createSortedRowModel,
@@ -40,6 +44,7 @@ interface MyColumnMeta {
 // New in v9: declare the features this table uses — anything you don't
 // register is tree-shaken out of the bundle.
 export const features = tableFeatures({
+  columnFacetingFeature,
   columnFilteringFeature,
   columnVisibilityFeature,
   rowPaginationFeature,
@@ -48,6 +53,9 @@ export const features = tableFeatures({
   filteredRowModel: createFilteredRowModel(),
   paginatedRowModel: createPaginatedRowModel(),
   sortedRowModel: createSortedRowModel(),
+  facetedRowModel: createFacetedRowModel(),
+  facetedUniqueValues: createFacetedUniqueValues(),
+  facetedMinMaxValues: createFacetedMinMaxValues(),
   filterFns: {
     includesString: filterFn_includesString,
     inNumberRange: filterFn_inNumberRange,

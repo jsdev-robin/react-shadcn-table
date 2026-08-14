@@ -4,11 +4,11 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
 import type { GridFeatures } from '@/package/features';
+import { useGrid } from '@/package/hooks/useGrid';
 import type { Column, RowData } from '@tanstack/react-table';
 
 const HeaderFilter = ({
@@ -18,6 +18,12 @@ const HeaderFilter = ({
 }) => {
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
+  const { isFetching } = useGrid();
+
+  const selectValue =
+    !isFetching && filterVariant === 'select'
+      ? Array.from(column.getFacetedUniqueValues().keys()).sort().slice(0, 5000)
+      : [];
 
   return column.getCanFilter() ? (
     <div
@@ -53,22 +59,21 @@ const HeaderFilter = ({
           />
         </div>
       ) : filterVariant === 'select' ? (
-        <Select>
+        <Select
+          value={(columnFilterValue?.toString() ?? 'all') as string}
+          onValueChange={(value) =>
+            column.setFilterValue(value === 'all' ? undefined : value)
+          }
+        >
           <SelectTrigger className="w-full">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              {[
-                { label: 'Apple', value: 'apple' },
-                { label: 'Banana', value: 'banana' },
-                { label: 'Blueberry', value: 'blueberry' },
-                { label: 'Grapes', value: 'grapes' },
-                { label: 'Pineapple', value: 'pineapple' },
-              ].map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
+              <SelectItem value="all">All</SelectItem>
+              {selectValue.map((value) => (
+                <SelectItem key={String(value)} value={String(value)}>
+                  {String(value)}
                 </SelectItem>
               ))}
             </SelectGroup>
