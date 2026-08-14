@@ -1,5 +1,6 @@
 import {
   columnFilteringFeature,
+  columnSizingFeature,
   columnVisibilityFeature,
   createFilteredRowModel,
   createPaginatedRowModel,
@@ -26,6 +27,7 @@ export const features = tableFeatures({
   sortedRowModel: createSortedRowModel(),
   filterFns: { includesString: filterFn_includesString },
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
+  columnSizingFeature,
 });
 
 // Pass this as the first generic argument to `ColumnDef`, `Column`, `Table`,
