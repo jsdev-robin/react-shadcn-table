@@ -103,6 +103,7 @@ const ToolbarRight = ({ height }: { height: number }) => {
               width: 28,
               fontSize: 12,
               height: 'auto',
+              borderRadius: 'none',
             }}
           >
             <Icon size={14} />
