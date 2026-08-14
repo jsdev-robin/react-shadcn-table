@@ -5,7 +5,7 @@ import GridCenterBody from './GridCenterBody';
 import GridCenterHeader from './GridCenterHeader';
 
 const GridCenter = () => {
-  const { paneRef1, paneRef2 } = useGrid();
+  const { paneRef1, paneRef2, height } = useGrid();
 
   return (
     <React.Fragment>
@@ -24,8 +24,8 @@ const GridCenter = () => {
       <div
         style={{
           width: '100%',
-          height: '65vh',
           overflow: 'scroll',
+          height: height,
         }}
         ref={paneRef2}
       >

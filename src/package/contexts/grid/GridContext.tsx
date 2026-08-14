@@ -27,6 +27,7 @@ export const GridContextProvider = <TableData extends RowData>({
   manualFiltering = false,
   manualSorting = false,
   manualPagination = false,
+  height = '65vh',
 }: GridContextProviderProps<TableData>) => {
   const table = useTable(
     {
@@ -92,6 +93,7 @@ export const GridContextProvider = <TableData extends RowData>({
       isLoading,
       isError,
       refetch,
+      height,
     }),
     [
       paneRef1,
@@ -105,6 +107,7 @@ export const GridContextProvider = <TableData extends RowData>({
       isLoading,
       isError,
       refetch,
+      height,
     ],
   );
 

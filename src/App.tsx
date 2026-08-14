@@ -314,6 +314,7 @@ const App = () => {
         // manualFiltering
         // manualPagination
         // manualSorting={true}
+        height="60vh"
       />
     </div>
   );
