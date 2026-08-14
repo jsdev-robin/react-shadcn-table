@@ -98,7 +98,7 @@ const GridInner = () => {
           borderRadius: '6px',
           overflow: 'hidden',
           width: '100%',
-          background: 'color-mix(in srgb, var(--muted) 40%, transparent)',
+          background: 'color-mix(in srgb, var(--muted) 50%, transparent)',
           border: '1px solid var(--border)',
         }}
       >
