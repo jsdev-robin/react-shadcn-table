@@ -2,6 +2,7 @@ import { TableHead } from '@/components/ui/table';
 import type { GridFeatures } from '@/package/features';
 import type { Header, RowData } from '@tanstack/react-table';
 import type { CSSProperties } from 'react';
+import HeaderMenu from '../../header/HeaderMenu';
 import HeaderSort from '../../header/HeaderSort';
 
 const GridCenterHead = ({
@@ -32,7 +33,7 @@ const GridCenterHead = ({
             }}
           >
             <HeaderSort header={header} />
-            <div>dd</div>
+            <HeaderMenu header={header} />
           </div>
         </div>
       )}
