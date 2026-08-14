@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Columns3, Filter, GripVertical, Rows3, Settings } from 'lucide-react';
 import { useState } from 'react';
+import ToolbarRightColumns from './ToolbarRightColumns';
 
 const ToolbarRight = ({ height }: { height: number }) => {
   'use no memo';
@@ -28,7 +29,7 @@ const ToolbarRight = ({ height }: { height: number }) => {
             height: '100%',
           }}
         >
-          ToolbarColumns
+          <ToolbarRightColumns />
         </div>
       )}
 

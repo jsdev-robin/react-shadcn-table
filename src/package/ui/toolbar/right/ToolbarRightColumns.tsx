@@ -1,0 +1,79 @@
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { useGrid } from '@/package/hooks/useGrid';
+
+const ToolbarRightColumns = () => {
+  const { table } = useGrid();
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+        height: '100%',
+        paddingTop: '8px',
+        paddingBottom: '8px',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          overflowY: 'auto',
+          padding: '8px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+          }}
+        >
+          <Label
+            style={{
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              display: 'flex',
+              gap: '8px',
+            }}
+          >
+            <Checkbox
+              checked={table.getIsAllColumnsVisible()}
+              onCheckedChange={(checked) =>
+                table.toggleAllColumnsVisible(checked === true)
+              }
+            />
+            Toggle All
+          </Label>
+          {table.getAllLeafColumns().map((column) => (
+            <Label
+              key={column.id}
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                display: 'flex',
+                gap: '8px',
+              }}
+            >
+              <Checkbox
+                checked={column.getIsVisible()}
+                onCheckedChange={(checked) =>
+                  column.toggleVisibility(checked === true)
+                }
+              />
+              {column.id
+                .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+                .replace(/^./, (str) => str.toUpperCase())}
+            </Label>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ToolbarRightColumns;
