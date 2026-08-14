@@ -2,6 +2,7 @@ import { TableHead } from '@/components/ui/table';
 import type { GridFeatures } from '@/package/features';
 import type { Header, RowData } from '@tanstack/react-table';
 import type { CSSProperties } from 'react';
+import HeaderFilter from '../../header/HeaderFilter';
 import HeaderMenu from '../../header/HeaderMenu';
 import HeaderSort from '../../header/HeaderSort';
 
@@ -17,6 +18,7 @@ const GridCenterHead = ({
     maxWidth: header.getSize(),
     borderRight: '1px solid',
     borderColor: 'var(--border)',
+    padding: 0,
   };
 
   return (
@@ -25,7 +27,7 @@ const GridCenterHead = ({
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
-              padding: 0.5,
+              padding: '4px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -35,6 +37,7 @@ const GridCenterHead = ({
             <HeaderSort header={header} />
             <HeaderMenu header={header} />
           </div>
+          <HeaderFilter header={header} />
         </div>
       )}
     </TableHead>

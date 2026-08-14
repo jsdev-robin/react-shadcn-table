@@ -29,7 +29,6 @@ export const features = tableFeatures({
   filterFns: { includesString: filterFn_includesString },
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
   columnSizingFeature,
-
   globalFilteringFeature,
 });
 
