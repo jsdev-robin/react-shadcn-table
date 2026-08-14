@@ -21,8 +21,8 @@ const Pagination = () => {
   return (
     <div
       style={{
-        height: '64px',
-        paddingInline: '16px',
+        minHeight: '50px',
+        padding: '16px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
