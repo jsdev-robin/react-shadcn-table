@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { dummyVehicles, type Vehicle } from './data/dummyData';
 import { Grid } from './package/core';
 import type { GridFeatures } from './package/features';
+import { useGridState } from './package/hooks/useGridState';
 
 const App = () => {
   const columns = useMemo<ColumnDef<GridFeatures, Vehicle, unknown>[]>(
@@ -291,6 +292,10 @@ const App = () => {
     [],
   );
 
+  const { state, handlers } = useGridState();
+
+  console.log(state);
+
   return (
     <div
       style={{
@@ -304,6 +309,8 @@ const App = () => {
         }}
         columns={columns}
         name="dfdfd"
+        state={state}
+        {...handlers}
       />
     </div>
   );

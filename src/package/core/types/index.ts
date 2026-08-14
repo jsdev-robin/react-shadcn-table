@@ -1,5 +1,14 @@
 import type { GridFeatures } from '@/package/features';
-import type { ColumnDef, RowData } from '@tanstack/react-table';
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  OnChangeFn,
+  PaginationState,
+  RowData,
+  RowSelectionState,
+  SortingState,
+  TableState,
+} from '@tanstack/react-table';
 
 export interface GridProps<TData extends RowData> {
   payload?: {
@@ -8,4 +17,16 @@ export interface GridProps<TData extends RowData> {
   };
   columns: ColumnDef<GridFeatures, TData>[];
   name?: string;
+
+  state?: Partial<TableState<GridFeatures>>;
+  onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
+  onPaginationChange?: OnChangeFn<PaginationState>;
+  onSortingChange?: OnChangeFn<SortingState>;
+  onRowSelectionChange?: OnChangeFn<RowSelectionState>;
+  setGlobalFilter?: React.Dispatch<React.SetStateAction<string>>;
+  manualPagination?: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
+  isFetching?: boolean;
+  refetch?: () => void;
 }
