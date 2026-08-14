@@ -42,7 +42,7 @@ const App = () => {
         cell: (info) => info.getValue(),
         header: () => <div>VIN</div>,
         meta: {
-          filterVariant: 'text',
+          filterVariant: 'range',
         },
       },
       {

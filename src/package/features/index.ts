@@ -5,8 +5,12 @@ import {
   createFilteredRowModel,
   createPaginatedRowModel,
   createSortedRowModel,
+  filterFn_equalsString,
   filterFn_includesString,
+  filterFn_inDateRange,
+  filterFn_inNumberRange,
   globalFilteringFeature,
+  metaHelper,
   rowPaginationFeature,
   rowSelectionFeature,
   rowSortingFeature,
@@ -14,6 +18,24 @@ import {
   sortFn_text,
   tableFeatures,
 } from '@tanstack/react-table';
+
+interface MyColumnMeta {
+  filterVariant?:
+    | 'text'
+    | 'number'
+    | 'tel'
+    | 'url'
+    | 'color'
+    | 'range'
+    | 'select'
+    | 'dateRange'
+    | 'date'
+    | 'datetime-local'
+    | 'month'
+    | 'time'
+    | 'week'
+    | 'search';
+}
 
 // New in v9: declare the features this table uses — anything you don't
 // register is tree-shaken out of the bundle.
@@ -26,10 +48,16 @@ export const features = tableFeatures({
   filteredRowModel: createFilteredRowModel(),
   paginatedRowModel: createPaginatedRowModel(),
   sortedRowModel: createSortedRowModel(),
-  filterFns: { includesString: filterFn_includesString },
+  filterFns: {
+    includesString: filterFn_includesString,
+    inNumberRange: filterFn_inNumberRange,
+    inDateRange: filterFn_inDateRange,
+    equalsString: filterFn_equalsString,
+  },
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
   columnSizingFeature,
   globalFilteringFeature,
+  columnMeta: metaHelper<MyColumnMeta>(),
 });
 
 // Pass this as the first generic argument to `ColumnDef`, `Column`, `Table`,

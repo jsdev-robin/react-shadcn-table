@@ -37,7 +37,7 @@ const GridCenterHead = ({
             <HeaderSort header={header} />
             <HeaderMenu header={header} />
           </div>
-          <HeaderFilter header={header} />
+          <HeaderFilter column={header.column} />
         </div>
       )}
     </TableHead>
