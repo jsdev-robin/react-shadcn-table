@@ -1,6 +1,8 @@
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
+import { RotateCcw } from 'lucide-react';
 
 const ToolbarRightColumns = () => {
   const { table } = useGrid();
@@ -15,6 +17,33 @@ const ToolbarRightColumns = () => {
         paddingBottom: '8px',
       }}
     >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingInline: '8px',
+          paddingBottom: '8px',
+          borderBottom: '1px solid var(--border)',
+        }}
+      >
+        <h1
+          style={{
+            fontSize: '16px',
+          }}
+        >
+          Columns ({table.getAllLeafColumns().length})
+        </h1>
+        <Button
+          title="Restore"
+          size="icon-xs"
+          onClick={() => {
+            table.resetColumnVisibility();
+          }}
+        >
+          <RotateCcw />
+        </Button>
+      </div>
       <div
         style={{
           display: 'flex',
