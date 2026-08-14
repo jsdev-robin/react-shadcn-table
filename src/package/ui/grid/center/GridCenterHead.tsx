@@ -9,6 +9,7 @@ const GridCenterHead = ({
 }: {
   header: Header<GridFeatures, RowData, unknown>;
 }) => {
+  'use no memo';
   const style: CSSProperties = {
     width: header.getSize(),
     minWidth: header.getSize(),

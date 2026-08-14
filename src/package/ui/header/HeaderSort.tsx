@@ -8,7 +8,9 @@ const HeaderSort = ({
 }: {
   header: Header<GridFeatures, RowData, unknown>;
 }) => {
+  'use no memo';
   const { table } = useGrid();
+  const canSort = header.column.getCanSort();
 
   return (
     <div
@@ -26,13 +28,28 @@ const HeaderSort = ({
         display: 'flex',
         alignItems: 'center',
         gap: 1,
-        cursor: 'pointer',
+        cursor: canSort ? 'pointer' : 'default',
+        userSelect: canSort ? 'none' : 'auto',
       }}
     >
       <table.FlexRender header={header} />
       {{
-        asc: <ChevronUpIcon fontSize="small" />,
-        desc: <ChevronDownIcon fontSize="small" />,
+        asc: (
+          <ChevronUpIcon
+            style={{
+              width: 16,
+              height: 16,
+            }}
+          />
+        ),
+        desc: (
+          <ChevronDownIcon
+            style={{
+              width: 16,
+              height: 16,
+            }}
+          />
+        ),
       }[header.column.getIsSorted() as string] ?? null}
     </div>
   );
