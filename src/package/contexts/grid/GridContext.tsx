@@ -24,9 +24,9 @@ export const GridContextProvider = <TableData extends RowData>({
   isLoading,
   isFetching,
   refetch,
-  manualFiltering = true,
-  manualSorting = true,
-  manualPagination = true,
+  manualFiltering = false,
+  manualSorting = false,
+  manualPagination = false,
 }: GridContextProviderProps<TableData>) => {
   const table = useTable(
     {

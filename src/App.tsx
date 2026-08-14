@@ -313,7 +313,7 @@ const App = () => {
         {...handlers}
         manualFiltering
         manualPagination
-        manualSorting
+        manualSorting={true}
       />
     </div>
   );
