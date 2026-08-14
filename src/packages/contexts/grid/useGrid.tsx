@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { GridContext } from './GridContext';
 import type { GridContextProps } from './types';
 
-export function useGridContext<TData extends RowData = RowData>() {
+export function useGrid<TData extends RowData = RowData>() {
   const ctx = useContext(GridContext);
   if (!ctx) {
     throw new Error('useGridContext must be used within a GridContextProvider');

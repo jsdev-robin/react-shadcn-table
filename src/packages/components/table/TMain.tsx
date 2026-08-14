@@ -1,11 +1,11 @@
-import { useGridContext } from '@/packages/contexts/grid/useGridContext';
+import { useGrid } from '@/packages/contexts/grid/useGrid';
 import React from 'react';
 import TopToolbar from '../toolbar/top';
 import TBody from './TBody';
 import THeader from './THeader';
 
 const TMain = () => {
-  const { paneRef1, paneRef2 } = useGridContext();
+  const { paneRef1, paneRef2 } = useGrid();
 
   return (
     <React.Fragment>

@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
-import { useGridContext } from '@/packages/contexts/grid/useGridContext';
+import { useGrid } from '@/packages/contexts/grid/useGrid';
 
 const TBody = () => {
-  const { table } = useGridContext();
+  const { table } = useGrid();
 
   return (
     <Table

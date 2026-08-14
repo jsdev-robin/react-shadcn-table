@@ -1,8 +1,9 @@
-import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useGridContext } from '@/packages/contexts/grid/useGridContext';
+import { Table, TableHeader, TableRow } from '@/components/ui/table';
+import { useGrid } from '@/packages/contexts/grid/useGrid';
+import THead from './THead';
 
 const THeader = () => {
-  const { table } = useGridContext();
+  const { table } = useGrid();
 
   return (
     <Table
@@ -14,20 +15,7 @@ const THeader = () => {
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <TableHead
-                key={header.id}
-                style={{
-                  width: header.getSize(),
-                  minWidth: header.getSize(),
-                  maxWidth: header.getSize(),
-                  borderRight: '1px solid',
-                  borderColor: 'var(--border)',
-                }}
-              >
-                {header.isPlaceholder ? null : (
-                  <table.FlexRender header={header} />
-                )}
-              </TableHead>
+              <THead header={header} key={header.id} />
             ))}
           </TableRow>
         ))}
