@@ -7,6 +7,7 @@ import {
   type RowData,
   type TableFeature,
 } from '@tanstack/react-table';
+import HeaderFilter from '../header/HeaderFilter';
 
 interface THeadProps {
   header: Header<
@@ -32,7 +33,26 @@ const THead = ({ header }: THeadProps) => {
         borderColor: 'var(--border)',
       }}
     >
-      {header.isPlaceholder ? null : <table.FlexRender header={header} />}
+      {header.isPlaceholder ? null : (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{
+              padding: 0.5,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 1,
+            }}
+          >
+            <div>
+              {header.isPlaceholder ? null : (
+                <table.FlexRender header={header} />
+              )}
+            </div>
+          </div>
+          <HeaderFilter column={header.column} />
+        </div>
+      )}
     </TableHead>
   );
 };
