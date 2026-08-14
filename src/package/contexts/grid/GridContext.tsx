@@ -57,6 +57,7 @@ export const GridContextProvider = <TableData extends RowData>({
   const paneRef4 = useRef<HTMLDivElement>(null);
   const paneRef5 = useRef<HTMLDivElement>(null);
   const paneRef6 = useRef<HTMLDivElement>(null);
+  const gridWrapperRef = useRef<HTMLDivElement>(null);
 
   useSyncScroll({
     refs: [paneRef1, paneRef2],
@@ -86,6 +87,7 @@ export const GridContextProvider = <TableData extends RowData>({
       paneRef4,
       paneRef5,
       paneRef6,
+      gridWrapperRef,
       isFetching,
       isLoading,
       isError,
@@ -98,6 +100,7 @@ export const GridContextProvider = <TableData extends RowData>({
       paneRef4,
       paneRef5,
       paneRef6,
+      gridWrapperRef,
       isFetching,
       isLoading,
       isError,

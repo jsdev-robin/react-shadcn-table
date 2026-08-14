@@ -20,6 +20,7 @@ export interface GridContextProps<TableData extends RowData = RowData> {
   paneRef4: React.RefObject<HTMLDivElement | null>;
   paneRef5: React.RefObject<HTMLDivElement | null>;
   paneRef6: React.RefObject<HTMLDivElement | null>;
+  gridWrapperRef: React.RefObject<HTMLDivElement | null>;
   isFetching?: boolean;
   isLoading?: boolean;
   isError?: boolean;

@@ -1,8 +1,11 @@
 'use client';
 
 import type { RowData } from '@tanstack/react-table';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { GridContextProvider } from '../contexts/grid/GridContext';
+import { useGrid } from '../hooks/useGrid';
 import GridCenter from '../ui/grid/center/GridCenter';
+import ToolbarRight from '../ui/toolbar/right';
 import type { GridProps } from './types';
 
 const Grid = <T extends RowData>({
@@ -48,11 +51,42 @@ const Grid = <T extends RowData>({
 };
 
 const GridInner = () => {
+  'use no memo';
+  const { gridWrapperRef } = useGrid();
+  const tableWrapperRef = useRef<HTMLDivElement>(null);
+  const [tableHeight, setTableHeight] = useState<number>(0);
+
+  useLayoutEffect(() => {
+    if (tableWrapperRef.current) {
+      setTableHeight(tableWrapperRef.current.getBoundingClientRect().height);
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = tableWrapperRef.current;
+    if (!el) return;
+    const updateHeight = () => {
+      setTableHeight(el.getBoundingClientRect().height);
+    };
+    const resizeObserver = new ResizeObserver(updateHeight);
+    resizeObserver.observe(el);
+
+    document.addEventListener('fullscreenchange', updateHeight);
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      document.removeEventListener('fullscreenchange', updateHeight);
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   return (
     <div
       style={{
         position: 'relative',
       }}
+      ref={gridWrapperRef}
     >
       <div
         style={{
@@ -70,9 +104,11 @@ const GridInner = () => {
             overflow: 'hidden',
             flex: 1,
           }}
+          ref={tableWrapperRef}
         >
           <GridCenter />
         </div>
+        <ToolbarRight height={tableHeight} />
       </div>
     </div>
   );

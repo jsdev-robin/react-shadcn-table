@@ -299,7 +299,7 @@ const App = () => {
   return (
     <div
       style={{
-        padding: '100px',
+        padding: '10px',
       }}
     >
       <Grid
@@ -311,9 +311,9 @@ const App = () => {
         name="dfdfd"
         state={state}
         {...handlers}
-        manualFiltering
-        manualPagination
-        manualSorting={true}
+        // manualFiltering
+        // manualPagination
+        // manualSorting={true}
       />
     </div>
   );
