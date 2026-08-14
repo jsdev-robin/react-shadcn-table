@@ -1,8 +1,12 @@
 import { DebouncedInput } from '@/components/ui/debounced-input';
 import {
-  NativeSelect,
-  NativeSelectOption,
-} from '@/components/ui/native-select';
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import type { GridFeatures } from '@/package/features';
 import { useGrid } from '@/package/hooks/useGrid';
 import type { Column, RowData } from '@tanstack/react-table';
@@ -57,22 +61,26 @@ const HeaderFilter = ({
           />
         </div>
       ) : filterVariant === 'select' ? (
-        <NativeSelect
-          className="h-7"
-          value={(columnFilterValue?.toString() ?? '') as string}
-          onChange={(e) =>
-            column.setFilterValue(
-              e.target.value === '' ? undefined : e.target.value,
-            )
+        <Select
+          value={(columnFilterValue?.toString() ?? 'all') as string}
+          onValueChange={(value) =>
+            column.setFilterValue(value === 'all' ? undefined : value)
           }
         >
-          <NativeSelectOption value="">All</NativeSelectOption>
-          {selectValue.map((value) => (
-            <NativeSelectOption key={String(value)} value={String(value)}>
-              {String(value)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          <SelectTrigger className="w-full" size="sm">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="all">All</SelectItem>
+              {selectValue.map((value) => (
+                <SelectItem key={String(value)} value={String(value)}>
+                  {String(value)}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       ) : filterVariant &&
         [
           'text',
