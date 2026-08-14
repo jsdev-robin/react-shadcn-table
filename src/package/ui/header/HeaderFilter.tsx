@@ -1,12 +1,8 @@
 import { DebouncedInput } from '@/components/ui/debounced-input';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  NativeSelect,
+  NativeSelectOption,
+} from '@/components/ui/native-select';
 import type { GridFeatures } from '@/package/features';
 import { useGrid } from '@/package/hooks/useGrid';
 import type { Column, RowData } from '@tanstack/react-table';
@@ -36,6 +32,7 @@ const HeaderFilter = ({
       {filterVariant === 'range' ? (
         <div style={{ display: 'flex', gap: '4px' }}>
           <DebouncedInput
+            className="h-7"
             type="number"
             value={(columnFilterValue as [number, number])?.[0] ?? ''}
             onChange={(value) =>
@@ -47,6 +44,7 @@ const HeaderFilter = ({
             placeholder={`Min`}
           />
           <DebouncedInput
+            className="h-7"
             type="number"
             value={(columnFilterValue as [number, number])?.[1] ?? ''}
             onChange={(value) =>
@@ -59,26 +57,22 @@ const HeaderFilter = ({
           />
         </div>
       ) : filterVariant === 'select' ? (
-        <Select
-          value={(columnFilterValue?.toString() ?? 'all') as string}
-          onValueChange={(value) =>
-            column.setFilterValue(value === 'all' ? undefined : value)
+        <NativeSelect
+          className="h-7"
+          value={(columnFilterValue?.toString() ?? '') as string}
+          onChange={(e) =>
+            column.setFilterValue(
+              e.target.value === '' ? undefined : e.target.value,
+            )
           }
         >
-          <SelectTrigger className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="all">All</SelectItem>
-              {selectValue.map((value) => (
-                <SelectItem key={String(value)} value={String(value)}>
-                  {String(value)}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          <NativeSelectOption value="">All</NativeSelectOption>
+          {selectValue.map((value) => (
+            <NativeSelectOption key={String(value)} value={String(value)}>
+              {String(value)}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
       ) : filterVariant &&
         [
           'text',
@@ -94,6 +88,7 @@ const HeaderFilter = ({
           'search',
         ].includes(filterVariant) ? (
         <DebouncedInput
+          className="h-7"
           onChange={(value) => column.setFilterValue(value)}
           placeholder="Search..."
           type={filterVariant}
