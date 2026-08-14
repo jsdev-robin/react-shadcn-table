@@ -25,6 +25,8 @@ export interface GridProps<TData extends RowData> {
   onRowSelectionChange?: OnChangeFn<RowSelectionState>;
   setGlobalFilter?: React.Dispatch<React.SetStateAction<string>>;
   manualPagination?: boolean;
+  manualFiltering?: boolean;
+  manualSorting?: boolean;
   isLoading?: boolean;
   isError?: boolean;
   isFetching?: boolean;

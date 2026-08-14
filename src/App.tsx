@@ -311,6 +311,9 @@ const App = () => {
         name="dfdfd"
         state={state}
         {...handlers}
+        manualFiltering
+        manualPagination
+        manualSorting
       />
     </div>
   );
