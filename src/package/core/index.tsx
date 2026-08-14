@@ -5,9 +5,43 @@ import { GridContextProvider } from '../contexts/grid/GridContext';
 import GridCenter from '../ui/grid/center/GridCenter';
 import type { GridProps } from './types';
 
-const Grid = <T extends RowData>({ payload, columns, name }: GridProps<T>) => {
+const Grid = <T extends RowData>({
+  payload,
+  columns,
+  name,
+  state,
+  onColumnFiltersChange,
+  onPaginationChange,
+  onSortingChange,
+  onRowSelectionChange,
+  setGlobalFilter,
+  manualPagination,
+  manualFiltering,
+  manualSorting,
+  isLoading,
+  isError,
+  isFetching,
+  refetch,
+}: GridProps<T>) => {
   return (
-    <GridContextProvider payload={payload} columns={columns} name={name}>
+    <GridContextProvider
+      payload={payload}
+      columns={columns}
+      name={name}
+      state={state}
+      onColumnFiltersChange={onColumnFiltersChange}
+      onPaginationChange={onPaginationChange}
+      onSortingChange={onSortingChange}
+      onRowSelectionChange={onRowSelectionChange}
+      setGlobalFilter={setGlobalFilter}
+      manualPagination={manualPagination}
+      manualFiltering={manualFiltering}
+      manualSorting={manualSorting}
+      isLoading={isLoading}
+      isError={isError}
+      isFetching={isFetching}
+      refetch={refetch}
+    >
       <GridInner />
     </GridContextProvider>
   );
