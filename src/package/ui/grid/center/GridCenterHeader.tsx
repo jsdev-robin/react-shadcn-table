@@ -1,5 +1,6 @@
-import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableHeader, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
+import GridCenterHead from './GridCenterHead';
 
 const GridCenterHeader = () => {
   const { table } = useGrid();
@@ -14,20 +15,7 @@ const GridCenterHeader = () => {
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <TableHead
-                key={header.id}
-                style={{
-                  width: header.getSize(),
-                  minWidth: header.getSize(),
-                  maxWidth: header.getSize(),
-                  borderRight: '1px solid',
-                  borderColor: 'var(--border)',
-                }}
-              >
-                {header.isPlaceholder ? null : (
-                  <table.FlexRender header={header} />
-                )}
-              </TableHead>
+              <GridCenterHead header={header} key={header.id} />
             ))}
           </TableRow>
         ))}
