@@ -5,6 +5,7 @@ import GridCell from '../../shared/GridCell';
 import GridCenterEmpty from './feedback/GridCenterEmpty';
 import GridCenterError from './feedback/GridCenterError';
 import GridCenterSkeleton from './feedback/GridCenterSkeleton';
+import { GridCenterRowPin } from './GridCenterRowPin';
 
 const GridCenterBody = () => {
   'use no memo';
@@ -22,6 +23,9 @@ const GridCenterBody = () => {
         width: table.getCenterTotalSize(),
       }}
     >
+      {table.getTopRows().map((row) => (
+        <GridCenterRowPin key={row.id} row={row} />
+      ))}
       <TableBody>
         {table.getRowModel().rows.map((row) => (
           <React.Fragment key={row.id}>
@@ -36,6 +40,9 @@ const GridCenterBody = () => {
           </React.Fragment>
         ))}
       </TableBody>
+      {table.getBottomRows().map((row) => (
+        <GridCenterRowPin key={row.id} row={row} />
+      ))}
     </Table>
   );
 };

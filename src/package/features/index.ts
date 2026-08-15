@@ -19,6 +19,7 @@ import {
   globalFilteringFeature,
   metaHelper,
   rowPaginationFeature,
+  rowPinningFeature,
   rowSelectionFeature,
   rowSortingFeature,
   sortFn_alphanumeric,
@@ -47,6 +48,7 @@ interface MyColumnMeta {
 // New in v9: declare the features this table uses — anything you don't
 // register is tree-shaken out of the bundle.
 export const features = tableFeatures({
+  rowPinningFeature,
   columnOrderingFeature,
   columnPinningFeature,
   columnResizingFeature,
