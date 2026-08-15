@@ -3,7 +3,7 @@
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
 
-const GridCenterEmpty = () => {
+const GridStartEmpty = () => {
   const { table } = useGrid();
 
   return (
@@ -28,4 +28,4 @@ const GridCenterEmpty = () => {
   );
 };
 
-export default GridCenterEmpty;
+export default GridStartEmpty;

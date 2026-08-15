@@ -2,12 +2,20 @@ import { Table, TableBody, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
 import React from 'react';
 import GridCell from '../../shared/GridCell';
+import GridStartEmpty from './feedback/GridStartEmpty';
+import GridStartSkeleton from './feedback/GridStartSkeleton';
 
 const GridStartBody = () => {
   'use no memo';
-  const { table } = useGrid();
+  const { table, isLoading, isError } = useGrid();
 
-  return (
+  return isLoading ? (
+    <GridStartSkeleton />
+  ) : isError ? (
+    <div>Error</div>
+  ) : table.getRowModel().rows.length === 0 ? (
+    <GridStartEmpty />
+  ) : (
     <Table>
       <TableBody>
         {table.getRowModel().rows.map((row) => (
