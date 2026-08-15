@@ -297,26 +297,45 @@ const App = () => {
   console.log(state);
 
   return (
-    <div
-      style={{
-        padding: '10px',
-      }}
-    >
-      <Grid
-        payload={{
-          data: dummyVehicles,
-          total: 40,
+    <section className="space-y-10">
+      <div
+        style={{
+          padding: '10px',
         }}
-        columns={columns}
-        name="dfdfd"
-        state={state}
-        {...handlers}
-        // manualFiltering
-        // manualPagination
-        // manualSorting={true}
-        height="60vh"
-      />
-    </div>
+      >
+        <Grid
+          payload={{
+            data: dummyVehicles,
+            total: 40,
+          }}
+          columns={columns}
+          name="dfdfd"
+          state={state}
+          {...handlers}
+          // manualFiltering
+          // manualPagination
+          // manualSorting={true}
+          height="60vh"
+        />
+      </div>
+      {/* <div
+        style={{
+          padding: '100px',
+        }}
+      >
+        <Grid
+          payload={{
+            data: dummyVehicles,
+            total: 40,
+          }}
+          columns={columns}
+          name="dfdfd"
+          state={state}
+          {...handlers}
+          height="60vh"
+        />
+      </div> */}
+    </section>
   );
 };
 
