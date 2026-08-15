@@ -72,7 +72,7 @@ const HeaderMenu = ({
               >
                 Pin to left
                 <DropdownMenuShortcut>
-                  <PinIcon className="mun:rotate-45" />
+                  <PinIcon style={{ transform: 'rotate(45deg)' }} />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
             )}
@@ -96,7 +96,7 @@ const HeaderMenu = ({
               >
                 Pin to right
                 <DropdownMenuShortcut>
-                  <PinIcon className="mun:-rotate-45" />
+                  <PinIcon style={{ transform: 'rotate(-45deg)' }} />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
             )}

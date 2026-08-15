@@ -14,17 +14,30 @@ export const getPinStyles = (
 
   return {
     boxShadow: isLastLeftPinnedColumn
-      ? '-4px 0 4px -4px gray inset'
+      ? '-1px 0 1px -1px gray inset'
       : isFirstRightPinnedColumn
-        ? '4px 0 4px -4px gray inset'
+        ? '1px 0 1px -1px gray inset'
         : undefined,
+    // borderRight: isLastLeftPinnedColumn ? `1px solid var(--border)` : undefined,
+    // borderLeft: isFirstRightPinnedColumn
+    //   ? `1px solid var(--border)`
+    //   : undefined,
     insetInlineStart:
       isPinned === 'start' ? `${column.getStart('start')}px` : undefined,
     insetInlineEnd:
       isPinned === 'end' ? `${column.getAfter('end')}px` : undefined,
+    // left:
+    //   isPinned === 'start' && !isSplit
+    //     ? `${column.getStart('start')}px`
+    //     : undefined,
+    // right:
+    //   isPinned === 'end' && !isSplit
+    //     ? `${column.getAfter('end')}px`
+    //     : undefined,
     opacity: isPinned ? 0.95 : 1,
-    position: isPinned ? 'sticky' : 'relative',
+    position: isPinned ? (isSplit ? 'relative' : 'sticky') : 'relative',
     width: column.getSize(),
-    zIndex: isPinned ? 1 : 0,
+    zIndex: isPinned ? 100 : 0,
+    background: isPinned && !isSplit ? 'var(--background)' : undefined,
   };
 };
