@@ -53,6 +53,7 @@ const App = () => {
         meta: {
           filterVariant: 'select',
         },
+        spanRows: true,
       },
       {
         id: 'vehicle',

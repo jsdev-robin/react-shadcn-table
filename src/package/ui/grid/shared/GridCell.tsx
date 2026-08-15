@@ -62,10 +62,22 @@ const GridCell = ({ cell }: { cell: Cell<GridFeatures, RowData, unknown> }) => {
     return () => resizeObserver.disconnect();
   }, [isSplit]);
 
+  const rowSpan = cell.getRowSpan();
+  const colSpan = cell.getColSpan();
+
+  // A span of 0 means this cell is covered by a cell above
+  // or to its left. Skip it. Do NOT render `rowSpan={0}`:
+  // in HTML that means "span to the end of the row group",
+  // so forgetting this check merges the cell down the whole
+  // tbody instead of rendering nothing.
+  if (rowSpan === 0 || colSpan === 0) return null;
+
   return (
     <TableCell
       ref={cellRef}
       style={style}
+      rowSpan={rowSpan}
+      colSpan={colSpan}
       tabIndex={cell.getCanSelect() ? cell.getTabIndex() : undefined}
       onMouseDown={
         cell.getCanSelect() ? cell.getSelectionStartHandler() : undefined

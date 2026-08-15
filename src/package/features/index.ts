@@ -1,5 +1,6 @@
 import {
   cellSelectionFeature,
+  cellSpanningFeature,
   columnFacetingFeature,
   columnFilteringFeature,
   columnOrderingFeature,
@@ -49,6 +50,7 @@ interface MyColumnMeta {
 // New in v9: declare the features this table uses — anything you don't
 // register is tree-shaken out of the bundle.
 export const features = tableFeatures({
+  cellSpanningFeature,
   cellSelectionFeature,
   rowPinningFeature,
   columnOrderingFeature,
