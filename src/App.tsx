@@ -46,6 +46,16 @@ const App = () => {
         enableHiding: false,
       },
       {
+        id: 'fleetGroup',
+        accessorKey: 'fleetGroup',
+        cell: (info) => info.getValue(),
+        header: () => <div>Fleet Group</div>,
+        meta: {
+          filterVariant: 'text',
+        },
+        spanRows: true,
+      },
+      {
         id: 'driver',
         accessorKey: 'driver',
         cell: (info) => info.getValue(),
@@ -53,7 +63,6 @@ const App = () => {
         meta: {
           filterVariant: 'select',
         },
-        spanRows: true,
       },
       {
         id: 'vehicle',
@@ -276,15 +285,6 @@ const App = () => {
         accessorKey: 'gpsTrackingId',
         cell: (info) => info.getValue(),
         header: () => <div>GPS ID</div>,
-        meta: {
-          filterVariant: 'text',
-        },
-      },
-      {
-        id: 'fleetGroup',
-        accessorKey: 'fleetGroup',
-        cell: (info) => info.getValue(),
-        header: () => <div>Fleet Group</div>,
         meta: {
           filterVariant: 'text',
         },
