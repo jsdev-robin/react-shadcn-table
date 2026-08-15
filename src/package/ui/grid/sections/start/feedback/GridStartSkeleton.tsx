@@ -5,12 +5,11 @@ import { useGrid } from '@/package/hooks/useGrid';
 import { getPinStyles } from '@/package/utils/getPinStyles';
 import GridRowSkeleton from '../../../shared/feedback/GridRowSkeleton';
 
-const GridCenterSkeleton = () => {
+const GridStartSkeleton = () => {
   const { table, isSplit } = useGrid();
 
-  const visibleColumns = (
-    isSplit ? table.getCenterHeaderGroups() : table.getHeaderGroups()
-  )
+  const visibleColumns = table
+    .getStartHeaderGroups()
     .map((group) =>
       group.headers
         .filter((header) => !header.isPlaceholder && !header.subHeaders?.length)
@@ -46,4 +45,4 @@ const GridCenterSkeleton = () => {
   );
 };
 
-export default GridCenterSkeleton;
+export default GridStartSkeleton;
