@@ -7,7 +7,7 @@ import { RotateCcw } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 
 const ToolbarRightColumns = () => {
-  const { table } = useGrid();
+  const { table, isSplit, setIsSplit } = useGrid();
   const [searchTerm, setSearchTerm] = useState('');
   const visibleColumns = useMemo(() => {
     return table
@@ -131,14 +131,33 @@ const ToolbarRightColumns = () => {
           padding: '8px',
         }}
       >
-        <Button variant="outline" size="sm" className="w-full">
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full"
+          onClick={() => {
+            table.resetColumnPinning();
+            setIsSplit(false);
+          }}
+        >
           Reset Pinning
         </Button>
-        <Button variant="outline" size="sm" className="w-full">
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full"
+          onClick={() => table.resetColumnSizing()}
+        >
           Reset Sizing
         </Button>
-        <Button variant="outline" size="sm" className="w-full">
-          Enter Split View
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full"
+          disabled={!table.getIsSomeColumnsPinned()}
+          onClick={() => setIsSplit(!isSplit)}
+        >
+          {isSplit ? 'Exit Split View' : 'Enter Split View'}
         </Button>
       </div>
     </div>
