@@ -153,6 +153,7 @@ const ToolbarRightColumns = () => {
           size="xs"
           className="w-full"
           onClick={() => table.resetColumnOrder()}
+          disabled={table.state.columnOrder.length === 0}
         >
           Reset Order
         </Button>
@@ -178,6 +179,7 @@ const ToolbarRightColumns = () => {
             table.resetColumnPinning();
             setIsSplit(false);
           }}
+          disabled={!table.getIsSomeColumnsPinned()}
         >
           Reset Pinning
         </Button>
@@ -186,6 +188,7 @@ const ToolbarRightColumns = () => {
           size="xs"
           className="w-full"
           onClick={() => table.resetColumnSizing()}
+          disabled={Object.keys(table.state.columnSizing).length === 0}
         >
           Reset Sizing
         </Button>
