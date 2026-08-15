@@ -19,6 +19,7 @@ const ToolbarRight = ({ height }: { height: number }) => {
         display: 'flex',
         overflow: 'hidden',
         height: height,
+        borderBottom: '1px solid var(--border)',
       }}
     >
       {activePanel === 'columns' && (

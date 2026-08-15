@@ -18,6 +18,15 @@ const ToolbarRightColumns = () => {
       );
   }, [searchTerm, table]);
 
+  const randomizeColumns = () => {
+    const ids = table.getAllLeafColumns().map((d) => d.id);
+    for (let i = ids.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [ids[i], ids[j]] = [ids[j], ids[i]];
+    }
+    table.setColumnOrder(ids);
+  };
+
   return (
     <div
       style={{
@@ -125,12 +134,42 @@ const ToolbarRightColumns = () => {
       </div>
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
           gap: '8px',
           padding: '8px',
         }}
       >
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full"
+          onClick={() => randomizeColumns()}
+        >
+          Shuffle
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full"
+          onClick={() => table.resetColumnOrder()}
+        >
+          Reset Order
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full"
+          onClick={() =>
+            table.setColumnOrder(
+              [
+                ...table.getAllLeafColumns().map((column) => column.id),
+              ].reverse(),
+            )
+          }
+        >
+          Reverse Order
+        </Button>
         <Button
           variant="outline"
           size="sm"
@@ -157,7 +196,7 @@ const ToolbarRightColumns = () => {
           disabled={!table.getIsSomeColumnsPinned()}
           onClick={() => setIsSplit(!isSplit)}
         >
-          {isSplit ? 'Exit Split View' : 'Enter Split View'}
+          {isSplit ? 'Exit Split' : 'Split View'}
         </Button>
       </div>
     </div>
