@@ -1,5 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
+import { Checkbox } from './components/ui/checkbox';
 import { dummyVehicles, type Vehicle } from './data/dummyData';
 import { Grid } from './package/core';
 import type { GridFeatures } from './package/features';
@@ -8,6 +9,15 @@ import { useGridState } from './package/hooks/useGridState';
 const App = () => {
   const columns = useMemo<ColumnDef<GridFeatures, Vehicle, unknown>[]>(
     () => [
+      {
+        id: 'select',
+        header: () => <Checkbox />,
+        cell: () => <Checkbox />,
+        size: 48,
+        maxSize: 48,
+        enableColumnFilter: false,
+        enableSorting: false,
+      },
       {
         id: 'id',
         accessorKey: 'id',
@@ -316,7 +326,7 @@ const App = () => {
           // manualPagination
           // manualSorting={true}
           height="60vh"
-          isLoading
+          isLoading={false}
         />
       </div>
       {/* <div

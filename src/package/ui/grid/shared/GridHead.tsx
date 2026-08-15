@@ -32,7 +32,7 @@ const GridHead = ({
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
-              padding: '4px',
+              padding: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
