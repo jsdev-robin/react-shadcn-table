@@ -17,8 +17,6 @@ const GridStartEmpty = () => {
                 width: column.getSize(),
                 minWidth: column.getSize(),
                 maxWidth: column.getSize(),
-                borderRight: '1px solid',
-                borderColor: 'var(--border)',
               }}
             />
           ))}
