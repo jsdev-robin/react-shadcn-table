@@ -56,7 +56,6 @@ const ToolbarRightRows = () => {
             </Button>
           )}
         </table.Subscribe>
-
         <Button
           variant="outline"
           className="w-full"
