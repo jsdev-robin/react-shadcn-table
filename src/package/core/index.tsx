@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { GridContextProvider } from '../contexts/grid/GridContext';
 import { useGrid } from '../hooks/useGrid';
 import GridCenter from '../ui/grid/sections/center/GridCenter';
+import GridStart from '../ui/grid/sections/start/GridStart';
 import Pagination from '../ui/pagination';
 import ToolbarRight from '../ui/toolbar/right';
 import type { GridProps } from './types';
@@ -102,6 +103,7 @@ const GridInner = () => {
           border: '1px solid var(--border)',
         }}
       >
+        <GridStart />
         <div
           style={{
             overflow: 'hidden',

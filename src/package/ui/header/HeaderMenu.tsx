@@ -27,6 +27,7 @@ const HeaderMenu = ({
 }: {
   header: Header<GridFeatures, RowData, unknown>;
 }) => {
+  'use no memo';
   const { isLoading, isError } = useGrid();
 
   return header.column.getCanFilter() ? (

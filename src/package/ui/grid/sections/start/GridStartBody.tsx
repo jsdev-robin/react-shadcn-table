@@ -3,24 +3,17 @@ import { useGrid } from '@/package/hooks/useGrid';
 import React from 'react';
 import GridCell from '../../shared/GridCell';
 
-const GridCenterBody = () => {
+const GridStartBody = () => {
   'use no memo';
-  const { table, isSplit } = useGrid();
+  const { table } = useGrid();
 
   return (
-    <Table
-      style={{
-        width: table.getCenterTotalSize(),
-      }}
-    >
+    <Table>
       <TableBody>
         {table.getRowModel().rows.map((row) => (
           <React.Fragment key={row.id}>
             <TableRow data-state={row.getIsSelected()}>
-              {(isSplit
-                ? row.getCenterVisibleCells()
-                : row.getVisibleCells()
-              ).map((cell) => (
+              {row.getStartVisibleCells().map((cell) => (
                 <GridCell key={cell.id} cell={cell} />
               ))}
             </TableRow>
@@ -31,4 +24,4 @@ const GridCenterBody = () => {
   );
 };
 
-export default GridCenterBody;
+export default GridStartBody;

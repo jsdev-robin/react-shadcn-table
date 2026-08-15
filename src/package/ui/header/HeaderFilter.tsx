@@ -16,6 +16,7 @@ const HeaderFilter = ({
 }: {
   column: Column<GridFeatures, RowData, unknown>;
 }) => {
+  'use no memo';
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
   const { isFetching } = useGrid();

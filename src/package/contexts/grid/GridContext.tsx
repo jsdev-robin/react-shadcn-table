@@ -29,7 +29,8 @@ export const GridContextProvider = <TableData extends RowData>({
   manualPagination = false,
   height = '65vh',
 }: GridContextProviderProps<TableData>) => {
-  const [isSplit, setIsSplit] = useState(false);
+  'use no memo';
+  const [isSplit, setIsSplit] = useState(true);
   const paneRef1 = useRef<HTMLDivElement>(null);
   const paneRef2 = useRef<HTMLDivElement>(null);
   const paneRef3 = useRef<HTMLDivElement>(null);

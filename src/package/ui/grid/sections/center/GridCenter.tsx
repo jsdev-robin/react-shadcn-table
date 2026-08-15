@@ -5,6 +5,7 @@ import GridCenterBody from './GridCenterBody';
 import GridCenterHeader from './GridCenterHeader';
 
 const GridCenter = () => {
+  'use no memo';
   const { paneRef1, paneRef2, height } = useGrid();
 
   return (
