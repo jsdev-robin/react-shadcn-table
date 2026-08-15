@@ -1,7 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { Checkbox } from './components/ui/checkbox';
-import { type Vehicle } from './data/dummyData';
+import { dummyVehicles, type Vehicle } from './data/dummyData';
 import { Grid } from './package/core';
 import type { GridFeatures } from './package/features';
 import { useGridState } from './package/hooks/useGridState';
@@ -315,8 +315,8 @@ const App = () => {
       >
         <Grid
           payload={{
-            data: [],
-            total: 0,
+            data: dummyVehicles,
+            total: 40,
           }}
           columns={columns}
           name="dfdfd"
