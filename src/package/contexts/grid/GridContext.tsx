@@ -1,7 +1,6 @@
 'use client';
 
 import useSyncScroll from '@/package/hooks/useSyncScroll';
-import { useColumnVisibilityState } from '@/package/state/columnVisibility';
 import { useTable, type RowData } from '@tanstack/react-table';
 import { createContext, useMemo, useRef } from 'react';
 import { features } from '../../features';
@@ -30,22 +29,18 @@ export const GridContextProvider = <TableData extends RowData>({
   manualPagination = false,
   height = '65vh',
 }: GridContextProviderProps<TableData>) => {
-  const [columnVisibility, onColumnVisibilityChange] =
-    useColumnVisibilityState(name);
-
   const table = useTable(
     {
+      features: features,
       data: payload?.data ?? [],
       rowCount: payload?.total,
       key: name,
-      features: features,
       columns: columns,
       defaultColumn: {
         minSize: 60,
         maxSize: 800,
       },
-      state: { ...state, columnVisibility },
-      onColumnVisibilityChange: onColumnVisibilityChange,
+      state: { ...state },
       onSortingChange: onSortingChange,
       onColumnFiltersChange: onColumnFiltersChange,
       onGlobalFilterChange: setGlobalFilter,
