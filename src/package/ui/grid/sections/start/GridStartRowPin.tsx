@@ -24,7 +24,7 @@ export function GridStartRowPin({ row }: { row: any }) {
             : undefined,
       }}
     >
-      {row.getLeftVisibleCells().map((cell: any) => (
+      {row.getStartVisibleCells().map((cell: any) => (
         <GridCell key={cell.id} cell={cell} />
       ))}
     </TableRow>
