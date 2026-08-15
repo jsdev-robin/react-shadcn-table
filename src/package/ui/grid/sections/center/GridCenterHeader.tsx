@@ -1,6 +1,6 @@
 import { Table, TableHeader, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
-import GridCenterHead from './GridCenterHead';
+import GridHead from '../../shared/GridHead';
 
 const GridCenterHeader = () => {
   const { table } = useGrid();
@@ -15,7 +15,7 @@ const GridCenterHeader = () => {
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <GridCenterHead header={header} key={header.id} />
+              <GridHead header={header} key={header.id} />
             ))}
           </TableRow>
         ))}

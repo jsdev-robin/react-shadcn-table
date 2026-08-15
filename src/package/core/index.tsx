@@ -4,7 +4,7 @@ import type { RowData } from '@tanstack/react-table';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { GridContextProvider } from '../contexts/grid/GridContext';
 import { useGrid } from '../hooks/useGrid';
-import GridCenter from '../ui/grid/center/GridCenter';
+import GridCenter from '../ui/grid/sections/center/GridCenter';
 import Pagination from '../ui/pagination';
 import ToolbarRight from '../ui/toolbar/right';
 import type { GridProps } from './types';

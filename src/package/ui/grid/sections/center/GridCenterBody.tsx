@@ -1,7 +1,7 @@
 import { Table, TableBody, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
 import React from 'react';
-import GridCenterCell from './GridCenterCell';
+import GridCell from '../../shared/GridCell';
 
 const GridCenterBody = () => {
   const { table, isSplit } = useGrid();
@@ -20,7 +20,7 @@ const GridCenterBody = () => {
                 ? row.getCenterVisibleCells()
                 : row.getVisibleCells()
               ).map((cell) => (
-                <GridCenterCell key={cell.id} cell={cell} />
+                <GridCell key={cell.id} cell={cell} />
               ))}
             </TableRow>
           </React.Fragment>

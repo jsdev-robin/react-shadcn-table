@@ -8,7 +8,7 @@ import HeaderFilter from '../../header/HeaderFilter';
 import HeaderMenu from '../../header/HeaderMenu';
 import HeaderSort from '../../header/HeaderSort';
 
-const GridCenterHead = ({
+const GridHead = ({
   header,
 }: {
   header: Header<GridFeatures, RowData, unknown>;
@@ -49,4 +49,4 @@ const GridCenterHead = ({
   );
 };
 
-export default GridCenterHead;
+export default GridHead;

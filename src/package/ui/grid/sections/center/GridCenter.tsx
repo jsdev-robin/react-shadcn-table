@@ -1,6 +1,6 @@
 import { useGrid } from '@/package/hooks/useGrid';
+import TopToolbar from '@/package/ui/toolbar/top';
 import React from 'react';
-import TopToolbar from '../../toolbar/top';
 import GridCenterBody from './GridCenterBody';
 import GridCenterHeader from './GridCenterHeader';
 

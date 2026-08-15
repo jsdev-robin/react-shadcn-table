@@ -5,11 +5,8 @@ import { getPinStyles } from '@/package/utils/getPinStyles';
 import type { Cell, RowData } from '@tanstack/react-table';
 import { useLayoutEffect, useRef } from 'react';
 
-const GridCenterCell = ({
-  cell,
-}: {
-  cell: Cell<GridFeatures, RowData, unknown>;
-}) => {
+const GridCell = ({ cell }: { cell: Cell<GridFeatures, RowData, unknown> }) => {
+  'use no memo';
   const { table, isSplit } = useGrid();
   const cellRef = useRef<HTMLTableCellElement>(null);
 
@@ -53,4 +50,4 @@ const GridCenterCell = ({
   );
 };
 
-export default GridCenterCell;
+export default GridCell;
