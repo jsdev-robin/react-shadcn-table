@@ -4,7 +4,7 @@ import GridEndHeader from './GridEndHeader';
 
 const GridEnd = () => {
   'use no memo';
-  const { paneRef3, paneRef4, height, isError, isSplit, table } = useGrid();
+  const { paneRef5, paneRef6, height, isError, isSplit, table } = useGrid();
 
   return (
     <>
@@ -30,7 +30,7 @@ const GridEnd = () => {
               overflowX: 'hidden',
               scrollbarColor: 'transparent transparent',
             }}
-            ref={paneRef3}
+            ref={paneRef5}
           >
             <GridEndHeader />
           </div>
@@ -40,7 +40,7 @@ const GridEnd = () => {
               overflow: 'scroll',
               height: height,
             }}
-            ref={paneRef4}
+            ref={paneRef6}
           >
             <GridEndBody />
           </div>
