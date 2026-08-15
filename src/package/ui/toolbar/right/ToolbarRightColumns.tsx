@@ -142,7 +142,7 @@ const ToolbarRightColumns = () => {
       >
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           className="w-full"
           onClick={() => randomizeColumns()}
         >
@@ -150,7 +150,7 @@ const ToolbarRightColumns = () => {
         </Button>
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           className="w-full"
           onClick={() => table.resetColumnOrder()}
         >
@@ -158,7 +158,7 @@ const ToolbarRightColumns = () => {
         </Button>
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           className="w-full"
           onClick={() =>
             table.setColumnOrder(
@@ -172,7 +172,7 @@ const ToolbarRightColumns = () => {
         </Button>
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           className="w-full"
           onClick={() => {
             table.resetColumnPinning();
@@ -183,7 +183,7 @@ const ToolbarRightColumns = () => {
         </Button>
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           className="w-full"
           onClick={() => table.resetColumnSizing()}
         >
@@ -191,7 +191,7 @@ const ToolbarRightColumns = () => {
         </Button>
         <Button
           variant="outline"
-          size="sm"
+          size="xs"
           className="w-full"
           disabled={!table.getIsSomeColumnsPinned()}
           onClick={() => setIsSplit(!isSplit)}
