@@ -2,7 +2,7 @@
 
 import useSyncScroll from '@/package/hooks/useSyncScroll';
 import { useTable, type RowData } from '@tanstack/react-table';
-import { createContext, useMemo, useRef } from 'react';
+import { createContext, useMemo, useRef, useState } from 'react';
 import { features } from '../../features';
 import type { GridContextProps, GridContextProviderProps } from './types';
 
@@ -29,6 +29,15 @@ export const GridContextProvider = <TableData extends RowData>({
   manualPagination = false,
   height = '65vh',
 }: GridContextProviderProps<TableData>) => {
+  const [isSplit, setIsSplit] = useState(false);
+  const paneRef1 = useRef<HTMLDivElement>(null);
+  const paneRef2 = useRef<HTMLDivElement>(null);
+  const paneRef3 = useRef<HTMLDivElement>(null);
+  const paneRef4 = useRef<HTMLDivElement>(null);
+  const paneRef5 = useRef<HTMLDivElement>(null);
+  const paneRef6 = useRef<HTMLDivElement>(null);
+  const gridWrapperRef = useRef<HTMLDivElement>(null);
+
   const table = useTable(
     {
       features: features,
@@ -51,14 +60,6 @@ export const GridContextProvider = <TableData extends RowData>({
     },
     (state) => state,
   );
-
-  const paneRef1 = useRef<HTMLDivElement>(null);
-  const paneRef2 = useRef<HTMLDivElement>(null);
-  const paneRef3 = useRef<HTMLDivElement>(null);
-  const paneRef4 = useRef<HTMLDivElement>(null);
-  const paneRef5 = useRef<HTMLDivElement>(null);
-  const paneRef6 = useRef<HTMLDivElement>(null);
-  const gridWrapperRef = useRef<HTMLDivElement>(null);
 
   useSyncScroll({
     refs: [paneRef1, paneRef2],
@@ -89,6 +90,8 @@ export const GridContextProvider = <TableData extends RowData>({
       paneRef5,
       paneRef6,
       gridWrapperRef,
+      isSplit,
+      setIsSplit,
       isFetching,
       isLoading,
       isError,
@@ -103,6 +106,8 @@ export const GridContextProvider = <TableData extends RowData>({
       paneRef5,
       paneRef6,
       gridWrapperRef,
+      isSplit,
+      setIsSplit,
       isFetching,
       isLoading,
       isError,

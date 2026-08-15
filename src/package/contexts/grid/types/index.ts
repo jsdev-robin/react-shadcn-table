@@ -21,6 +21,8 @@ export interface GridContextProps<TableData extends RowData = RowData> {
   paneRef5: React.RefObject<HTMLDivElement | null>;
   paneRef6: React.RefObject<HTMLDivElement | null>;
   gridWrapperRef: React.RefObject<HTMLDivElement | null>;
+  isSplit: boolean;
+  setIsSplit: React.Dispatch<React.SetStateAction<boolean>>;
   isFetching?: boolean;
   isLoading?: boolean;
   isError?: boolean;

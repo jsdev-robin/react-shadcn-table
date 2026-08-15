@@ -1,6 +1,9 @@
 import {
   columnFacetingFeature,
   columnFilteringFeature,
+  columnOrderingFeature,
+  columnPinningFeature,
+  columnResizingFeature,
   columnSizingFeature,
   columnVisibilityFeature,
   createFacetedMinMaxValues,
@@ -44,9 +47,13 @@ interface MyColumnMeta {
 // New in v9: declare the features this table uses — anything you don't
 // register is tree-shaken out of the bundle.
 export const features = tableFeatures({
+  columnOrderingFeature,
+  columnPinningFeature,
+  columnResizingFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
   columnFacetingFeature,
   columnFilteringFeature,
-  columnVisibilityFeature,
   rowPaginationFeature,
   rowSelectionFeature,
   rowSortingFeature,
@@ -63,7 +70,6 @@ export const features = tableFeatures({
     equalsString: filterFn_equalsString,
   },
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
-  columnSizingFeature,
   globalFilteringFeature,
   columnMeta: metaHelper<MyColumnMeta>(),
 });

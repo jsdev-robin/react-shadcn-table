@@ -1,5 +1,7 @@
 import { TableHead } from '@/components/ui/table';
 import type { GridFeatures } from '@/package/features';
+import { useGrid } from '@/package/hooks/useGrid';
+import { getPinStyles } from '@/package/utils/getPinStyles';
 import type { Header, RowData } from '@tanstack/react-table';
 import type { CSSProperties } from 'react';
 import HeaderFilter from '../../header/HeaderFilter';
@@ -12,6 +14,8 @@ const GridCenterHead = ({
   header: Header<GridFeatures, RowData, unknown>;
 }) => {
   'use no memo';
+  const { isSplit } = useGrid();
+
   const style: CSSProperties = {
     width: header.getSize(),
     minWidth: header.getSize(),
@@ -19,6 +23,7 @@ const GridCenterHead = ({
     borderRight: '1px solid',
     borderColor: 'var(--border)',
     padding: 0,
+    ...getPinStyles(header.column, isSplit),
   };
 
   return (

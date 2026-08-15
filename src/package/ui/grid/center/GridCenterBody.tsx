@@ -1,8 +1,10 @@
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
+import React from 'react';
+import GridCenterCell from './GridCenterCell';
 
 const GridCenterBody = () => {
-  const { table } = useGrid();
+  const { table, isSplit } = useGrid();
 
   return (
     <Table
@@ -12,25 +14,16 @@ const GridCenterBody = () => {
     >
       <TableBody>
         {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
-            {row.getAllCells().map((cell) => (
-              <TableCell
-                key={cell.id}
-                style={{
-                  width: cell.column.getSize(),
-                  minWidth: cell.column.getSize(),
-                  maxWidth: cell.column.getSize(),
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                  borderRight: '1px solid',
-                  borderColor: 'var(--border)',
-                }}
-              >
-                <table.FlexRender cell={cell} />
-              </TableCell>
-            ))}
-          </TableRow>
+          <React.Fragment key={row.id}>
+            <TableRow data-state={row.getIsSelected()}>
+              {(isSplit
+                ? row.getCenterVisibleCells()
+                : row.getVisibleCells()
+              ).map((cell) => (
+                <GridCenterCell key={cell.id} cell={cell} />
+              ))}
+            </TableRow>
+          </React.Fragment>
         ))}
       </TableBody>
     </Table>
