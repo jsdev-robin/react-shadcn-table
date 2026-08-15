@@ -22,18 +22,18 @@ export const getPinStyles = (
     // borderLeft: isFirstRightPinnedColumn
     //   ? `1px solid var(--border)`
     //   : undefined,
-    insetInlineStart:
-      isPinned === 'start' ? `${column.getStart('start')}px` : undefined,
-    insetInlineEnd:
-      isPinned === 'end' ? `${column.getAfter('end')}px` : undefined,
-    // left:
-    //   isPinned === 'start' && !isSplit
-    //     ? `${column.getStart('start')}px`
-    //     : undefined,
-    // right:
-    //   isPinned === 'end' && !isSplit
-    //     ? `${column.getAfter('end')}px`
-    //     : undefined,
+    // insetInlineStart:
+    //   isPinned === 'start' ? `${column.getStart('start')}px` : undefined,
+    // insetInlineEnd:
+    //   isPinned === 'end' ? `${column.getAfter('end')}px` : undefined,
+    left:
+      isPinned === 'start' && !isSplit
+        ? `${column.getStart('start')}px`
+        : undefined,
+    right:
+      isPinned === 'end' && !isSplit
+        ? `${column.getAfter('end')}px`
+        : undefined,
     opacity: isPinned ? 0.95 : 1,
     position: isPinned ? (isSplit ? 'relative' : 'sticky') : 'relative',
     width: column.getSize(),

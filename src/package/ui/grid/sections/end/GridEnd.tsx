@@ -1,8 +1,8 @@
 import { useGrid } from '@/package/hooks/useGrid';
-import GridStartBody from './GridStartBody';
-import GridStartHeader from './GridStartHeader';
+import GridEndBody from './GridEndBody';
+import GridEndHeader from './GridEndHeader';
 
-const GridStart = () => {
+const GridEnd = () => {
   'use no memo';
   const { paneRef3, paneRef4, height, isError, isSplit, table } = useGrid();
 
@@ -10,7 +10,7 @@ const GridStart = () => {
     <>
       {!isError &&
       isSplit &&
-      (table.state.columnPinning?.start?.length ?? 0) > 0 ? (
+      (table.state.columnPinning?.end?.length ?? 0) > 0 ? (
         <div
           style={{
             maxWidth: '220px',
@@ -32,7 +32,7 @@ const GridStart = () => {
             }}
             ref={paneRef3}
           >
-            <GridStartHeader />
+            <GridEndHeader />
           </div>
           <div
             style={{
@@ -42,7 +42,7 @@ const GridStart = () => {
             }}
             ref={paneRef4}
           >
-            <GridStartBody />
+            <GridEndBody />
           </div>
         </div>
       ) : null}
@@ -50,4 +50,4 @@ const GridStart = () => {
   );
 };
 
-export default GridStart;
+export default GridEnd;

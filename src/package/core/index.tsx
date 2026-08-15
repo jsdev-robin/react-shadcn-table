@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { GridContextProvider } from '../contexts/grid/GridContext';
 import { useGrid } from '../hooks/useGrid';
 import GridCenter from '../ui/grid/sections/center/GridCenter';
+import GridEnd from '../ui/grid/sections/end/GridEnd';
 import GridStart from '../ui/grid/sections/start/GridStart';
 import Pagination from '../ui/pagination';
 import ToolbarRight from '../ui/toolbar/right';
@@ -114,6 +115,7 @@ const GridInner = () => {
           <GridCenter />
           <Pagination />
         </div>
+        <GridEnd />
         <ToolbarRight height={tableHeight} />
       </div>
     </div>

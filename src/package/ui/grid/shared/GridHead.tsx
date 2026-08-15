@@ -36,7 +36,7 @@ const GridHead = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: 1,
+              gap: '4px',
             }}
           >
             <HeaderSort header={header} />
