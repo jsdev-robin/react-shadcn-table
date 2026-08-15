@@ -1,8 +1,10 @@
 import { TableRow } from '@/components/ui/table';
+import type { GridFeatures } from '@/package/features';
 import { useGrid } from '@/package/hooks/useGrid';
+import type { Row, RowData } from '@tanstack/react-table';
 import GridCell from '../../shared/GridCell';
 
-export function GridEndRowPin({ row }: { row: any }) {
+export function GridEndRowPin({ row }: { row: Row<GridFeatures, RowData> }) {
   'use no memo';
   const { table } = useGrid();
 
