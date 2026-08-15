@@ -3,7 +3,7 @@
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
 import { getPinStyles } from '@/package/utils/getPinStyles';
-import GridCenterRowSkeleton from './GridCenterRowSkeleton';
+import GridRowSkeleton from '../../start/feedback/GridRowSkeleton';
 
 const GridCenterSkeleton = () => {
   const { table, isSplit } = useGrid();
@@ -36,7 +36,7 @@ const GridCenterSkeleton = () => {
                   ...getPinStyles(column, isSplit),
                 }}
               >
-                <GridCenterRowSkeleton column={column} i={i} j={j} />
+                <GridRowSkeleton column={column} i={i} j={j} />
               </TableCell>
             ))}
           </TableRow>

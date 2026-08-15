@@ -7,7 +7,7 @@ import { Loader } from 'lucide-react';
 
 const PREDEFINED_WIDTHS = [60, 100, 80, 50, 70, 40, 90];
 
-const GridCenterRowSkeleton = ({
+const GridRowSkeleton = ({
   column,
   i,
   j,
@@ -54,4 +54,4 @@ const GridCenterRowSkeleton = ({
   );
 };
 
-export default GridCenterRowSkeleton;
+export default GridRowSkeleton;
