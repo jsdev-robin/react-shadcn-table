@@ -53,7 +53,7 @@ const App = () => {
         meta: {
           filterVariant: 'text',
         },
-        spanRows: true,
+        // spanRows: true,
       },
       {
         id: 'driver',
