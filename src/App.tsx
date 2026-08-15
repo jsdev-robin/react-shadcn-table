@@ -316,6 +316,7 @@ const App = () => {
           // manualPagination
           // manualSorting={true}
           height="60vh"
+          isLoading
         />
       </div>
       {/* <div

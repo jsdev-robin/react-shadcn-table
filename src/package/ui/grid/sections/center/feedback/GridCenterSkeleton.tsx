@@ -30,7 +30,8 @@ const GridCenterSkeleton = () => {
                   width: column.getSize(),
                   minWidth: column.getSize(),
                   maxWidth: column.getSize(),
-
+                  borderRight: '1px solid',
+                  borderColor: 'var(--border)',
                   transition: 'padding 0.2s',
                   ...getPinStyles(column, isSplit),
                 }}
