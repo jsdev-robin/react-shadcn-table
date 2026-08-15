@@ -90,6 +90,9 @@ const GridInner = () => {
     <div
       style={{
         position: 'relative',
+        background: 'color-mix(in srgb, var(--muted) 50%, transparent)',
+        border: '1px solid var(--border)',
+        borderRadius: '6px',
       }}
       ref={gridWrapperRef}
     >
@@ -97,11 +100,9 @@ const GridInner = () => {
         style={{
           display: 'flex',
           alignItems: 'flex-start',
-          borderRadius: '6px',
+
           overflow: 'hidden',
           width: '100%',
-          background: 'color-mix(in srgb, var(--muted) 50%, transparent)',
-          border: '1px solid var(--border)',
         }}
       >
         <GridStart />
@@ -113,11 +114,11 @@ const GridInner = () => {
           ref={tableWrapperRef}
         >
           <GridCenter />
-          <Pagination />
         </div>
         <GridEnd />
         <ToolbarRight height={tableHeight} />
       </div>
+      <Pagination />
     </div>
   );
 };
