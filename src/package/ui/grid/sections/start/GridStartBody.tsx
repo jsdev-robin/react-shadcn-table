@@ -1,4 +1,4 @@
-import { Table, TableBody, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
 import React from 'react';
 import GridCell from '../../shared/GridCell';
@@ -8,7 +8,7 @@ import { GridStartRowPin } from './GridStartRowPin';
 
 const GridStartBody = () => {
   'use no memo';
-  const { table, isLoading, isError } = useGrid();
+  const { table, isLoading, isError, renderSubComponent } = useGrid();
 
   return isLoading ? (
     <GridStartSkeleton />
@@ -29,6 +29,13 @@ const GridStartBody = () => {
                 <GridCell key={cell.id} cell={cell} />
               ))}
             </TableRow>
+            {renderSubComponent && row.getIsExpanded() && (
+              <TableRow>
+                <TableCell colSpan={row.getVisibleCells().length}>
+                  {renderSubComponent({ row })}
+                </TableCell>
+              </TableRow>
+            )}
           </React.Fragment>
         ))}
         {table.getBottomRows().map((row) => (
