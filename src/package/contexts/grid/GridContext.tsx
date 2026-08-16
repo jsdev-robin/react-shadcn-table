@@ -44,6 +44,7 @@ export const GridContextProvider = <TableData extends RowData>({
   height = '65vh',
   getRowCanExpand,
   renderSubComponent,
+  onRowSelectionChange,
 }: GridContextProviderProps<TableData>) => {
   'use no memo';
   const [isSplit, setIsSplit] = useState(false);
@@ -76,10 +77,12 @@ export const GridContextProvider = <TableData extends RowData>({
       columnResizeMode: 'onChange',
       enableCellSelection: true,
       enableCellSpanning: true,
+      enableRowSelection: true,
       onSortingChange: onSortingChange,
       onColumnFiltersChange: onColumnFiltersChange,
       onGlobalFilterChange: setGlobalFilter,
       onPaginationChange: onPaginationChange,
+      onRowSelectionChange: onRowSelectionChange,
       onDensityChange: setDensity,
       manualFiltering: manualFiltering,
       manualSorting: manualSorting,

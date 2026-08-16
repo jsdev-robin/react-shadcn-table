@@ -29,7 +29,7 @@ const GridCenterBody = () => {
       <TableBody>
         {table.getRowModel().rows.map((row) => (
           <React.Fragment key={row.id}>
-            <TableRow data-state={row.getIsSelected()}>
+            <TableRow data-state={row.getIsSelected() && 'selected'}>
               {(isSplit
                 ? row.getCenterVisibleCells()
                 : row.getVisibleCells()

@@ -24,7 +24,7 @@ const GridEndBody = () => {
         ))}
         {table.getRowModel().rows.map((row) => (
           <React.Fragment key={row.id}>
-            <TableRow data-state={row.getIsSelected()}>
+            <TableRow data-state={row.getIsSelected() && 'selected'}>
               {row.getEndVisibleCells().map((cell) => (
                 <GridCell key={cell.id} cell={cell} />
               ))}

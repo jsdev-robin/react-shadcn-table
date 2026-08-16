@@ -28,12 +28,34 @@ const App = () => {
       },
       {
         id: 'select',
-        header: () => <Checkbox />,
-        cell: () => <Checkbox />,
+        header: ({ table }) => (
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected()
+                ? true
+                : table.getIsSomePageRowsSelected()
+                  ? 'indeterminate'
+                  : false
+            }
+            onCheckedChange={(checked) =>
+              table.toggleAllPageRowsSelected(checked === true)
+            }
+            aria-label="Select all"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            disabled={!row.getCanSelect()}
+            onCheckedChange={(checked) => row.toggleSelected(checked === true)}
+            aria-label="Select row"
+          />
+        ),
         size: 48,
         maxSize: 48,
         enableColumnFilter: false,
         enableSorting: false,
+        enableCellSelection: false,
       },
       {
         id: 'pin',
@@ -42,6 +64,7 @@ const App = () => {
         size: 100,
         maxSize: 100,
         enableColumnFilter: false,
+        enableCellSelection: false,
         cell: ({ row }) =>
           row.getIsPinned() ? (
             <button onClick={() => row.pin(false)}>❌</button>
