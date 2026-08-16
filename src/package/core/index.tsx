@@ -32,6 +32,7 @@ const Grid = <T extends RowData>({
   getRowCanExpand,
   renderSubComponent,
 }: GridProps<T>) => {
+  'use no memo';
   return (
     <GridContextProvider
       payload={payload}

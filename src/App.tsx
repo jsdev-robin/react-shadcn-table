@@ -7,8 +7,25 @@ import type { GridFeatures } from './package/features';
 import { useGridState } from './package/hooks/useGridState';
 
 const App = () => {
+  'use no memo';
   const columns = useMemo<ColumnDef<GridFeatures, Vehicle, unknown>[]>(
     () => [
+      {
+        accessorFn: (_row, index) => index + 1,
+        id: 'rowNumber',
+        header: '#',
+        cell: ({ row }) => {
+          const pageIndex = state.pagination?.pageIndex ?? 0;
+          const pageSize = state.pagination?.pageSize ?? 10;
+
+          return pageIndex * pageSize + row.index + 1;
+        },
+        size: 36,
+        maxSize: 36,
+        enableColumnFilter: false,
+        enableSorting: false,
+        enableHiding: false,
+      },
       {
         id: 'select',
         header: () => <Checkbox />,
