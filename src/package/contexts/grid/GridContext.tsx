@@ -183,6 +183,7 @@ export const GridContextProvider = <TableData extends RowData>({
       globalFilter: state.globalFilter,
       setGlobalFilter,
       renderSubComponent,
+      name,
     }),
     [
       paneRef1,
@@ -202,6 +203,7 @@ export const GridContextProvider = <TableData extends RowData>({
       state.globalFilter,
       setGlobalFilter,
       renderSubComponent,
+      name,
     ],
   );
 

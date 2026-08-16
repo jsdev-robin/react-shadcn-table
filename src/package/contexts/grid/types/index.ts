@@ -34,6 +34,7 @@ export interface GridContextProps<TableData extends RowData = RowData> {
   renderSubComponent?: (props: {
     row: Row<GridFeatures, TableData>;
   }) => React.ReactElement;
+  name?: string;
 }
 
 export interface GridContextProviderProps<TData extends RowData> {

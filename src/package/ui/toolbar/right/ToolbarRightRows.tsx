@@ -22,7 +22,7 @@ import { useState } from 'react';
 import * as XLSX from 'xlsx';
 
 const ToolbarRightRows = () => {
-  const { table } = useGrid();
+  const { table, name } = useGrid();
   const [toastMsg, setToastMsg] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -64,11 +64,11 @@ const ToolbarRightRows = () => {
       XLSX.utils.book_append_sheet(
         workbook,
         worksheet,
-        ranges.length > 1 ? `Selection ${index + 1}` : 'Selection',
+        ranges.length > 1 ? `Sheet ${index + 1}` : name,
       );
     });
 
-    XLSX.writeFile(workbook, `selection-${Date.now()}.xlsx`);
+    XLSX.writeFile(workbook, `${name}-${Date.now()}.xlsx`);
     showToast('Selection exported to Excel');
   };
 
@@ -83,11 +83,7 @@ const ToolbarRightRows = () => {
       if (index > 0) doc.addPage();
 
       doc.setFontSize(12);
-      doc.text(
-        ranges.length > 1 ? `Selection ${index + 1}` : 'Selection',
-        14,
-        14,
-      );
+      doc.text(ranges.length > 1 ? `${name} ${index + 1}` : name, 14, 14);
 
       autoTable(doc, {
         head: [headers],
@@ -100,7 +96,7 @@ const ToolbarRightRows = () => {
       });
     });
 
-    doc.save(`selection-${Date.now()}.pdf`);
+    doc.save(`${name}-${Date.now()}.pdf`);
     showToast('Selection exported to PDF');
   };
 
@@ -123,7 +119,7 @@ const ToolbarRightRows = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `selection-${Date.now()}.json`;
+    link.download = `${name}-${Date.now()}.json`;
     link.click();
     URL.revokeObjectURL(url);
 
@@ -137,7 +133,7 @@ const ToolbarRightRows = () => {
     const headers = getSelectionHeaders();
     const rows = ranges.flat();
 
-    printTable('Grid Selection', headers, rows);
+    printTable(name, headers, rows);
   };
 
   return (

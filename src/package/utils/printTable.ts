@@ -4,7 +4,12 @@ export function printTable(
   rows: unknown[][],
 ) {
   const printWindow = window.open('', '_blank');
-  if (!printWindow) return;
+  if (!printWindow) {
+    window.alert(
+      'Print window was blocked. Please allow popups for this site and try again.',
+    );
+    return;
+  }
 
   const escapeHtml = (value: unknown) => {
     const text = value == null ? '' : String(value);
@@ -22,6 +27,7 @@ export function printTable(
     )
     .join('');
 
+  printWindow.document.open();
   printWindow.document.write(`
 <!DOCTYPE html>
 <html>
@@ -46,10 +52,17 @@ export function printTable(
 </body>
 </html>
   `);
-
   printWindow.document.close();
-  printWindow.onload = () => {
+
+  const triggerPrint = () => {
     printWindow.focus();
     printWindow.print();
   };
+
+  if (printWindow.document.readyState === 'complete') {
+    setTimeout(triggerPrint, 100);
+  } else {
+    printWindow.onload = () => setTimeout(triggerPrint, 100);
+    setTimeout(triggerPrint, 500);
+  }
 }

@@ -377,7 +377,7 @@ const App = () => {
             total: 40,
           }}
           columns={columns}
-          name="dfdfd"
+          name="Fleet"
           state={state}
           {...handlers}
           // manualFiltering
