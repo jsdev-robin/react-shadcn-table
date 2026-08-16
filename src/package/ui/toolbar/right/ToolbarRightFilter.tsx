@@ -125,6 +125,8 @@ const ToolbarFilters = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        paddingBlock: '8px',
+        gap: '8px',
       }}
     >
       <div
@@ -132,7 +134,9 @@ const ToolbarFilters = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px',
+          paddingInline: '8px',
+          paddingBottom: '8px',
+          height: '36px',
           borderBottom: '1px solid var(--border)',
         }}
       >
@@ -145,7 +149,7 @@ const ToolbarFilters = () => {
           Filters
         </h1>
       </div>
-      <div style={{ padding: '8px' }}>
+      <div style={{ paddingInline: '8px' }}>
         <DebouncedInput
           style={{ width: '100%' }}
           type="search"
@@ -156,34 +160,39 @@ const ToolbarFilters = () => {
           placeholder="Search all columns..."
         />
       </div>
-
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
           overflowY: 'auto',
-          padding: '8px',
-          gap: '8px',
+          paddingInline: '8px',
         }}
       >
-        {table.getHeaderGroups().map((headerGroup) => (
-          <React.Fragment key={headerGroup.id}>
-            {headerGroup.headers
-              .filter(
-                (header) =>
-                  !['rowNumber', 'select', 'pin', 'actions'].includes(
-                    header.column.id,
-                  ),
-              )
-              .map((header) => (
-                <ToolbarFilter key={header.id} column={header.column} />
-              ))}
-          </React.Fragment>
-        ))}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
+          {table.getHeaderGroups().map((headerGroup) => (
+            <React.Fragment key={headerGroup.id}>
+              {headerGroup.headers
+                .filter(
+                  (header) =>
+                    !['rowNumber', 'select', 'pin', 'actions'].includes(
+                      header.column.id,
+                    ),
+                )
+                .map((header) => (
+                  <ToolbarFilter key={header.id} column={header.column} />
+                ))}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
-
-      <div style={{ padding: '8px' }}>
+      <div style={{ paddingInline: '8px' }}>
         <Button
           variant="outline"
           size="sm"
