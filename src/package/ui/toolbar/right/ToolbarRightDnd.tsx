@@ -131,7 +131,8 @@ const ToolbarDnd = () => {
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
-          paddingBottom: '8px',
+          paddingBlock: '8px',
+          gap: '8px',
         }}
       >
         <div
@@ -139,7 +140,9 @@ const ToolbarDnd = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '8px',
+            paddingInline: '8px',
+            paddingBottom: '8px',
+            height: '36px',
             borderBottom: '1px solid var(--border)',
           }}
         >
@@ -153,7 +156,7 @@ const ToolbarDnd = () => {
           </h1>
           <Button
             variant="ghost"
-            size="icon-xs"
+            size="icon-sm"
             title="Reset"
             onClick={() => table.resetColumnOrder()}
           >
@@ -167,31 +170,39 @@ const ToolbarDnd = () => {
             flexDirection: 'column',
             flex: 1,
             overflowY: 'auto',
-            padding: '8px',
+            paddingInline: '8px',
           }}
         >
-          <SortableContext
-            items={columnOrder}
-            strategy={verticalListSortingStrategy}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+            }}
           >
-            <ItemGroup>
-              {columnOrder.map((columnId) => {
-                const column = table.getColumn(columnId);
-                if (!column) return null;
-                return (
-                  <DraggableColumnItem
-                    key={columnId}
-                    columnId={columnId}
-                    label={
-                      typeof column.columnDef.header === 'string'
-                        ? column.columnDef.header
-                        : columnId
-                    }
-                  />
-                );
-              })}
-            </ItemGroup>
-          </SortableContext>
+            <SortableContext
+              items={columnOrder}
+              strategy={verticalListSortingStrategy}
+            >
+              <ItemGroup>
+                {columnOrder.map((columnId) => {
+                  const column = table.getColumn(columnId);
+                  if (!column) return null;
+                  return (
+                    <DraggableColumnItem
+                      key={columnId}
+                      columnId={columnId}
+                      label={
+                        typeof column.columnDef.header === 'string'
+                          ? column.columnDef.header
+                          : columnId
+                      }
+                    />
+                  );
+                })}
+              </ItemGroup>
+            </SortableContext>
+          </div>
         </div>
       </div>
     </DndContext>
