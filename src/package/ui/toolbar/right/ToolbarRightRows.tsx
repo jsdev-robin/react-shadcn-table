@@ -44,6 +44,7 @@ const ToolbarRightRows = () => {
     if (ranges.length === 0) return;
 
     const headers = getSelectionHeaders();
+    const sheetName = name ?? 'Grid';
     const workbook = XLSX.utils.book_new();
 
     ranges.forEach((grid, index) => {
@@ -64,11 +65,11 @@ const ToolbarRightRows = () => {
       XLSX.utils.book_append_sheet(
         workbook,
         worksheet,
-        ranges.length > 1 ? `Sheet ${index + 1}` : name,
+        ranges.length > 1 ? `Sheet ${index + 1}` : sheetName,
       );
     });
 
-    XLSX.writeFile(workbook, `${name}-${Date.now()}.xlsx`);
+    XLSX.writeFile(workbook, `${sheetName}-${Date.now()}.xlsx`);
     showToast('Selection exported to Excel');
   };
 
@@ -77,13 +78,18 @@ const ToolbarRightRows = () => {
     if (ranges.length === 0) return;
 
     const headers = getSelectionHeaders();
+    const docTitle = name ?? 'Grid';
     const doc = new jsPDF({ orientation: 'landscape' });
 
     ranges.forEach((grid, index) => {
       if (index > 0) doc.addPage();
 
       doc.setFontSize(12);
-      doc.text(ranges.length > 1 ? `${name} ${index + 1}` : name, 14, 14);
+      doc.text(
+        ranges.length > 1 ? `${docTitle} ${index + 1}` : docTitle,
+        14,
+        14,
+      );
 
       autoTable(doc, {
         head: [headers],
@@ -96,7 +102,7 @@ const ToolbarRightRows = () => {
       });
     });
 
-    doc.save(`${name}-${Date.now()}.pdf`);
+    doc.save(`${docTitle}-${Date.now()}.pdf`);
     showToast('Selection exported to PDF');
   };
 
@@ -105,6 +111,7 @@ const ToolbarRightRows = () => {
     if (ranges.length === 0) return;
 
     const headers = getSelectionHeaders();
+    const fileName = name ?? 'Grid';
 
     const payload = ranges.map((grid) =>
       grid.map((row) =>
@@ -119,7 +126,7 @@ const ToolbarRightRows = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${name}-${Date.now()}.json`;
+    link.download = `${fileName}-${Date.now()}.json`;
     link.click();
     URL.revokeObjectURL(url);
 
@@ -133,7 +140,7 @@ const ToolbarRightRows = () => {
     const headers = getSelectionHeaders();
     const rows = ranges.flat();
 
-    printTable(name, headers, rows);
+    printTable(name ?? 'Grid', headers, rows);
   };
 
   return (
