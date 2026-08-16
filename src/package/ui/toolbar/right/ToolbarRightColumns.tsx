@@ -44,6 +44,7 @@ const ToolbarRightColumns = () => {
           justifyContent: 'space-between',
           paddingInline: '8px',
           paddingBottom: '8px',
+          height: '36px',
           borderBottom: '1px solid var(--border)',
         }}
       >
@@ -58,7 +59,7 @@ const ToolbarRightColumns = () => {
         <Button
           title="Restore"
           variant="ghost"
-          size="icon-xs"
+          size="icon-sm"
           onClick={() => {
             table.resetColumnVisibility();
           }}
