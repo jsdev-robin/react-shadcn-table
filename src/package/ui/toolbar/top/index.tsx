@@ -1,8 +1,11 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
+import { DebouncedInput } from '@/components/ui/debounced-input';
+import { useGrid } from '@/package/hooks/useGrid';
 
 const TopToolbar = () => {
+  const { setGlobalFilter, globalFilter } = useGrid();
+
   return (
     <div
       style={{
@@ -14,9 +17,12 @@ const TopToolbar = () => {
         justifyContent: 'space-between',
       }}
     >
-      <Input
-        style={{
-          width: '260px',
+      <DebouncedInput
+        style={{ width: '240px' }}
+        type="search"
+        value={String(globalFilter)}
+        onChange={(value) => {
+          setGlobalFilter?.(String(value));
         }}
         placeholder="Search by query"
       />
