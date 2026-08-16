@@ -32,6 +32,12 @@ const GridEndSkeleton = () => {
                   borderRight: '1px solid',
                   borderColor: 'var(--border)',
                   transition: 'padding 0.2s',
+                  padding:
+                    table.state.density === 'sm'
+                      ? '4px'
+                      : table.state.density === 'md'
+                        ? '8px'
+                        : '16px',
                   ...getPinStyles(column, isSplit),
                 }}
               >

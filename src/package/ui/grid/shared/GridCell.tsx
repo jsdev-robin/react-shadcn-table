@@ -41,6 +41,12 @@ const GridCell = ({ cell }: { cell: Cell<GridFeatures, RowData, unknown> }) => {
     borderColor: 'var(--border)',
     userSelect: 'none' as const,
     cursor: cell.getCanSelect() ? 'cell' : undefined,
+    padding:
+      table.state.density === 'sm'
+        ? '4px'
+        : table.state.density === 'md'
+          ? '8px'
+          : '16px',
     ...getPinStyles(cell.column, isSplit),
     ...getSelectionStyles(cell),
   };

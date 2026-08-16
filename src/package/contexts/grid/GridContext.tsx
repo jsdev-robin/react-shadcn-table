@@ -1,6 +1,7 @@
 'use client';
 
 import useSyncScroll from '@/package/hooks/useSyncScroll';
+import type { DensityState } from '@/package/state/rowDensity';
 import { toTsv } from '@/package/utils/toTsv';
 import { useHotkeys } from '@tanstack/react-hotkeys';
 import { useCreateAtom } from '@tanstack/react-store';
@@ -9,7 +10,13 @@ import {
   type CellSelectionState,
   type RowData,
 } from '@tanstack/react-table';
-import { createContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { features } from '../../features';
 import type { GridContextProps, GridContextProviderProps } from './types';
 
@@ -46,6 +53,7 @@ export const GridContextProvider = <TableData extends RowData>({
   const paneRef6 = useRef<HTMLDivElement>(null);
   const gridWrapperRef = useRef<HTMLDivElement>(null);
   const cellSelectionAtom = useCreateAtom<CellSelectionState>([]);
+  const [density, setDensity] = React.useState<DensityState>('md');
 
   const table = useTable(
     {
@@ -58,7 +66,7 @@ export const GridContextProvider = <TableData extends RowData>({
         minSize: 60,
         maxSize: 800,
       },
-      state: { ...state },
+      state: { ...state, density },
       atoms: {
         cellSelection: cellSelectionAtom,
       },
@@ -68,6 +76,7 @@ export const GridContextProvider = <TableData extends RowData>({
       onColumnFiltersChange: onColumnFiltersChange,
       onGlobalFilterChange: setGlobalFilter,
       onPaginationChange: onPaginationChange,
+      onDensityChange: setDensity,
       manualFiltering: manualFiltering,
       manualSorting: manualSorting,
       manualPagination: manualPagination,

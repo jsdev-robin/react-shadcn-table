@@ -28,6 +28,7 @@ import {
   sortFn_text,
   tableFeatures,
 } from '@tanstack/react-table';
+import { densityPlugin } from '../state/rowDensity';
 
 interface MyColumnMeta {
   filterVariant?:
@@ -78,6 +79,9 @@ export const features = tableFeatures({
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
   globalFilteringFeature,
   columnMeta: metaHelper<MyColumnMeta>(),
+
+  // Custom
+  densityPlugin,
 });
 
 // Pass this as the first generic argument to `ColumnDef`, `Column`, `Table`,
