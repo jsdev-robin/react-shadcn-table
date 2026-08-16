@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
 import { toTsv } from '@/package/utils/toTsv';
 import { useState } from 'react';
@@ -39,51 +40,99 @@ const ToolbarRightRows = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '8px',
+          gap: '16px',
           paddingInline: '8px',
         }}
       >
-        <table.Subscribe source={table.atoms.cellSelection}>
-          {() => (
-            <Button
-              variant="outline"
-              className="w-full"
-              disabled={table.getSelectedCellCount() === 0}
-              onClick={async () => {
-                await navigator.clipboard.writeText(
-                  toTsv(table.getSelectedCellRangesData()),
-                );
-                showToast('Selection copied to clipboard');
-              }}
-            >
-              Copy Selection
-            </Button>
-          )}
-        </table.Subscribe>
-        <Button
-          variant="outline"
-          className="w-full"
-          disabled={table.getRowModel().rows.length === 0}
-          onClick={() => table.selectAllCells()}
+        <Label>Density</Label>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+          }}
         >
-          Select All Cells
-        </Button>
+          <Button
+            className="w-full"
+            variant={table.state.density === 'sm' ? 'default' : 'outline'}
+            onClick={() => table.setDensity('sm')}
+          >
+            Small
+          </Button>
+          <Button
+            className="w-full"
+            variant={table.state.density === 'md' ? 'default' : 'outline'}
+            onClick={() => table.setDensity('md')}
+          >
+            Default
+          </Button>
+          <Button
+            className="w-full"
+            variant={table.state.density === 'lg' ? 'default' : 'outline'}
+            onClick={() => table.setDensity('lg')}
+          >
+            Large
+          </Button>
+        </div>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+          paddingInline: '8px',
+        }}
+      >
+        <Label>Selection</Label>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+          }}
+        >
+          <table.Subscribe source={table.atoms.cellSelection}>
+            {() => (
+              <Button
+                variant="outline"
+                className="w-full"
+                disabled={table.getSelectedCellCount() === 0}
+                onClick={async () => {
+                  await navigator.clipboard.writeText(
+                    toTsv(table.getSelectedCellRangesData()),
+                  );
+                  showToast('Selection copied to clipboard');
+                }}
+              >
+                Copy Selection
+              </Button>
+            )}
+          </table.Subscribe>
+          <Button
+            variant="outline"
+            className="w-full"
+            disabled={table.getRowModel().rows.length === 0}
+            onClick={() => table.selectAllCells()}
+          >
+            Select All Cells
+          </Button>
 
-        <table.Subscribe source={table.atoms.cellSelection}>
-          {() => (
-            <Button
-              variant="outline"
-              className="w-full"
-              disabled={table.getSelectedCellCount() === 0}
-              onClick={() => {
-                table.resetCellSelection(true);
-                showToast('Selection cleared');
-              }}
-            >
-              Clear Selection
-            </Button>
-          )}
-        </table.Subscribe>
+          <table.Subscribe source={table.atoms.cellSelection}>
+            {() => (
+              <Button
+                variant="outline"
+                className="w-full"
+                disabled={table.getSelectedCellCount() === 0}
+                onClick={() => {
+                  table.resetCellSelection(true);
+                  showToast('Selection cleared');
+                }}
+              >
+                Clear Selection
+              </Button>
+            )}
+          </table.Subscribe>
+        </div>
       </div>
 
       {toastMsg && (
