@@ -388,7 +388,7 @@ const App = () => {
           isError={false}
         />
       </div>
-      {/* <div
+      <div
         style={{
           padding: '100px',
         }}
@@ -404,7 +404,7 @@ const App = () => {
           {...handlers}
           height="60vh"
         />
-      </div> */}
+      </div>
     </section>
   );
 };
