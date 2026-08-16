@@ -1,8 +1,9 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { useGrid } from '@/package/hooks/useGrid';
-import { Expand, Loader2, Shrink } from 'lucide-react';
+import { Expand, Shrink } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ToolbarRightSettings = () => {
@@ -89,9 +90,7 @@ const ToolbarRightSettings = () => {
           onClick={() => refetch?.()}
           disabled={isFetching}
         >
-          {isFetching && (
-            <Loader2 style={{ animation: 'spin 1s linear infinite' }} />
-          )}
+          {isFetching && <Spinner />}
           {isFetching ? 'Refreshing...' : 'Refresh Data'}
         </Button>
         <Button variant="outline" onClick={handleReset}>
