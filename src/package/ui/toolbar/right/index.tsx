@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Columns3, Filter, GripVertical, Rows3, Settings } from 'lucide-react';
 import { useState } from 'react';
 import ToolbarRightColumns from './ToolbarRightColumns';
+import ToolbarRightDnd from './ToolbarRightDnd';
 import ToolbarRightRows from './ToolbarRightRows';
 
 const ToolbarRight = ({ height }: { height: number }) => {
@@ -67,7 +68,7 @@ const ToolbarRight = ({ height }: { height: number }) => {
             height: '100%',
           }}
         >
-          ToolbarDnd
+          <ToolbarRightDnd />
         </div>
       )}
 
