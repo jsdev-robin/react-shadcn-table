@@ -164,6 +164,8 @@ export const GridContextProvider = <TableData extends RowData>({
       isError,
       refetch,
       height,
+      globalFilter: state.globalFilter,
+      setGlobalFilter,
     }),
     [
       paneRef1,
@@ -180,6 +182,8 @@ export const GridContextProvider = <TableData extends RowData>({
       isError,
       refetch,
       height,
+      state.globalFilter,
+      setGlobalFilter,
     ],
   );
 

@@ -28,6 +28,8 @@ export interface GridContextProps<TableData extends RowData = RowData> {
   isError?: boolean;
   refetch?: () => void;
   height?: string;
+  globalFilter: string;
+  setGlobalFilter?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface GridContextProviderProps<TData extends RowData> {

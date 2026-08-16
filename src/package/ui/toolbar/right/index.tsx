@@ -5,6 +5,7 @@ import { Columns3, Filter, GripVertical, Rows3, Settings } from 'lucide-react';
 import { useState } from 'react';
 import ToolbarRightColumns from './ToolbarRightColumns';
 import ToolbarRightDnd from './ToolbarRightDnd';
+import ToolbarRightFilter from './ToolbarRightFilter';
 import ToolbarRightRows from './ToolbarRightRows';
 
 const ToolbarRight = ({ height }: { height: number }) => {
@@ -13,6 +14,12 @@ const ToolbarRight = ({ height }: { height: number }) => {
 
   const togglePanel = (panel: string | null) => {
     setActivePanel(activePanel === panel ? null : panel);
+  };
+
+  const style = {
+    width: 208,
+    borderLeft: '1px solid var(--border)',
+    height: '100%',
   };
 
   return (
@@ -25,64 +32,30 @@ const ToolbarRight = ({ height }: { height: number }) => {
       }}
     >
       {activePanel === 'columns' && (
-        <div
-          style={{
-            width: 208,
-            borderLeft: '1px solid var(--border)',
-            height: '100%',
-          }}
-        >
+        <div style={style}>
           <ToolbarRightColumns />
         </div>
       )}
 
       {activePanel === 'rows' && (
-        <div
-          style={{
-            width: 208,
-            borderLeft: '1px solid var(--border)',
-            height: '100%',
-          }}
-        >
+        <div style={style}>
           <ToolbarRightRows />
         </div>
       )}
 
       {activePanel === 'filter' && (
-        <div
-          style={{
-            width: 208,
-            borderLeft: '1px solid var(--border)',
-            height: '100%',
-          }}
-        >
-          ToolbarFilters
+        <div style={style}>
+          <ToolbarRightFilter />
         </div>
       )}
 
       {activePanel === 'dnd' && (
-        <div
-          style={{
-            width: 208,
-            borderLeft: '1px solid var(--border)',
-            height: '100%',
-          }}
-        >
+        <div style={style}>
           <ToolbarRightDnd />
         </div>
       )}
 
-      {activePanel === 'settings' && (
-        <div
-          style={{
-            width: 208,
-            borderLeft: '1px solid var(--border)',
-            height: '100%',
-          }}
-        >
-          ToolbarSettings
-        </div>
-      )}
+      {activePanel === 'settings' && <div style={style}>ToolbarSettings</div>}
 
       <div
         style={{
