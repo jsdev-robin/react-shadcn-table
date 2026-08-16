@@ -47,6 +47,8 @@ const ToolbarRightSettings = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        paddingBlock: '8px',
+        gap: '8px',
       }}
     >
       <div
@@ -54,7 +56,9 @@ const ToolbarRightSettings = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px',
+          paddingInline: '8px',
+          paddingBottom: '8px',
+          height: '36px',
           borderBottom: '1px solid var(--border)',
         }}
       >
@@ -71,18 +75,17 @@ const ToolbarRightSettings = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          padding: '8px',
+          paddingInline: '8px',
           flex: 1,
           gap: '8px',
         }}
       >
-        <Button variant="outline" size="sm" onClick={handleToggleFullscreen}>
+        <Button variant="outline" onClick={handleToggleFullscreen}>
           {isFullscreen ? <Shrink /> : <Expand />}
           {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
         </Button>
         <Button
           variant="outline"
-          size="sm"
           onClick={() => refetch?.()}
           disabled={isFetching}
         >
@@ -91,7 +94,7 @@ const ToolbarRightSettings = () => {
           )}
           {isFetching ? 'Refreshing...' : 'Refresh Data'}
         </Button>
-        <Button variant="outline" size="sm" onClick={handleReset}>
+        <Button variant="outline" onClick={handleReset}>
           Reset to Default
         </Button>
       </div>
