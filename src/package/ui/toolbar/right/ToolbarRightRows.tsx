@@ -3,8 +3,17 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
 import { toTsv } from '@/package/utils/toTsv';
-import { Copy, MousePointerClick, Rows2, Rows3, Rows4, X } from 'lucide-react';
+import {
+  Copy,
+  FileSpreadsheet,
+  MousePointerClick,
+  Rows2,
+  Rows3,
+  Rows4,
+  X,
+} from 'lucide-react';
 import { useState } from 'react';
+import * as XLSX from 'xlsx';
 
 const ToolbarRightRows = () => {
   const { table } = useGrid();
@@ -13,6 +22,45 @@ const ToolbarRightRows = () => {
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 2000);
+  };
+
+  const handleExportSelectionToXlsx = () => {
+    const ranges = table.getSelectedCellRangesData();
+    if (ranges.length === 0) return;
+
+    const selectedColumnIds = table.getCellSelectionColumnIds();
+    const headers = selectedColumnIds.map((columnId) =>
+      columnId
+        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+        .replace(/^./, (str) => str.toUpperCase()),
+    );
+
+    const workbook = XLSX.utils.book_new();
+
+    ranges.forEach((grid, index) => {
+      const gridWithHeaders = [headers, ...grid];
+      const worksheet = XLSX.utils.aoa_to_sheet(gridWithHeaders);
+
+      const colWidths = gridWithHeaders[0]?.map((_, colIndex) => {
+        const maxLen = gridWithHeaders.reduce((max, row) => {
+          const cellValue = row[colIndex];
+          const len = cellValue == null ? 0 : String(cellValue).length;
+          return Math.max(max, len);
+        }, 0);
+        return { wch: maxLen + 2 };
+      });
+
+      worksheet['!cols'] = colWidths;
+
+      XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        ranges.length > 1 ? `Selection ${index + 1}` : 'Selection',
+      );
+    });
+
+    XLSX.writeFile(workbook, `selection-${Date.now()}.xlsx`);
+    showToast('Selection exported to Excel');
   };
 
   return (
@@ -99,6 +147,19 @@ const ToolbarRightRows = () => {
                 }}
               >
                 <Copy />
+              </Button>
+            )}
+          </table.Subscribe>
+          <table.Subscribe source={table.atoms.cellSelection}>
+            {() => (
+              <Button
+                size="icon"
+                variant="outline"
+                disabled={table.getSelectedCellCount() === 0}
+                title="Export to Excel"
+                onClick={handleExportSelectionToXlsx}
+              >
+                <FileSpreadsheet />
               </Button>
             )}
           </table.Subscribe>
