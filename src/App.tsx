@@ -388,23 +388,6 @@ const App = () => {
           isError={false}
         />
       </div>
-      <div
-        style={{
-          padding: '100px',
-        }}
-      >
-        <Grid
-          payload={{
-            data: dummyVehicles,
-            total: 40,
-          }}
-          columns={columns}
-          name="dfdfd"
-          state={state}
-          {...handlers}
-          height="60vh"
-        />
-      </div>
     </section>
   );
 };
