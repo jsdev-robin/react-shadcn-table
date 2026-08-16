@@ -1,9 +1,17 @@
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
-import { RotateCcw } from 'lucide-react';
+import {
+  ArrowLeftRight,
+  PinOff,
+  RotateCcw,
+  Ruler,
+  Shuffle,
+  SquareSplitHorizontal,
+} from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 
 const ToolbarRightColumns = () => {
@@ -138,73 +146,83 @@ const ToolbarRightColumns = () => {
       </div>
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+          display: 'flex',
+          flexDirection: 'column',
           gap: '8px',
           paddingInline: '8px',
         }}
       >
-        <Button
-          variant="outline"
-          size="xs"
-          className="w-full"
-          onClick={() => randomizeColumns()}
-        >
-          Shuffle
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          className="w-full"
-          onClick={() => table.resetColumnOrder()}
-          disabled={table.state.columnOrder.length === 0}
-        >
-          Reset Order
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          className="w-full"
-          onClick={() =>
-            table.setColumnOrder(
-              [
-                ...table.getAllLeafColumns().map((column) => column.id),
-              ].reverse(),
-            )
-          }
-        >
-          Reverse Order
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          className="w-full"
-          onClick={() => {
-            table.resetColumnPinning();
-            setIsSplit(false);
-          }}
-          disabled={!table.getIsSomeColumnsPinned()}
-        >
-          Reset Pinning
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          className="w-full"
-          onClick={() => table.resetColumnSizing()}
-          disabled={Object.keys(table.state.columnSizing).length === 0}
-        >
-          Reset Sizing
-        </Button>
-        <Button
-          variant="outline"
-          size="xs"
-          className="w-full"
-          disabled={!table.getIsSomeColumnsPinned()}
-          onClick={() => setIsSplit(!isSplit)}
-        >
-          {isSplit ? 'Exit Split' : 'Split View'}
-        </Button>
+        <ButtonGroup style={{ width: '100%' }}>
+          <Button
+            variant="outline"
+            size="icon"
+            title="Shuffle"
+            style={{ flex: 1 }}
+            onClick={() => randomizeColumns()}
+          >
+            <Shuffle />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            title="Reset Order"
+            style={{ flex: 1 }}
+            onClick={() => table.resetColumnOrder()}
+            disabled={table.state.columnOrder.length === 0}
+          >
+            <RotateCcw />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            title="Reverse Order"
+            style={{ flex: 1 }}
+            onClick={() =>
+              table.setColumnOrder(
+                [
+                  ...table.getAllLeafColumns().map((column) => column.id),
+                ].reverse(),
+              )
+            }
+          >
+            <ArrowLeftRight />
+          </Button>
+        </ButtonGroup>
+        <ButtonGroup style={{ width: '100%' }}>
+          <Button
+            variant="outline"
+            size="icon"
+            title="Reset Pinning"
+            style={{ flex: 1 }}
+            onClick={() => {
+              table.resetColumnPinning();
+              setIsSplit(false);
+            }}
+            disabled={!table.getIsSomeColumnsPinned()}
+          >
+            <PinOff />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            title="Reset Sizing"
+            style={{ flex: 1 }}
+            onClick={() => table.resetColumnSizing()}
+            disabled={Object.keys(table.state.columnSizing).length === 0}
+          >
+            <Ruler />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            title={isSplit ? 'Exit Split' : 'Split View'}
+            style={{ flex: 1 }}
+            disabled={!table.getIsSomeColumnsPinned()}
+            onClick={() => setIsSplit(!isSplit)}
+          >
+            <SquareSplitHorizontal />
+          </Button>
+        </ButtonGroup>
       </div>
     </div>
   );

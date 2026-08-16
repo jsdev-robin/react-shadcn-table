@@ -70,6 +70,7 @@ export const GridContextProvider = <TableData extends RowData>({
       atoms: {
         cellSelection: cellSelectionAtom,
       },
+      columnResizeMode: 'onChange',
       enableCellSelection: true,
       enableCellSpanning: true,
       onSortingChange: onSortingChange,
