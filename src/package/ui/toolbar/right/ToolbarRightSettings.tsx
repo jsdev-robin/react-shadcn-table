@@ -24,13 +24,21 @@ const ToolbarRightSettings = () => {
       'Are you sure you want to reset all settings to default?',
     );
     if (!confirmed) return;
+
     table.resetColumnPinning();
     table.resetRowPinning();
     table.resetColumnVisibility();
     table.resetColumnOrder();
     table.resetColumnSizing();
+    table.resetColumnFilters();
+    table.resetGlobalFilter();
+    table.resetSorting();
+    table.resetRowSelection();
+    table.resetCellSelection(true);
+    table.resetPagination();
     table.setDensity('md');
     setIsSplit(false);
+
     window.alert('Settings have been reset to default.');
   };
 
