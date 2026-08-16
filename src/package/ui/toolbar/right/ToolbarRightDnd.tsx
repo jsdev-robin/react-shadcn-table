@@ -131,6 +131,7 @@ const ToolbarDnd = () => {
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
+          paddingBottom: '8px',
         }}
       >
         <div
