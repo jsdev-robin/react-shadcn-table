@@ -3,9 +3,13 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
 import { toTsv } from '@/package/utils/toTsv';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import {
   Copy,
+  FileJson,
   FileSpreadsheet,
+  FileText,
   MousePointerClick,
   Rows2,
   Rows3,
@@ -24,17 +28,20 @@ const ToolbarRightRows = () => {
     setTimeout(() => setToastMsg(null), 2000);
   };
 
-  const handleExportSelectionToXlsx = () => {
-    const ranges = table.getSelectedCellRangesData();
-    if (ranges.length === 0) return;
-
+  const getSelectionHeaders = () => {
     const selectedColumnIds = table.getCellSelectionColumnIds();
-    const headers = selectedColumnIds.map((columnId) =>
+    return selectedColumnIds.map((columnId) =>
       columnId
         .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
         .replace(/^./, (str) => str.toUpperCase()),
     );
+  };
 
+  const handleExportSelectionToXlsx = () => {
+    const ranges = table.getSelectedCellRangesData();
+    if (ranges.length === 0) return;
+
+    const headers = getSelectionHeaders();
     const workbook = XLSX.utils.book_new();
 
     ranges.forEach((grid, index) => {
@@ -61,6 +68,64 @@ const ToolbarRightRows = () => {
 
     XLSX.writeFile(workbook, `selection-${Date.now()}.xlsx`);
     showToast('Selection exported to Excel');
+  };
+
+  const handleExportSelectionToPdf = () => {
+    const ranges = table.getSelectedCellRangesData();
+    if (ranges.length === 0) return;
+
+    const headers = getSelectionHeaders();
+    const doc = new jsPDF({ orientation: 'landscape' });
+
+    ranges.forEach((grid, index) => {
+      if (index > 0) doc.addPage();
+
+      doc.setFontSize(12);
+      doc.text(
+        ranges.length > 1 ? `Selection ${index + 1}` : 'Selection',
+        14,
+        14,
+      );
+
+      autoTable(doc, {
+        head: [headers],
+        body: grid.map((row) =>
+          row.map((cell) => (cell == null ? '' : String(cell))),
+        ),
+        startY: 20,
+        styles: { fontSize: 8 },
+        headStyles: { fillColor: [51, 51, 51] },
+      });
+    });
+
+    doc.save(`selection-${Date.now()}.pdf`);
+    showToast('Selection exported to PDF');
+  };
+
+  const handleExportSelectionToJson = () => {
+    const ranges = table.getSelectedCellRangesData();
+    if (ranges.length === 0) return;
+
+    const headers = getSelectionHeaders();
+
+    const payload = ranges.map((grid) =>
+      grid.map((row) =>
+        Object.fromEntries(headers.map((header, i) => [header, row[i]])),
+      ),
+    );
+
+    const blob = new Blob(
+      [JSON.stringify(ranges.length > 1 ? payload : payload[0], null, 2)],
+      { type: 'application/json' },
+    );
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `selection-${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+
+    showToast('Selection exported to JSON');
   };
 
   return (
@@ -160,6 +225,32 @@ const ToolbarRightRows = () => {
                 onClick={handleExportSelectionToXlsx}
               >
                 <FileSpreadsheet />
+              </Button>
+            )}
+          </table.Subscribe>
+          <table.Subscribe source={table.atoms.cellSelection}>
+            {() => (
+              <Button
+                size="icon"
+                variant="outline"
+                disabled={table.getSelectedCellCount() === 0}
+                title="Export to PDF"
+                onClick={handleExportSelectionToPdf}
+              >
+                <FileText />
+              </Button>
+            )}
+          </table.Subscribe>
+          <table.Subscribe source={table.atoms.cellSelection}>
+            {() => (
+              <Button
+                size="icon"
+                variant="outline"
+                disabled={table.getSelectedCellCount() === 0}
+                title="Export to JSON"
+                onClick={handleExportSelectionToJson}
+              >
+                <FileJson />
               </Button>
             )}
           </table.Subscribe>
