@@ -33,6 +33,8 @@ const ToolbarRightColumns = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        paddingBlock: '8px',
+        gap: '8px',
       }}
     >
       <div
@@ -40,7 +42,8 @@ const ToolbarRightColumns = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px',
+          paddingInline: '8px',
+          paddingBottom: '8px',
           borderBottom: '1px solid var(--border)',
         }}
       >
@@ -65,7 +68,7 @@ const ToolbarRightColumns = () => {
       </div>
       <div
         style={{
-          padding: '8px',
+          paddingInline: '8px',
         }}
       >
         <Input
@@ -81,14 +84,14 @@ const ToolbarRightColumns = () => {
           flexDirection: 'column',
           flex: 1,
           overflowY: 'auto',
-          padding: '8px',
+          paddingInline: '8px',
         }}
       >
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '8px',
+            gap: '16px',
           }}
         >
           {visibleColumns.length > 0 ? (
@@ -137,7 +140,7 @@ const ToolbarRightColumns = () => {
           display: 'grid',
           gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
           gap: '8px',
-          padding: '8px',
+          paddingInline: '8px',
         }}
       >
         <Button
