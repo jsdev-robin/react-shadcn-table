@@ -4,6 +4,7 @@ import type {
   ColumnFiltersState,
   OnChangeFn,
   PaginationState,
+  Row,
   RowData,
   RowSelectionState,
   SortingState,
@@ -32,4 +33,8 @@ export interface GridProps<TData extends RowData> {
   isError?: boolean;
   isFetching?: boolean;
   refetch?: () => void;
+  renderSubComponent?: (props: {
+    row: Row<GridFeatures, TData>;
+  }) => React.ReactElement;
+  getRowCanExpand?: (row: Row<GridFeatures, TData>) => boolean;
 }

@@ -29,6 +29,8 @@ const Grid = <T extends RowData>({
   isFetching,
   refetch,
   height,
+  getRowCanExpand,
+  renderSubComponent,
 }: GridProps<T>) => {
   return (
     <GridContextProvider
@@ -49,6 +51,8 @@ const Grid = <T extends RowData>({
       isFetching={isFetching}
       refetch={refetch}
       height={height}
+      getRowCanExpand={getRowCanExpand}
+      renderSubComponent={renderSubComponent}
     >
       <GridInner />
     </GridContextProvider>

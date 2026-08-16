@@ -42,6 +42,8 @@ export const GridContextProvider = <TableData extends RowData>({
   manualSorting = false,
   manualPagination = false,
   height = '65vh',
+  getRowCanExpand,
+  renderSubComponent,
 }: GridContextProviderProps<TableData>) => {
   'use no memo';
   const [isSplit, setIsSplit] = useState(false);
@@ -62,6 +64,7 @@ export const GridContextProvider = <TableData extends RowData>({
       rowCount: payload?.total,
       key: name,
       columns: columns,
+      getRowCanExpand,
       defaultColumn: {
         minSize: 60,
         maxSize: 800,
@@ -176,6 +179,7 @@ export const GridContextProvider = <TableData extends RowData>({
       height,
       globalFilter: state.globalFilter,
       setGlobalFilter,
+      renderSubComponent,
     }),
     [
       paneRef1,
@@ -194,6 +198,7 @@ export const GridContextProvider = <TableData extends RowData>({
       height,
       state.globalFilter,
       setGlobalFilter,
+      renderSubComponent,
     ],
   );
 

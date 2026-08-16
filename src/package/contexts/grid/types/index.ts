@@ -5,6 +5,7 @@ import type {
   OnChangeFn,
   PaginationState,
   ReactTable,
+  Row,
   RowData,
   RowSelectionState,
   SortingState,
@@ -30,6 +31,9 @@ export interface GridContextProps<TableData extends RowData = RowData> {
   height?: string;
   globalFilter: string;
   setGlobalFilter?: React.Dispatch<React.SetStateAction<string>>;
+  renderSubComponent?: (props: {
+    row: Row<GridFeatures, TableData>;
+  }) => React.ReactElement;
 }
 
 export interface GridContextProviderProps<TData extends RowData> {
@@ -55,4 +59,8 @@ export interface GridContextProviderProps<TData extends RowData> {
   isError?: boolean;
   isFetching?: boolean;
   refetch?: () => void;
+  renderSubComponent?: (props: {
+    row: Row<GridFeatures, TData>;
+  }) => React.ReactElement;
+  getRowCanExpand?: (row: Row<GridFeatures, TData>) => boolean;
 }
