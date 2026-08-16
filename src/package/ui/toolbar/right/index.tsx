@@ -7,6 +7,7 @@ import ToolbarRightColumns from './ToolbarRightColumns';
 import ToolbarRightDnd from './ToolbarRightDnd';
 import ToolbarRightFilter from './ToolbarRightFilter';
 import ToolbarRightRows from './ToolbarRightRows';
+import ToolbarRightSettings from './ToolbarRightSettings';
 
 const ToolbarRight = ({ height }: { height: number }) => {
   'use no memo';
@@ -55,7 +56,11 @@ const ToolbarRight = ({ height }: { height: number }) => {
         </div>
       )}
 
-      {activePanel === 'settings' && <div style={style}>ToolbarSettings</div>}
+      {activePanel === 'settings' && (
+        <div style={style}>
+          <ToolbarRightSettings />
+        </div>
+      )}
 
       <div
         style={{
