@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
+import { printTable } from '@/package/utils/printTable';
 import { toTsv } from '@/package/utils/toTsv';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -11,6 +12,7 @@ import {
   FileSpreadsheet,
   FileText,
   MousePointerClick,
+  Printer,
   Rows2,
   Rows3,
   Rows4,
@@ -128,6 +130,16 @@ const ToolbarRightRows = () => {
     showToast('Selection exported to JSON');
   };
 
+  const handlePrintSelection = () => {
+    const ranges = table.getSelectedCellRangesData();
+    if (ranges.length === 0) return;
+
+    const headers = getSelectionHeaders();
+    const rows = ranges.flat();
+
+    printTable('Grid Selection', headers, rows);
+  };
+
   return (
     <div
       style={{
@@ -196,91 +208,107 @@ const ToolbarRightRows = () => {
         }}
       >
         <Label>Selection</Label>
-        <ButtonGroup>
-          <table.Subscribe source={table.atoms.cellSelection}>
-            {() => (
-              <Button
-                size="icon"
-                variant="outline"
-                disabled={table.getSelectedCellCount() === 0}
-                title="Copy Selection"
-                onClick={async () => {
-                  await navigator.clipboard.writeText(
-                    toTsv(table.getSelectedCellRangesData()),
-                  );
-                  showToast('Selection copied to clipboard');
-                }}
-              >
-                <Copy />
-              </Button>
-            )}
-          </table.Subscribe>
-          <table.Subscribe source={table.atoms.cellSelection}>
-            {() => (
-              <Button
-                size="icon"
-                variant="outline"
-                disabled={table.getSelectedCellCount() === 0}
-                title="Export to Excel"
-                onClick={handleExportSelectionToXlsx}
-              >
-                <FileSpreadsheet />
-              </Button>
-            )}
-          </table.Subscribe>
-          <table.Subscribe source={table.atoms.cellSelection}>
-            {() => (
-              <Button
-                size="icon"
-                variant="outline"
-                disabled={table.getSelectedCellCount() === 0}
-                title="Export to PDF"
-                onClick={handleExportSelectionToPdf}
-              >
-                <FileText />
-              </Button>
-            )}
-          </table.Subscribe>
-          <table.Subscribe source={table.atoms.cellSelection}>
-            {() => (
-              <Button
-                size="icon"
-                variant="outline"
-                disabled={table.getSelectedCellCount() === 0}
-                title="Export to JSON"
-                onClick={handleExportSelectionToJson}
-              >
-                <FileJson />
-              </Button>
-            )}
-          </table.Subscribe>
-          <Button
-            size="icon"
-            variant="outline"
-            disabled={table.getRowModel().rows.length === 0}
-            title="Select All Cells"
-            onClick={() => table.selectAllCells()}
-          >
-            <MousePointerClick />
-          </Button>
-
-          <table.Subscribe source={table.atoms.cellSelection}>
-            {() => (
-              <Button
-                size="icon"
-                variant="outline"
-                disabled={table.getSelectedCellCount() === 0}
-                title="Clear Selection"
-                onClick={() => {
-                  table.resetCellSelection(true);
-                  showToast('Selection cleared');
-                }}
-              >
-                <X />
-              </Button>
-            )}
-          </table.Subscribe>
-        </ButtonGroup>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <ButtonGroup>
+            <table.Subscribe source={table.atoms.cellSelection}>
+              {() => (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled={table.getSelectedCellCount() === 0}
+                  title="Copy Selection"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(
+                      toTsv(table.getSelectedCellRangesData()),
+                    );
+                    showToast('Selection copied to clipboard');
+                  }}
+                >
+                  <Copy />
+                </Button>
+              )}
+            </table.Subscribe>
+            <table.Subscribe source={table.atoms.cellSelection}>
+              {() => (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled={table.getSelectedCellCount() === 0}
+                  title="Export to Excel"
+                  onClick={handleExportSelectionToXlsx}
+                >
+                  <FileSpreadsheet />
+                </Button>
+              )}
+            </table.Subscribe>
+            <table.Subscribe source={table.atoms.cellSelection}>
+              {() => (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled={table.getSelectedCellCount() === 0}
+                  title="Export to PDF"
+                  onClick={handleExportSelectionToPdf}
+                >
+                  <FileText />
+                </Button>
+              )}
+            </table.Subscribe>
+            <table.Subscribe source={table.atoms.cellSelection}>
+              {() => (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled={table.getSelectedCellCount() === 0}
+                  title="Export to JSON"
+                  onClick={handleExportSelectionToJson}
+                >
+                  <FileJson />
+                </Button>
+              )}
+            </table.Subscribe>
+            <table.Subscribe source={table.atoms.cellSelection}>
+              {() => (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled={table.getSelectedCellCount() === 0}
+                  title="Print Selection"
+                  onClick={handlePrintSelection}
+                >
+                  <Printer />
+                </Button>
+              )}
+            </table.Subscribe>
+            <Button
+              size="icon"
+              variant="outline"
+              disabled={table.getRowModel().rows.length === 0}
+              title="Select All Cells"
+              onClick={() => table.selectAllCells()}
+            >
+              <MousePointerClick />
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            <table.Subscribe source={table.atoms.cellSelection}>
+              {() => (
+                <Button
+                  size="icon"
+                  variant="outline"
+                  disabled={table.getSelectedCellCount() === 0}
+                  title="Clear Selection"
+                  onClick={() => {
+                    table.resetCellSelection(true);
+                    showToast('Selection cleared');
+                  }}
+                >
+                  <X />
+                </Button>
+              )}
+            </table.Subscribe>
+          </ButtonGroup>
+        </div>
       </div>
 
       {toastMsg && (
