@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
 import { toTsv } from '@/package/utils/toTsv';
+import { Copy, MousePointerClick, Rows2, Rows3, Rows4, X } from 'lucide-react';
 import { useState } from 'react';
 
 const ToolbarRightRows = () => {
@@ -40,63 +42,55 @@ const ToolbarRightRows = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '16px',
+          gap: '12px',
           paddingInline: '8px',
         }}
       >
         <Label>Density</Label>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
-          }}
-        >
+        <ButtonGroup>
           <Button
-            className="w-full"
+            size="icon"
             variant={table.state.density === 'sm' ? 'default' : 'outline'}
             onClick={() => table.setDensity('sm')}
+            title="Small"
           >
-            Small
+            <Rows4 />
           </Button>
           <Button
-            className="w-full"
+            size="icon"
             variant={table.state.density === 'md' ? 'default' : 'outline'}
             onClick={() => table.setDensity('md')}
+            title="Default"
           >
-            Default
+            <Rows3 />
           </Button>
           <Button
-            className="w-full"
+            size="icon"
             variant={table.state.density === 'lg' ? 'default' : 'outline'}
             onClick={() => table.setDensity('lg')}
+            title="Large"
           >
-            Large
+            <Rows2 />
           </Button>
-        </div>
+        </ButtonGroup>
       </div>
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '16px',
+          gap: '12px',
           paddingInline: '8px',
         }}
       >
         <Label>Selection</Label>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
-          }}
-        >
+        <ButtonGroup>
           <table.Subscribe source={table.atoms.cellSelection}>
             {() => (
               <Button
+                size="icon"
                 variant="outline"
-                className="w-full"
                 disabled={table.getSelectedCellCount() === 0}
+                title="Copy Selection"
                 onClick={async () => {
                   await navigator.clipboard.writeText(
                     toTsv(table.getSelectedCellRangesData()),
@@ -104,35 +98,37 @@ const ToolbarRightRows = () => {
                   showToast('Selection copied to clipboard');
                 }}
               >
-                Copy Selection
+                <Copy />
               </Button>
             )}
           </table.Subscribe>
           <Button
+            size="icon"
             variant="outline"
-            className="w-full"
             disabled={table.getRowModel().rows.length === 0}
+            title="Select All Cells"
             onClick={() => table.selectAllCells()}
           >
-            Select All Cells
+            <MousePointerClick />
           </Button>
 
           <table.Subscribe source={table.atoms.cellSelection}>
             {() => (
               <Button
+                size="icon"
                 variant="outline"
-                className="w-full"
                 disabled={table.getSelectedCellCount() === 0}
+                title="Clear Selection"
                 onClick={() => {
                   table.resetCellSelection(true);
                   showToast('Selection cleared');
                 }}
               >
-                Clear Selection
+                <X />
               </Button>
             )}
           </table.Subscribe>
-        </div>
+        </ButtonGroup>
       </div>
 
       {toastMsg && (
