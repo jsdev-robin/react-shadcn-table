@@ -76,7 +76,6 @@ const ToolbarFilter = ({
             {filterVariant === 'range' ? (
               <div style={{ display: 'flex', gap: '8px' }}>
                 <DebouncedInput
-                  style={{ height: '28px' }}
                   type="number"
                   value={(columnFilterValue as [number, number])?.[0] ?? ''}
                   onChange={(value) =>
@@ -88,7 +87,6 @@ const ToolbarFilter = ({
                   placeholder="Min"
                 />
                 <DebouncedInput
-                  style={{ height: '28px' }}
                   type="number"
                   value={(columnFilterValue as [number, number])?.[1] ?? ''}
                   onChange={(value) =>
@@ -102,7 +100,6 @@ const ToolbarFilter = ({
               </div>
             ) : (
               <DebouncedInput
-                style={{ width: '100%', height: '28px' }}
                 type="text"
                 value={(columnFilterValue ?? '') as string}
                 onChange={(value) => column.setFilterValue(value)}
@@ -127,10 +124,7 @@ const ToolbarFilters = () => {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '8px',
         height: '100%',
-        paddingTop: '8px',
-        paddingBottom: '8px',
       }}
     >
       <div
@@ -138,16 +132,20 @@ const ToolbarFilters = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingLeft: '8px',
-          paddingRight: '8px',
-          paddingBottom: '8px',
+          padding: '8px',
           borderBottom: '1px solid var(--border)',
         }}
       >
-        <span style={{ fontSize: '0.9375rem', fontWeight: 500 }}>Filters</span>
+        <h1
+          style={{
+            fontSize: '14px',
+            fontWeight: '500',
+          }}
+        >
+          Filters
+        </h1>
       </div>
-
-      <div style={{ paddingLeft: '8px', paddingRight: '8px' }}>
+      <div style={{ padding: '8px' }}>
         <DebouncedInput
           style={{ width: '100%' }}
           type="search"
@@ -163,11 +161,10 @@ const ToolbarFilters = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '16px',
           flex: 1,
-          paddingLeft: '12px',
-          paddingRight: '12px',
           overflowY: 'auto',
+          padding: '8px',
+          gap: '8px',
         }}
       >
         {table.getHeaderGroups().map((headerGroup) => (
@@ -186,7 +183,7 @@ const ToolbarFilters = () => {
         ))}
       </div>
 
-      <div style={{ paddingLeft: '8px', paddingRight: '8px' }}>
+      <div style={{ padding: '8px' }}>
         <Button
           variant="outline"
           size="sm"
