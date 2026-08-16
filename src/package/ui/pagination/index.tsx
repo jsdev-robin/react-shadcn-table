@@ -30,9 +30,35 @@ const Pagination = () => {
         gap: '16px',
       }}
     >
-      <div style={{ fontSize: '14px', color: 'var(--muted-foreground)' }}>
-        Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
-        {table.getRowCount().toLocaleString()} Rows
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          fontSize: '14px',
+          color: 'var(--muted-foreground)',
+        }}
+      >
+        <span>
+          Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
+          {table.getRowCount().toLocaleString()} Rows
+        </span>
+        {table.getSelectedRowModel().rows.length > 0 && (
+          <span>
+            {table.getSelectedRowModel().rows.length.toLocaleString()} selected
+          </span>
+        )}
+        <table.Subscribe source={table.atoms.cellSelection}>
+          {() =>
+            table.getSelectedCellCount() > 0 ? (
+              <span>
+                {table.getSelectedCellCount().toLocaleString()} cells selected
+                across {table.getCellSelectionRowIds().length.toLocaleString()}{' '}
+                rows and {table.getCellSelectionColumnIds().length} columns
+              </span>
+            ) : null
+          }
+        </table.Subscribe>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <span

@@ -29,6 +29,7 @@ const ToolbarRightSettings = () => {
     table.resetColumnVisibility();
     table.resetColumnOrder();
     table.resetColumnSizing();
+    table.setDensity('md');
     setIsSplit(false);
     window.alert('Settings have been reset to default.');
   };
