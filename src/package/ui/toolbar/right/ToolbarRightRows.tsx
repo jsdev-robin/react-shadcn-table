@@ -45,30 +45,22 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
+    const rows = ranges.flat();
     const sheetName = name ?? 'Grid';
     const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.aoa_to_sheet(rows);
 
-    ranges.forEach((grid, index) => {
-      const worksheet = XLSX.utils.aoa_to_sheet(grid);
-
-      const colWidths = grid[0]?.map((_, colIndex) => {
-        const maxLen = grid.reduce((max, row) => {
-          const cellValue = row[colIndex];
-          const len = cellValue == null ? 0 : String(cellValue).length;
-          return Math.max(max, len);
-        }, 0);
-        return { wch: maxLen + 2 };
-      });
-
-      worksheet['!cols'] = colWidths;
-
-      XLSX.utils.book_append_sheet(
-        workbook,
-        worksheet,
-        ranges.length > 1 ? `Sheet ${index + 1}` : sheetName,
-      );
+    const colWidths = rows[0]?.map((_, colIndex) => {
+      const maxLen = rows.reduce((max, row) => {
+        const cellValue = row[colIndex];
+        const len = cellValue == null ? 0 : String(cellValue).length;
+        return Math.max(max, len);
+      }, 0);
+      return { wch: maxLen + 2 };
     });
 
+    worksheet['!cols'] = colWidths;
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
     XLSX.writeFile(workbook, `${sheetName}-${Date.now()}.xlsx`);
     showToast('Selection exported to Excel');
   };
@@ -77,26 +69,19 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
+    const rows = ranges.flat();
     const docTitle = name ?? 'Grid';
     const doc = new jsPDF({ orientation: 'landscape' });
 
-    ranges.forEach((grid, index) => {
-      if (index > 0) doc.addPage();
+    doc.setFontSize(12);
+    doc.text(docTitle, 14, 14);
 
-      doc.setFontSize(12);
-      doc.text(
-        ranges.length > 1 ? `${docTitle} ${index + 1}` : docTitle,
-        14,
-        14,
-      );
-
-      autoTable(doc, {
-        body: grid.map((row) =>
-          row.map((cell) => (cell == null ? '' : String(cell))),
-        ),
-        startY: 20,
-        styles: { fontSize: 8 },
-      });
+    autoTable(doc, {
+      body: rows.map((row) =>
+        row.map((cell) => (cell == null ? '' : String(cell))),
+      ),
+      startY: 20,
+      styles: { fontSize: 8 },
     });
 
     doc.save(`${docTitle}-${Date.now()}.pdf`);
@@ -107,12 +92,12 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
+    const rows = ranges.flat();
     const fileName = name ?? 'Grid';
 
-    const blob = new Blob(
-      [JSON.stringify(ranges.length > 1 ? ranges : ranges[0], null, 2)],
-      { type: 'application/json' },
-    );
+    const blob = new Blob([JSON.stringify(rows, null, 2)], {
+      type: 'application/json',
+    });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -127,14 +112,8 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    if (ranges.length === 1) {
-      printTable(name ?? 'Grid', [], ranges[0]);
-      return;
-    }
-
-    ranges.forEach((grid, index) => {
-      printTable(`${name ?? 'Grid'} ${index + 1}`, [], grid);
-    });
+    const rows = ranges.flat();
+    printTable(name ?? 'Grid', [], rows);
   };
 
   const takeSnapshot = (): GridSnapshot => ({
