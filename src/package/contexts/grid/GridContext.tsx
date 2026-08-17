@@ -2,6 +2,7 @@
 
 import useSyncScroll from '@/package/hooks/useSyncScroll';
 import type { DensityState } from '@/package/state/rowDensity';
+import { useColumnOrderState } from '@/package/state/useColumnOrderState';
 import { useColumnVisibilityState } from '@/package/state/useColumnVisibilityState';
 import { toTsv } from '@/package/utils/toTsv';
 import { useHotkeys } from '@tanstack/react-hotkeys';
@@ -60,6 +61,10 @@ export const GridContextProvider = <TableData extends RowData>({
   const [density, setDensity] = React.useState<DensityState>('md');
   const [columnVisibility, onColumnVisibilityChange] =
     useColumnVisibilityState(name);
+  const [columnOrder, onColumnOrderChange] = useColumnOrderState(
+    name,
+    useMemo(() => columns.map((c) => c.id!), [columns]),
+  );
 
   const table = useTable(
     {
@@ -73,7 +78,7 @@ export const GridContextProvider = <TableData extends RowData>({
         minSize: 60,
         maxSize: 800,
       },
-      state: { ...state, density, columnVisibility },
+      state: { ...state, density, columnVisibility, columnOrder },
       atoms: {
         cellSelection: cellSelectionAtom,
       },
@@ -82,6 +87,7 @@ export const GridContextProvider = <TableData extends RowData>({
       enableCellSpanning: true,
       enableRowSelection: true,
       onColumnVisibilityChange: onColumnVisibilityChange,
+      onColumnOrderChange: onColumnOrderChange,
       onSortingChange: onSortingChange,
       onColumnFiltersChange: onColumnFiltersChange,
       onGlobalFilterChange: setGlobalFilter,
