@@ -3,7 +3,6 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Label } from '@/components/ui/label';
 import { useGrid } from '@/package/hooks/useGrid';
 import { printTable } from '@/package/utils/printTable';
-import { toTsv } from '@/package/utils/toTsv';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import {
@@ -32,26 +31,57 @@ type GridSnapshot = {
   columnFilters: unknown;
 };
 
+const formatHeader = (columnId: string) =>
+  columnId
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/^./, (str) => str.toUpperCase());
+
 const ToolbarRightRows = () => {
   const { table, name } = useGrid();
-  const [toastMsg, setToastMsg] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
-    setToastMsg(msg);
-    setTimeout(() => setToastMsg(null), 2000);
+  const getSelectionGrid = () => {
+    const rowIds = table.getCellSelectionRowIds();
+    const columnIds = table.getCellSelectionColumnIds();
+    if (rowIds.length === 0 || columnIds.length === 0) return null;
+
+    const rowIdSet = new Set(rowIds);
+    const columnIdSet = new Set(columnIds);
+
+    const rows = table.getRowModel().rows.filter((row) => rowIdSet.has(row.id));
+    const columns = table
+      .getVisibleLeafColumns()
+      .filter((column) => columnIdSet.has(column.id));
+
+    const header = columns.map((column) => {
+      const columnDefHeader = column.columnDef.header;
+      return typeof columnDefHeader === 'string'
+        ? columnDefHeader
+        : formatHeader(column.id);
+    });
+
+    const body = rows.map((row) => {
+      const cellsByColumnId = new Map(
+        row.getAllCells().map((cell) => [cell.column.id, cell]),
+      );
+      return columns.map((column) => {
+        const cell = cellsByColumnId.get(column.id);
+        return cell?.getIsSelected() ? cell.getValue() : '';
+      });
+    });
+
+    return { header, body };
   };
 
   const handleExportSelectionToXlsx = () => {
-    const ranges = table.getSelectedCellRangesData();
-    if (ranges.length === 0) return;
+    const selection = getSelectionGrid();
+    if (!selection) return;
+    const { header, body } = selection;
 
-    const rows = ranges.flat();
-    const sheetName = name ?? 'Grid';
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.aoa_to_sheet(rows);
+    const gridWithHeaders = [header, ...body];
+    const worksheet = XLSX.utils.aoa_to_sheet(gridWithHeaders);
 
-    const colWidths = rows[0]?.map((_, colIndex) => {
-      const maxLen = rows.reduce((max, row) => {
+    worksheet['!cols'] = header.map((_, colIndex) => {
+      const maxLen = gridWithHeaders.reduce((max, row) => {
         const cellValue = row[colIndex];
         const len = cellValue == null ? 0 : String(cellValue).length;
         return Math.max(max, len);
@@ -59,17 +89,16 @@ const ToolbarRightRows = () => {
       return { wch: maxLen + 2 };
     });
 
-    worksheet['!cols'] = colWidths;
-    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
-    XLSX.writeFile(workbook, `${sheetName}-${Date.now()}.xlsx`);
-    showToast('Selection exported to Excel');
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Selection');
+    XLSX.writeFile(workbook, `${name ?? 'export'}-${Date.now()}.xlsx`);
   };
 
   const handleExportSelectionToPdf = () => {
-    const ranges = table.getSelectedCellRangesData();
-    if (ranges.length === 0) return;
+    const selection = getSelectionGrid();
+    if (!selection) return;
+    const { header, body } = selection;
 
-    const rows = ranges.flat();
     const docTitle = name ?? 'Grid';
     const doc = new jsPDF({ orientation: 'landscape' });
 
@@ -77,25 +106,29 @@ const ToolbarRightRows = () => {
     doc.text(docTitle, 14, 14);
 
     autoTable(doc, {
-      body: rows.map((row) =>
+      head: [header],
+      body: body.map((row) =>
         row.map((cell) => (cell == null ? '' : String(cell))),
       ),
       startY: 20,
       styles: { fontSize: 8 },
+      headStyles: { fillColor: [51, 51, 51] },
     });
 
     doc.save(`${docTitle}-${Date.now()}.pdf`);
-    showToast('Selection exported to PDF');
   };
 
   const handleExportSelectionToJson = () => {
-    const ranges = table.getSelectedCellRangesData();
-    if (ranges.length === 0) return;
-
-    const rows = ranges.flat();
+    const selection = getSelectionGrid();
+    if (!selection) return;
+    const { header, body } = selection;
     const fileName = name ?? 'Grid';
 
-    const blob = new Blob([JSON.stringify(rows, null, 2)], {
+    const payload = body.map((row) =>
+      Object.fromEntries(header.map((h, i) => [h, row[i]])),
+    );
+
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {
       type: 'application/json',
     });
     const url = URL.createObjectURL(blob);
@@ -104,16 +137,23 @@ const ToolbarRightRows = () => {
     link.download = `${fileName}-${Date.now()}.json`;
     link.click();
     URL.revokeObjectURL(url);
-
-    showToast('Selection exported to JSON');
   };
 
   const handlePrintSelection = () => {
-    const ranges = table.getSelectedCellRangesData();
-    if (ranges.length === 0) return;
+    const selection = getSelectionGrid();
+    if (!selection) return;
+    printTable(name ?? 'Grid', selection.header, selection.body);
+  };
 
-    const rows = ranges.flat();
-    printTable(name ?? 'Grid', [], rows);
+  const handleCopySelection = async () => {
+    const selection = getSelectionGrid();
+    if (!selection) return;
+    const tsv = selection.body
+      .map((row) =>
+        row.map((cell) => (cell == null ? '' : String(cell))).join('\t'),
+      )
+      .join('\n');
+    await navigator.clipboard.writeText(tsv);
   };
 
   const takeSnapshot = (): GridSnapshot => ({
@@ -161,8 +201,7 @@ const ToolbarRightRows = () => {
       return;
     }
 
-    const previousKey = lastSnapshotKey.current;
-    const previousSnapshot: GridSnapshot = JSON.parse(previousKey);
+    const previousSnapshot: GridSnapshot = JSON.parse(lastSnapshotKey.current);
     undoStack.current.push(previousSnapshot);
     redoStack.current = [];
     lastSnapshotKey.current = key;
@@ -182,7 +221,6 @@ const ToolbarRightRows = () => {
     redoStack.current.push(takeSnapshot());
     applySnapshot(previous);
     setHistoryVersion((v) => v + 1);
-    showToast('Undo');
   };
 
   const handleRedo = () => {
@@ -191,7 +229,6 @@ const ToolbarRightRows = () => {
     undoStack.current.push(takeSnapshot());
     applySnapshot(next);
     setHistoryVersion((v) => v + 1);
-    showToast('Redo');
   };
 
   return (
@@ -301,12 +338,7 @@ const ToolbarRightRows = () => {
                   variant="outline"
                   disabled={table.getSelectedCellCount() === 0}
                   title="Copy Selection"
-                  onClick={async () => {
-                    await navigator.clipboard.writeText(
-                      toTsv(table.getSelectedCellRangesData()),
-                    );
-                    showToast('Selection copied to clipboard');
-                  }}
+                  onClick={handleCopySelection}
                 >
                   <Copy />
                 </Button>
@@ -382,10 +414,7 @@ const ToolbarRightRows = () => {
                   variant="outline"
                   disabled={table.getSelectedCellCount() === 0}
                   title="Clear Selection"
-                  onClick={() => {
-                    table.resetCellSelection(true);
-                    showToast('Selection cleared');
-                  }}
+                  onClick={() => table.resetCellSelection(true)}
                 >
                   <X />
                 </Button>
@@ -394,55 +423,6 @@ const ToolbarRightRows = () => {
           </ButtonGroup>
         </div>
       </div>
-
-      {toastMsg && (
-        <div
-          style={{
-            position: 'fixed',
-            bottom: '16px',
-            right: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            minWidth: '200px',
-            background: 'var(--popover, #fff)',
-            color: 'var(--popover-foreground, #111)',
-            border: '1px solid var(--border, #e5e5e5)',
-            padding: '12px 16px',
-            borderRadius: '8px',
-            fontSize: '13px',
-            fontWeight: 500,
-            boxShadow:
-              '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06)',
-            zIndex: 9999,
-            animation: 'toast-in 0.2s ease-out',
-          }}
-        >
-          <span
-            style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: '#22c55e',
-              flexShrink: 0,
-            }}
-          />
-          {toastMsg}
-        </div>
-      )}
-
-      <style>{`
-        @keyframes toast-in {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
