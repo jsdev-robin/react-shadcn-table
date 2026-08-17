@@ -58,5 +58,23 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.65.0",
     "vite": "^8.2.0"
-  }
+  },
+  "keywords": [
+    "react",
+    "table",
+    "data-table",
+    "shadcn",
+    "shadcn-ui",
+    "tanstack-table",
+    "radix-ui",
+    "tailwindcss",
+    "typescript",
+    "vite",
+    "dnd-kit",
+    "drag-and-drop",
+    "xlsx",
+    "excel-export",
+    "pdf-export",
+    "ui-components"
+  ]
 }
