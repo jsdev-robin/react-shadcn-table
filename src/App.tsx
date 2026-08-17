@@ -1,5 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from './components/ui/button';
 import { Checkbox } from './components/ui/checkbox';
 import { dummyVehicles, type Vehicle } from './data/dummyData';
@@ -366,12 +366,17 @@ const App = () => {
   console.log(state);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
+  const handleRefetch = useCallback(() => {
+    setIsFetching(true);
+    setTimeout(() => setIsFetching(false), 3000);
+  }, []);
   return (
     <section className="space-y-10">
       <div
@@ -393,7 +398,9 @@ const App = () => {
           // manualSorting={true}
           height="60vh"
           isLoading={isLoading}
+          isFetching={isFetching}
           isError={false}
+          refetch={handleRefetch}
           topRightSlot={
             <div>
               <Button>Add</Button>
