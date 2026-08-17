@@ -1,5 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from './components/ui/button';
 import { Checkbox } from './components/ui/checkbox';
 import { dummyVehicles, type Vehicle } from './data/dummyData';
@@ -365,6 +365,13 @@ const App = () => {
 
   console.log(state);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="space-y-10">
       <div
@@ -385,7 +392,7 @@ const App = () => {
           // manualPagination
           // manualSorting={true}
           height="60vh"
-          isLoading={false}
+          isLoading={isLoading}
           isError={false}
           topRightSlot={
             <div>
