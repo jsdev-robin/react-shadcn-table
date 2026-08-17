@@ -38,6 +38,6 @@ export const getPinStyles = (
     position: isPinned ? (isSplit ? 'relative' : 'sticky') : 'relative',
     width: column.getSize(),
     zIndex: isPinned ? 1 : 0,
-    background: isPinned && !isSplit ? 'var(--background)' : undefined,
+    backgroundColor: isPinned && !isSplit ? 'var(--background)' : undefined,
   };
 };
