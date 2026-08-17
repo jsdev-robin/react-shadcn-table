@@ -2,6 +2,7 @@
 
 import useSyncScroll from '@/package/hooks/useSyncScroll';
 import type { DensityState } from '@/package/state/rowDensity';
+import { useColumnVisibilityState } from '@/package/state/useColumnVisibilityState';
 import { toTsv } from '@/package/utils/toTsv';
 import { useHotkeys } from '@tanstack/react-hotkeys';
 import { useCreateAtom } from '@tanstack/react-store';
@@ -57,6 +58,8 @@ export const GridContextProvider = <TableData extends RowData>({
   const gridWrapperRef = useRef<HTMLDivElement>(null);
   const cellSelectionAtom = useCreateAtom<CellSelectionState>([]);
   const [density, setDensity] = React.useState<DensityState>('md');
+  const [columnVisibility, onColumnVisibilityChange] =
+    useColumnVisibilityState(name);
 
   const table = useTable(
     {
@@ -70,7 +73,7 @@ export const GridContextProvider = <TableData extends RowData>({
         minSize: 60,
         maxSize: 800,
       },
-      state: { ...state, density },
+      state: { ...state, density, columnVisibility },
       atoms: {
         cellSelection: cellSelectionAtom,
       },
@@ -78,6 +81,7 @@ export const GridContextProvider = <TableData extends RowData>({
       enableCellSelection: true,
       enableCellSpanning: true,
       enableRowSelection: true,
+      onColumnVisibilityChange: onColumnVisibilityChange,
       onSortingChange: onSortingChange,
       onColumnFiltersChange: onColumnFiltersChange,
       onGlobalFilterChange: setGlobalFilter,
