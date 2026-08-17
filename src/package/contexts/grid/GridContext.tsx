@@ -6,6 +6,7 @@ import { useColumnOrderState } from '@/package/state/useColumnOrderState';
 import { useColumnPinningState } from '@/package/state/useColumnPinningState';
 import { useColumnSizingState } from '@/package/state/useColumnSizingState';
 import { useColumnVisibilityState } from '@/package/state/useColumnVisibilityState';
+import { useSplitViewState } from '@/package/state/useSplitViewState';
 import { toTsv } from '@/package/utils/toTsv';
 import { useHotkeys } from '@tanstack/react-hotkeys';
 import { useCreateAtom } from '@tanstack/react-store';
@@ -14,13 +15,7 @@ import {
   type CellSelectionState,
   type RowData,
 } from '@tanstack/react-table';
-import React, {
-  createContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useEffect, useMemo, useRef } from 'react';
 import { features } from '../../features';
 import type { GridContextProps, GridContextProviderProps } from './types';
 
@@ -51,7 +46,6 @@ export const GridContextProvider = <TableData extends RowData>({
   onRowSelectionChange,
 }: GridContextProviderProps<TableData>) => {
   'use no memo';
-  const [isSplit, setIsSplit] = useState(false);
   const paneRef1 = useRef<HTMLDivElement>(null);
   const paneRef2 = useRef<HTMLDivElement>(null);
   const paneRef3 = useRef<HTMLDivElement>(null);
@@ -69,6 +63,7 @@ export const GridContextProvider = <TableData extends RowData>({
   );
   const [columnPinning, onColumnPinningChange] = useColumnPinningState(name);
   const [columnSizing, onColumnSizingChange] = useColumnSizingState(name);
+  const [isSplit, setIsSplit] = useSplitViewState(name);
 
   const table = useTable(
     {
