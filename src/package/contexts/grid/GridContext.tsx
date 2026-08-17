@@ -3,6 +3,8 @@
 import useSyncScroll from '@/package/hooks/useSyncScroll';
 import type { DensityState } from '@/package/state/rowDensity';
 import { useColumnOrderState } from '@/package/state/useColumnOrderState';
+import { useColumnPinningState } from '@/package/state/useColumnPinningState';
+import { useColumnSizingState } from '@/package/state/useColumnSizingState';
 import { useColumnVisibilityState } from '@/package/state/useColumnVisibilityState';
 import { toTsv } from '@/package/utils/toTsv';
 import { useHotkeys } from '@tanstack/react-hotkeys';
@@ -65,6 +67,8 @@ export const GridContextProvider = <TableData extends RowData>({
     name,
     useMemo(() => columns.map((c) => c.id!), [columns]),
   );
+  const [columnPinning, onColumnPinningChange] = useColumnPinningState(name);
+  const [columnSizing, onColumnSizingChange] = useColumnSizingState(name);
 
   const table = useTable(
     {
@@ -78,7 +82,14 @@ export const GridContextProvider = <TableData extends RowData>({
         minSize: 60,
         maxSize: 800,
       },
-      state: { ...state, density, columnVisibility, columnOrder },
+      state: {
+        ...state,
+        density,
+        columnVisibility,
+        columnOrder,
+        columnPinning,
+        columnSizing,
+      },
       atoms: {
         cellSelection: cellSelectionAtom,
       },
@@ -88,6 +99,8 @@ export const GridContextProvider = <TableData extends RowData>({
       enableRowSelection: true,
       onColumnVisibilityChange: onColumnVisibilityChange,
       onColumnOrderChange: onColumnOrderChange,
+      onColumnPinningChange: onColumnPinningChange,
+      onColumnSizingChange: onColumnSizingChange,
       onSortingChange: onSortingChange,
       onColumnFiltersChange: onColumnFiltersChange,
       onGlobalFilterChange: setGlobalFilter,
