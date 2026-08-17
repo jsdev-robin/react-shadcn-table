@@ -403,7 +403,7 @@ const App = () => {
           refetch={handleRefetch}
           topRightSlot={
             <div>
-              <Button>Add</Button>
+              <Button>Custom Slot</Button>
             </div>
           }
         />
