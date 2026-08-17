@@ -1,8 +1,20 @@
 {
   "name": "react-shadcn-table",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
+  "license": "MIT",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
