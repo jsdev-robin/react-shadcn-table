@@ -32,26 +32,6 @@ type GridSnapshot = {
   columnFilters: unknown;
 };
 
-const getColumnLetter = (index: number) => {
-  let letters = '';
-  let i = index + 1;
-  while (i > 0) {
-    const rem = (i - 1) % 26;
-    letters = String.fromCharCode(65 + rem) + letters;
-    i = Math.floor((i - 1) / 26);
-  }
-  return letters;
-};
-
-const getSpreadsheetHeaders = (width: number) =>
-  Array.from({ length: width }, (_, i) => getColumnLetter(i));
-
-const flattenRanges = (ranges: unknown[][][]) => {
-  const rows = ranges.flat();
-  const width = rows.reduce((max, row) => Math.max(max, row.length), 0);
-  return { rows, width };
-};
-
 const ToolbarRightRows = () => {
   const { table, name } = useGrid();
   const [toastMsg, setToastMsg] = useState<string | null>(null);
@@ -65,25 +45,30 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const { rows, width } = flattenRanges(ranges);
-    const headers = getSpreadsheetHeaders(width);
     const sheetName = name ?? 'Grid';
-
     const workbook = XLSX.utils.book_new();
-    const gridWithHeaders = [headers, ...rows];
-    const worksheet = XLSX.utils.aoa_to_sheet(gridWithHeaders);
 
-    const colWidths = headers.map((_, colIndex) => {
-      const maxLen = gridWithHeaders.reduce((max, row) => {
-        const cellValue = row[colIndex];
-        const len = cellValue == null ? 0 : String(cellValue).length;
-        return Math.max(max, len);
-      }, 0);
-      return { wch: maxLen + 2 };
+    ranges.forEach((grid, index) => {
+      const worksheet = XLSX.utils.aoa_to_sheet(grid);
+
+      const colWidths = grid[0]?.map((_, colIndex) => {
+        const maxLen = grid.reduce((max, row) => {
+          const cellValue = row[colIndex];
+          const len = cellValue == null ? 0 : String(cellValue).length;
+          return Math.max(max, len);
+        }, 0);
+        return { wch: maxLen + 2 };
+      });
+
+      worksheet['!cols'] = colWidths;
+
+      XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        ranges.length > 1 ? `Sheet ${index + 1}` : sheetName,
+      );
     });
 
-    worksheet['!cols'] = colWidths;
-    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
     XLSX.writeFile(workbook, `${sheetName}-${Date.now()}.xlsx`);
     showToast('Selection exported to Excel');
   };
@@ -92,22 +77,26 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const { rows, width } = flattenRanges(ranges);
-    const headers = getSpreadsheetHeaders(width);
     const docTitle = name ?? 'Grid';
     const doc = new jsPDF({ orientation: 'landscape' });
 
-    doc.setFontSize(12);
-    doc.text(docTitle, 14, 14);
+    ranges.forEach((grid, index) => {
+      if (index > 0) doc.addPage();
 
-    autoTable(doc, {
-      head: [headers],
-      body: rows.map((row) =>
-        row.map((cell) => (cell == null ? '' : String(cell))),
-      ),
-      startY: 20,
-      styles: { fontSize: 8 },
-      headStyles: { fillColor: [51, 51, 51] },
+      doc.setFontSize(12);
+      doc.text(
+        ranges.length > 1 ? `${docTitle} ${index + 1}` : docTitle,
+        14,
+        14,
+      );
+
+      autoTable(doc, {
+        body: grid.map((row) =>
+          row.map((cell) => (cell == null ? '' : String(cell))),
+        ),
+        startY: 20,
+        styles: { fontSize: 8 },
+      });
     });
 
     doc.save(`${docTitle}-${Date.now()}.pdf`);
@@ -118,17 +107,12 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const { rows, width } = flattenRanges(ranges);
-    const headers = getSpreadsheetHeaders(width);
     const fileName = name ?? 'Grid';
 
-    const payload = rows.map((row) =>
-      Object.fromEntries(headers.map((header, i) => [header, row[i]])),
+    const blob = new Blob(
+      [JSON.stringify(ranges.length > 1 ? ranges : ranges[0], null, 2)],
+      { type: 'application/json' },
     );
-
-    const blob = new Blob([JSON.stringify(payload, null, 2)], {
-      type: 'application/json',
-    });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -143,10 +127,14 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const { rows, width } = flattenRanges(ranges);
-    const headers = getSpreadsheetHeaders(width);
+    if (ranges.length === 1) {
+      printTable(name ?? 'Grid', [], ranges[0]);
+      return;
+    }
 
-    printTable(name ?? 'Grid', headers, rows);
+    ranges.forEach((grid, index) => {
+      printTable(`${name ?? 'Grid'} ${index + 1}`, [], grid);
+    });
   };
 
   const takeSnapshot = (): GridSnapshot => ({
