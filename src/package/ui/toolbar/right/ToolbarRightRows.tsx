@@ -32,6 +32,20 @@ type GridSnapshot = {
   columnFilters: unknown;
 };
 
+const getColumnLetter = (index: number) => {
+  let letters = '';
+  let i = index + 1;
+  while (i > 0) {
+    const rem = (i - 1) % 26;
+    letters = String.fromCharCode(65 + rem) + letters;
+    i = Math.floor((i - 1) / 26);
+  }
+  return letters;
+};
+
+const getSpreadsheetHeaders = (width: number) =>
+  Array.from({ length: width }, (_, i) => getColumnLetter(i));
+
 const ToolbarRightRows = () => {
   const { table, name } = useGrid();
   const [toastMsg, setToastMsg] = useState<string | null>(null);
@@ -41,24 +55,15 @@ const ToolbarRightRows = () => {
     setTimeout(() => setToastMsg(null), 2000);
   };
 
-  const getSelectionHeaders = () => {
-    const selectedColumnIds = table.getCellSelectionColumnIds();
-    return selectedColumnIds.map((columnId) =>
-      columnId
-        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-        .replace(/^./, (str) => str.toUpperCase()),
-    );
-  };
-
   const handleExportSelectionToXlsx = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const headers = getSelectionHeaders();
     const sheetName = name ?? 'Grid';
     const workbook = XLSX.utils.book_new();
 
     ranges.forEach((grid, index) => {
+      const headers = getSpreadsheetHeaders(grid[0]?.length ?? 0);
       const gridWithHeaders = [headers, ...grid];
       const worksheet = XLSX.utils.aoa_to_sheet(gridWithHeaders);
 
@@ -88,12 +93,13 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const headers = getSelectionHeaders();
     const docTitle = name ?? 'Grid';
     const doc = new jsPDF({ orientation: 'landscape' });
 
     ranges.forEach((grid, index) => {
       if (index > 0) doc.addPage();
+
+      const headers = getSpreadsheetHeaders(grid[0]?.length ?? 0);
 
       doc.setFontSize(12);
       doc.text(
@@ -121,14 +127,14 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const headers = getSelectionHeaders();
     const fileName = name ?? 'Grid';
 
-    const payload = ranges.map((grid) =>
-      grid.map((row) =>
+    const payload = ranges.map((grid) => {
+      const headers = getSpreadsheetHeaders(grid[0]?.length ?? 0);
+      return grid.map((row) =>
         Object.fromEntries(headers.map((header, i) => [header, row[i]])),
-      ),
-    );
+      );
+    });
 
     const blob = new Blob(
       [JSON.stringify(ranges.length > 1 ? payload : payload[0], null, 2)],
@@ -148,10 +154,16 @@ const ToolbarRightRows = () => {
     const ranges = table.getSelectedCellRangesData();
     if (ranges.length === 0) return;
 
-    const headers = getSelectionHeaders();
-    const rows = ranges.flat();
+    if (ranges.length === 1) {
+      const headers = getSpreadsheetHeaders(ranges[0][0]?.length ?? 0);
+      printTable(name ?? 'Grid', headers, ranges[0]);
+      return;
+    }
 
-    printTable(name ?? 'Grid', headers, rows);
+    ranges.forEach((grid, index) => {
+      const headers = getSpreadsheetHeaders(grid[0]?.length ?? 0);
+      printTable(`${name ?? 'Grid'} ${index + 1}`, headers, grid);
+    });
   };
 
   const takeSnapshot = (): GridSnapshot => ({
