@@ -37,4 +37,7 @@ export interface GridProps<TData extends RowData> {
     row: Row<GridFeatures, TData>;
   }) => React.ReactElement;
   getRowCanExpand?: (row: Row<GridFeatures, TData>) => boolean;
+  enableCellSelection?: boolean;
+  enableCellSpanning?: boolean;
+  enableRowSelection?: boolean;
 }

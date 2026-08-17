@@ -31,6 +31,9 @@ const Grid = <T extends RowData>({
   height,
   getRowCanExpand,
   renderSubComponent,
+  enableCellSelection,
+  enableCellSpanning,
+  enableRowSelection,
 }: GridProps<T>) => {
   'use no memo';
   return (
@@ -54,6 +57,9 @@ const Grid = <T extends RowData>({
       height={height}
       getRowCanExpand={getRowCanExpand}
       renderSubComponent={renderSubComponent}
+      enableCellSelection={enableCellSelection}
+      enableCellSpanning={enableCellSpanning}
+      enableRowSelection={enableRowSelection}
     >
       <GridInner />
     </GridContextProvider>

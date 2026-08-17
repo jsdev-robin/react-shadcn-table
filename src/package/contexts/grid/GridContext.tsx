@@ -45,6 +45,9 @@ export const GridContextProvider = <TableData extends RowData>({
   getRowCanExpand,
   renderSubComponent,
   onRowSelectionChange,
+  enableCellSelection = true,
+  enableCellSpanning = true,
+  enableRowSelection = true,
 }: GridContextProviderProps<TableData>) => {
   'use no memo';
   const paneRef1 = useRef<HTMLDivElement>(null);
@@ -92,9 +95,9 @@ export const GridContextProvider = <TableData extends RowData>({
         cellSelection: cellSelectionAtom,
       },
       columnResizeMode: 'onChange',
-      enableCellSelection: true,
-      enableCellSpanning: true,
-      enableRowSelection: true,
+      enableCellSelection: enableCellSelection,
+      enableCellSpanning: enableCellSpanning,
+      enableRowSelection: enableRowSelection,
       onColumnVisibilityChange: onColumnVisibilityChange,
       onColumnOrderChange: onColumnOrderChange,
       onColumnPinningChange: onColumnPinningChange,
