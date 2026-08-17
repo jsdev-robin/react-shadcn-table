@@ -1,5 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
+import { Button } from './components/ui/button';
 import { Checkbox } from './components/ui/checkbox';
 import { dummyVehicles, type Vehicle } from './data/dummyData';
 import { Grid } from './package/core';
@@ -386,6 +387,11 @@ const App = () => {
           height="60vh"
           isLoading={false}
           isError={false}
+          topRightSlot={
+            <div>
+              <Button>Add</Button>
+            </div>
+          }
         />
       </div>
     </section>

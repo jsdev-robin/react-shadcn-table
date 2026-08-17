@@ -4,7 +4,7 @@ import { DebouncedInput } from '@/components/ui/debounced-input';
 import { useGrid } from '@/package/hooks/useGrid';
 
 const TopToolbar = () => {
-  const { setGlobalFilter, globalFilter } = useGrid();
+  const { setGlobalFilter, globalFilter, topRightSlot } = useGrid();
 
   return (
     <div
@@ -26,6 +26,7 @@ const TopToolbar = () => {
         }}
         placeholder="Search by query"
       />
+      <div>{topRightSlot}</div>
     </div>
   );
 };

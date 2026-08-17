@@ -35,6 +35,7 @@ export interface GridContextProps<TableData extends RowData = RowData> {
     row: Row<GridFeatures, TableData>;
   }) => React.ReactElement;
   name?: string;
+  topRightSlot?: React.ReactNode;
 }
 
 export interface GridContextProviderProps<TData extends RowData> {
@@ -68,4 +69,5 @@ export interface GridContextProviderProps<TData extends RowData> {
   enableCellSelection?: boolean;
   enableCellSpanning?: boolean;
   enableRowSelection?: boolean;
+  topRightSlot?: React.ReactNode;
 }

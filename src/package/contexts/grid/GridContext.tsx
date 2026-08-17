@@ -48,6 +48,7 @@ export const GridContextProvider = <TableData extends RowData>({
   enableCellSelection = true,
   enableCellSpanning = true,
   enableRowSelection = true,
+  topRightSlot,
 }: GridContextProviderProps<TableData>) => {
   'use no memo';
   const paneRef1 = useRef<HTMLDivElement>(null);
@@ -209,6 +210,7 @@ export const GridContextProvider = <TableData extends RowData>({
       setGlobalFilter,
       renderSubComponent,
       name,
+      topRightSlot,
     }),
     [
       paneRef1,
@@ -229,6 +231,7 @@ export const GridContextProvider = <TableData extends RowData>({
       setGlobalFilter,
       renderSubComponent,
       name,
+      topRightSlot,
     ],
   );
 

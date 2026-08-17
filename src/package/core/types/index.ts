@@ -19,7 +19,6 @@ export interface GridProps<TData extends RowData> {
   columns: ColumnDef<GridFeatures, TData>[];
   name?: string;
   height?: string;
-
   state?: Partial<TableState<GridFeatures>>;
   onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
   onPaginationChange?: OnChangeFn<PaginationState>;
@@ -40,4 +39,5 @@ export interface GridProps<TData extends RowData> {
   enableCellSelection?: boolean;
   enableCellSpanning?: boolean;
   enableRowSelection?: boolean;
+  topRightSlot?: React.ReactNode;
 }
