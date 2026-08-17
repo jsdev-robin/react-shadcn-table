@@ -6,6 +6,7 @@ import { useColumnPinningState } from '@/package/state/useColumnPinningState';
 import { useColumnSizingState } from '@/package/state/useColumnSizingState';
 import { useColumnVisibilityState } from '@/package/state/useColumnVisibilityState';
 import { useDensityState } from '@/package/state/useDensityState';
+import { useRowPinningState } from '@/package/state/useRowPinningState';
 import { useSplitViewState } from '@/package/state/useSplitViewState';
 import { toTsv } from '@/package/utils/toTsv';
 import { useHotkeys } from '@tanstack/react-hotkeys';
@@ -64,6 +65,7 @@ export const GridContextProvider = <TableData extends RowData>({
   const [columnPinning, onColumnPinningChange] = useColumnPinningState(name);
   const [columnSizing, onColumnSizingChange] = useColumnSizingState(name);
   const [isSplit, setIsSplit] = useSplitViewState(name);
+  const [rowPinning, onRowPinningChange] = useRowPinningState(name);
 
   const table = useTable(
     {
@@ -84,6 +86,7 @@ export const GridContextProvider = <TableData extends RowData>({
         columnOrder,
         columnPinning,
         columnSizing,
+        rowPinning,
       },
       atoms: {
         cellSelection: cellSelectionAtom,
@@ -96,6 +99,7 @@ export const GridContextProvider = <TableData extends RowData>({
       onColumnOrderChange: onColumnOrderChange,
       onColumnPinningChange: onColumnPinningChange,
       onColumnSizingChange: onColumnSizingChange,
+      onRowPinningChange: onRowPinningChange,
       onSortingChange: onSortingChange,
       onColumnFiltersChange: onColumnFiltersChange,
       onGlobalFilterChange: setGlobalFilter,
