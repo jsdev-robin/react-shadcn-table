@@ -1,11 +1,11 @@
 'use client';
 
 import useSyncScroll from '@/package/hooks/useSyncScroll';
-import type { DensityState } from '@/package/state/rowDensity';
 import { useColumnOrderState } from '@/package/state/useColumnOrderState';
 import { useColumnPinningState } from '@/package/state/useColumnPinningState';
 import { useColumnSizingState } from '@/package/state/useColumnSizingState';
 import { useColumnVisibilityState } from '@/package/state/useColumnVisibilityState';
+import { useDensityState } from '@/package/state/useDensityState';
 import { useSplitViewState } from '@/package/state/useSplitViewState';
 import { toTsv } from '@/package/utils/toTsv';
 import { useHotkeys } from '@tanstack/react-hotkeys';
@@ -15,7 +15,7 @@ import {
   type CellSelectionState,
   type RowData,
 } from '@tanstack/react-table';
-import React, { createContext, useEffect, useMemo, useRef } from 'react';
+import { createContext, useEffect, useMemo, useRef } from 'react';
 import { features } from '../../features';
 import type { GridContextProps, GridContextProviderProps } from './types';
 
@@ -54,7 +54,7 @@ export const GridContextProvider = <TableData extends RowData>({
   const paneRef6 = useRef<HTMLDivElement>(null);
   const gridWrapperRef = useRef<HTMLDivElement>(null);
   const cellSelectionAtom = useCreateAtom<CellSelectionState>([]);
-  const [density, setDensity] = React.useState<DensityState>('md');
+  const [density, setDensity] = useDensityState(name);
   const [columnVisibility, onColumnVisibilityChange] =
     useColumnVisibilityState(name);
   const [columnOrder, onColumnOrderChange] = useColumnOrderState(
