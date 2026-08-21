@@ -1,7 +1,7 @@
 {
   "name": "react-shadcn-table",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.3-dev.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
