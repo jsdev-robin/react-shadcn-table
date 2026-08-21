@@ -1,28 +1,10 @@
 'use client';
 
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from '@/components/ui/input-group';
-import { Spinner } from '@/components/ui/spinner';
+import { DebouncedInput } from '@/components/ui/debounced-input';
 import { useGrid } from '@/package/hooks/useGrid';
-import { useDebouncedCallback } from '@tanstack/react-pacer/debouncer';
-import { useEffect, useState } from 'react';
 
 const TopToolbar = () => {
-  const { setGlobalFilter, globalFilter, topRightSlot, isFetching } = useGrid();
-
-  const [value, setValue] = useState(String(globalFilter ?? ''));
-
-  useEffect(() => {
-    setValue(String(globalFilter ?? ''));
-  }, [globalFilter]);
-
-  const debouncedSetGlobalFilter = useDebouncedCallback(
-    (next: string) => setGlobalFilter?.(next),
-    { wait: 300 },
-  );
+  const { setGlobalFilter, globalFilter, topRightSlot } = useGrid();
 
   return (
     <div
@@ -39,27 +21,19 @@ const TopToolbar = () => {
         style={{
           display: 'flex',
           justifyItems: 'center',
+          flexWrap: 'wrap',
           gap: '16px',
         }}
       >
-        <InputGroup>
-          <InputGroupInput
-            style={{ width: '240px' }}
-            type="search"
-            value={value}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const next = e.target.value;
-              setValue(next);
-              debouncedSetGlobalFilter(next);
-            }}
-            placeholder="Search by query"
-          />
-          {isFetching && (
-            <InputGroupAddon align="inline-end">
-              <Spinner />
-            </InputGroupAddon>
-          )}
-        </InputGroup>
+        <DebouncedInput
+          style={{ width: '100%' }}
+          type="search"
+          value={String(globalFilter)}
+          onChange={(value) => {
+            setGlobalFilter?.(String(value));
+          }}
+          placeholder="Search by query"
+        />
       </div>
       <div>{topRightSlot}</div>
     </div>
