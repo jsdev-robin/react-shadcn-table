@@ -19,7 +19,11 @@ const GridCenterSkeleton = () => {
     .flat();
 
   return (
-    <Table>
+    <Table
+      style={{
+        width: table.getCenterTotalSize(),
+      }}
+    >
       <TableBody>
         {[...Array(20)].map((_, i) => (
           <TableRow key={i}>
