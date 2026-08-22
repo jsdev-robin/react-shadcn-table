@@ -15,7 +15,6 @@ const ToolbarFilter = ({
   column: Column<GridFeatures, RowData, unknown>;
 }) => {
   'use no memo';
-
   const sortedUniqueValues = useMemo(() => {
     return column.getCanFilter()
       ? {
@@ -197,7 +196,12 @@ const ToolbarFilters = () => {
           variant="outline"
           size="sm"
           style={{ width: '100%' }}
-          onClick={() => table.setColumnFilters([])}
+          onClick={() => {
+            table.setColumnFilters([]);
+            if (setGlobalFilter) {
+              setGlobalFilter('');
+            }
+          }}
         >
           <RotateCcw size={16} />
           Reset Filters

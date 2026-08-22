@@ -8,7 +8,14 @@ import { useEffect, useState } from 'react';
 
 const ToolbarRightSettings = () => {
   'use no memo';
-  const { table, setIsSplit, gridWrapperRef, isFetching, refetch } = useGrid();
+  const {
+    table,
+    setIsSplit,
+    gridWrapperRef,
+    isFetching,
+    refetch,
+    setGlobalFilter,
+  } = useGrid();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -38,6 +45,9 @@ const ToolbarRightSettings = () => {
     table.resetPagination();
     table.setDensity('md');
     setIsSplit(false);
+    if (setGlobalFilter) {
+      setGlobalFilter('');
+    }
 
     window.alert('Settings have been reset to default.');
   };
