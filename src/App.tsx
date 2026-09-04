@@ -103,6 +103,13 @@ const App = () => {
         header: () => <div>Driver</div>,
         meta: {
           filterVariant: 'select',
+          options: [
+            { label: 'John Smith', value: 'John Smith' },
+            { label: 'Maria Garcia', value: 'Maria Garcia' },
+            { label: 'Ahmed Khan', value: 'Ahmed Khan' },
+            { label: 'Li Wei', value: 'Li Wei' },
+            { label: 'Unassigned', value: 'Unassigned' },
+          ],
         },
       },
       {
