@@ -48,6 +48,7 @@ interface MyColumnMeta {
     | 'time'
     | 'week'
     | 'search';
+  options?: { label: string; value: string }[];
 }
 
 // New in v9: declare the features this table uses — anything you don't

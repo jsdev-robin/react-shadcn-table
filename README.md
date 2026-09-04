@@ -6,7 +6,7 @@ A feature-rich, headless-powered data grid for React — built on [TanStack Tabl
 
 ## Features
 
-- Global search + per-column filtering (text, range)
+- Global search + per-column filtering (text, range, select)
 - Multi-column sorting
 - Client-side & manual (server-side) pagination
 - Row selection with checkboxes
@@ -102,6 +102,68 @@ const { data, isLoading, isError, refetch, isFetching } = useUsersQuery({
 />;
 ```
 
+## Column Filters
+
+Each column opts into a filter UI via `meta.filterVariant`. Supported variants: `text`, `number`, `tel`, `url`, `color`, `range`, `select`, `dateRange`, `date`, `datetime-local`, `month`, `time`, `week`, `search`.
+
+```tsx
+{
+  id: 'status',
+  accessorKey: 'status',
+  filterFn: 'equalsString',
+  header: () => <div>Status</div>,
+  meta: {
+    filterVariant: 'text',
+  },
+}
+```
+
+### Select Filters with `options`
+
+For `filterVariant: 'select'`, provide a static `options` array in `meta` to control exactly what appears in the dropdown — instead of the grid deriving choices from the values currently loaded in the table (via faceted unique values). This is the recommended approach whenever you know the fixed set of values up front (enums, statuses, categories), especially with `manualFiltering`, where the faceted values are only ever a subset of what's on the server.
+
+```tsx
+{
+  id: 'status',
+  accessorKey: 'status',
+  filterFn: 'equalsString',
+  header: () => <div>Status</div>,
+  meta: {
+    filterVariant: 'select',
+    options: [
+      { label: 'Pending', value: 'pending' },
+      { label: 'Preparing', value: 'preparing' },
+      { label: 'Ready', value: 'ready' },
+      { label: 'Completed', value: 'completed' },
+      { label: 'Cancelled', value: 'cancelled' },
+    ],
+  },
+}
+```
+
+**Shape:**
+
+```ts
+options?: { label: string; value: string }[];
+```
+
+- `label` — text shown in the dropdown item.
+- `value` — value sent through `column.setFilterValue(...)` and applied by your `filterFn`.
+
+**Fallback behavior:** if `options` is omitted (or empty) on a `select` column, the grid falls back to deriving choices from `column.getFacetedUniqueValues()` — useful for ad hoc/free-form columns where the value set isn't known ahead of time, but only reliable for values present in the currently loaded page of data.
+
+```tsx
+// No static options — dropdown is populated from values seen in loaded rows
+{
+  id: 'driver',
+  accessorKey: 'driver',
+  header: () => <div>Driver</div>,
+  meta: {
+    filterVariant: 'select',
+  },
+}
+```
+
 ## Toolbar Actions
 
 Add custom action buttons to the toolbar via `topRightSlot`:
@@ -170,6 +232,13 @@ const selectedIds = pluckSelected(data, rowSelection, 'id');
 | `height`                | `string`                                                     | `'65vh'`  | Fixed height of the scrollable table body                        |
 | `name`                  | `string`                                                     | `'munza'` | Storage key for persisting per-grid layout                       |
 | `topRightSlot`          | `React.ReactNode`                                            | —         | Custom content on the right of the toolbar (e.g. action buttons) |
+
+### Column `meta` (`MyColumnMeta`)
+
+| Field           | Type                                                                                                                                                             | Description                                                                                          |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `filterVariant` | `'text' \| 'number' \| 'tel' \| 'url' \| 'color' \| 'range' \| 'select' \| 'dateRange' \| 'date' \| 'datetime-local' \| 'month' \| 'time' \| 'week' \| 'search'` | Which filter UI to render in the column header                                                       |
+| `options`       | `{ label: string; value: string }[]`                                                                                                                             | Static choices for `filterVariant: 'select'`. Falls back to `getFacetedUniqueValues()` when omitted. |
 
 ### `useGridState()`
 

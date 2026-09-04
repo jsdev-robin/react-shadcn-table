@@ -18,13 +18,18 @@ const HeaderFilter = ({
 }) => {
   'use no memo';
   const columnFilterValue = column.getFilterValue();
-  const { filterVariant } = column.columnDef.meta ?? {};
+  const { filterVariant, options } = column.columnDef.meta ?? {};
   const { isFetching } = useGrid();
 
-  const selectValue =
-    !isFetching && filterVariant === 'select'
-      ? Array.from(column.getFacetedUniqueValues().keys()).sort().slice(0, 5000)
-      : [];
+  const selectOptions =
+    options && options.length > 0
+      ? options
+      : !isFetching && filterVariant === 'select'
+        ? Array.from(column.getFacetedUniqueValues().keys())
+            .sort()
+            .slice(0, 5000)
+            .map((value) => ({ label: String(value), value: String(value) }))
+        : [];
 
   return column.getCanFilter() ? (
     <div
@@ -74,9 +79,9 @@ const HeaderFilter = ({
           <SelectContent>
             <SelectGroup>
               <SelectItem value="all">All</SelectItem>
-              {selectValue.map((value) => (
-                <SelectItem key={String(value)} value={String(value)}>
-                  {String(value)}
+              {selectOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
                 </SelectItem>
               ))}
             </SelectGroup>
