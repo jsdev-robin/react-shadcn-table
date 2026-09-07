@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useGrid } from '@/package/hooks/useGrid';
 import React from 'react';
-import GridCell from '../../shared/GridCell';
+import GridCellSplit from '../../shared/GridCellSplit';
 import GridEndEmpty from './feedback/GridEndEmpty';
 import GridEndSkeleton from './feedback/GridEndSkeleton';
 import { GridEndRowPin } from './GridEndRowPin';
@@ -26,7 +26,7 @@ const GridEndBody = () => {
           <React.Fragment key={row.id}>
             <TableRow data-state={row.getIsSelected() && 'selected'}>
               {row.getEndVisibleCells().map((cell) => (
-                <GridCell key={cell.id} cell={cell} />
+                <GridCellSplit key={cell.id} cell={cell} />
               ))}
             </TableRow>
             {renderSubComponent && row.getIsExpanded() && (

@@ -59,6 +59,15 @@ const App = () => {
         enableCellSelection: false,
       },
       {
+        id: 'actions',
+        header: () => <div>Actions</div>,
+        cell: () => <Button size="xs">Action</Button>,
+        size: 74,
+        maxSize: 74,
+        enableColumnFilter: false,
+        enableCellSelection: false,
+      },
+      {
         id: 'pin',
         accessorKey: 'pin',
         header: () => 'Pin',
