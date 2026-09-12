@@ -49,7 +49,7 @@ const GridHead = ({
           <HeaderFilter column={header.column} />
         </div>
       )}
-      <HeaderResizing header={header} />
+      {header.column.getCanResize() && <HeaderResizing header={header} />}
     </TableHead>
   );
 };

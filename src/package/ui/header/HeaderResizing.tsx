@@ -10,7 +10,7 @@ const HeaderResizing = ({
 }) => {
   'use no memo';
   const isResizing = header.column.getIsResizing();
-  return isResizing ? (
+  return (
     <div
       className="header-resizer"
       onDoubleClick={() => header.column.resetSize()}
@@ -29,7 +29,7 @@ const HeaderResizing = ({
         opacity: isResizing ? 1 : 0,
       }}
     />
-  ) : null;
+  );
 };
 
 export default HeaderResizing;
