@@ -21,7 +21,7 @@ const GridCenterSkeleton = () => {
   return (
     <Table
       style={{
-        width: table.getCenterTotalSize(),
+        minWidth: table.getCenterTotalSize(),
       }}
     >
       <TableBody>
