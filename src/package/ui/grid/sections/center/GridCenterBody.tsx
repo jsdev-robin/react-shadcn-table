@@ -20,7 +20,7 @@ const GridCenterBody = () => {
   ) : (
     <Table
       style={{
-        width: table.getCenterTotalSize(),
+        minWidth: table.getCenterTotalSize(),
       }}
     >
       {table.getTopRows().map((row) => (
