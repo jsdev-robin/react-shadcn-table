@@ -9,7 +9,7 @@ const GridCenterHeader = () => {
   return (
     <Table
       style={{
-        minWidth: table.getCenterTotalSize(),
+        width: table.getCenterTotalSize(),
       }}
     >
       <TableHeader>
