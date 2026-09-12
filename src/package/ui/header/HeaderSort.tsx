@@ -12,7 +12,7 @@ const HeaderSort = ({
   const { table } = useGrid();
   const canSort = header.column.getCanSort();
 
-  return canSort ? (
+  return (
     <div
       onClick={header.column.getToggleSortingHandler()}
       title={
@@ -52,7 +52,7 @@ const HeaderSort = ({
         ),
       }[header.column.getIsSorted() as string] ?? null}
     </div>
-  ) : null;
+  );
 };
 
 export default HeaderSort;
