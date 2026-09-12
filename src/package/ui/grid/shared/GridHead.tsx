@@ -16,13 +16,13 @@ const GridHead = ({
 }) => {
   'use no memo';
   const { isSplit } = useGrid();
+  const isFixedWidth = header.column.columnDef.meta?.fixedSize;
+  const size = header.getSize();
 
   const style: CSSProperties = {
+    width: isFixedWidth ? size + 'px' : undefined,
     position: 'relative',
     whiteSpace: 'nowrap',
-    width: header.getSize(),
-    minWidth: header.getSize(),
-    maxWidth: header.getSize(),
     borderRight: '1px solid',
     borderColor: 'var(--border)',
     padding: 0,

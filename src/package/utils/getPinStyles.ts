@@ -36,7 +36,7 @@ export const getPinStyles = (
         : undefined,
     opacity: isPinned ? 0.95 : 1,
     position: isPinned ? (isSplit ? 'relative' : 'sticky') : 'relative',
-    width: column.getSize(),
+    // width: column.getSize(),
     zIndex: isPinned ? 1 : 0,
     backgroundColor: isPinned && !isSplit ? 'var(--background)' : undefined,
   };

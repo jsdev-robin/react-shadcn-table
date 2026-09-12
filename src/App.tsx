@@ -25,6 +25,9 @@ const App = () => {
         enableColumnFilter: false,
         enableSorting: false,
         enableHiding: false,
+        meta: {
+          fixedSize: true,
+        },
       },
       {
         id: 'actions',
@@ -34,6 +37,9 @@ const App = () => {
         maxSize: 74,
         enableColumnFilter: false,
         enableCellSelection: false,
+        meta: {
+          fixedSize: true,
+        },
       },
       {
         id: 'id',

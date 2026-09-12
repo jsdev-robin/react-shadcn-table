@@ -49,6 +49,7 @@ interface MyColumnMeta {
     | 'week'
     | 'search';
   options?: { label: string; value: string }[];
+  fixedSize?: boolean;
 }
 
 // New in v9: declare the features this table uses — anything you don't

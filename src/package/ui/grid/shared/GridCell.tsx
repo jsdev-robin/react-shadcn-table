@@ -30,10 +30,11 @@ const GridCell = ({ cell }: { cell: Cell<GridFeatures, RowData, unknown> }) => {
   const { table, isSplit } = useGrid();
   const cellRef = useRef<HTMLTableCellElement>(null);
 
+  const isFixedWidth = cell.column.columnDef.meta?.fixedSize;
+  const size = cell.column.getSize();
+
   const style = {
-    width: cell.column.getSize(),
-    minWidth: cell.column.getSize(),
-    maxWidth: cell.column.getSize(),
+    width: isFixedWidth ? size + 'px' : undefined,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
