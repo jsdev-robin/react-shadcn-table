@@ -5,6 +5,7 @@ import type {
   ColumnFiltersState,
   PaginationState,
   Row,
+  RowSelectionState,
   SortingState,
 } from '@tanstack/react-table';
 export { type GridContextProps } from './contexts/grid/types';
@@ -21,5 +22,6 @@ export type {
   ColumnFiltersState,
   PaginationState,
   Row,
+  RowSelectionState,
   SortingState,
 };
