@@ -190,6 +190,18 @@ export const GridContextProvider = <TableData extends RowData>({
     { target: gridWrapperRef },
   );
 
+  const wasFetching = useRef(isFetching);
+  useEffect(() => {
+    if (
+      wasFetching.current &&
+      !isFetching &&
+      Object.keys(table.state.rowSelection ?? {}).length > 0
+    ) {
+      table.resetRowSelection(true);
+    }
+    wasFetching.current = isFetching;
+  }, [isFetching]);
+
   const value = useMemo(
     () => ({
       paneRef1,
