@@ -7,7 +7,11 @@ const GridStartEmpty = () => {
   const { table } = useGrid();
 
   return (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getStartTotalSize(),
+      }}
+    >
       <TableBody>
         <TableRow>
           {table.getStartVisibleLeafColumns().map((column, i) => (

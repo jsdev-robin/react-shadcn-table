@@ -7,7 +7,11 @@ const GridEndHeader = () => {
   const { table } = useGrid();
 
   return (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getEndTotalSize(),
+      }}
+    >
       <TableHeader>
         {table.getEndHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>

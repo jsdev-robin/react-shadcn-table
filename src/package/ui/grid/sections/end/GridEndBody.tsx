@@ -17,7 +17,11 @@ const GridEndBody = () => {
   ) : table.getRowModel().rows.length === 0 ? (
     <GridEndEmpty />
   ) : (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getEndTotalSize(),
+      }}
+    >
       <TableBody>
         {table.getTopRows().map((row) => (
           <GridEndRowPin key={row.id} row={row} />

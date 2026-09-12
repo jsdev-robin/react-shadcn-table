@@ -7,7 +7,11 @@ const GridEndEmpty = () => {
   const { table } = useGrid();
 
   return (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getEndTotalSize(),
+      }}
+    >
       <TableBody>
         <TableRow>
           {table.getEndVisibleLeafColumns().map((column, i) => (

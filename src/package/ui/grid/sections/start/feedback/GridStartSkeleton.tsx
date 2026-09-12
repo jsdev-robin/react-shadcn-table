@@ -18,7 +18,11 @@ const GridStartSkeleton = () => {
     .flat();
 
   return (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getStartTotalSize(),
+      }}
+    >
       <TableBody>
         {[...Array(20)].map((_, i) => (
           <TableRow key={i}>

@@ -80,8 +80,9 @@ export const GridContextProvider = <TableData extends RowData>({
       columns: columns,
       getRowCanExpand,
       defaultColumn: {
-        minSize: 60,
-        maxSize: 800,
+        size: 200,
+        minSize: 50,
+        maxSize: 500,
       },
       state: {
         ...state,
