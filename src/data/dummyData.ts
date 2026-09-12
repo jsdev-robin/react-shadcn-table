@@ -34,7 +34,7 @@ export interface Vehicle {
 
 export const dummyVehicles: Vehicle[] = [
   {
-    driver: 'James Mitchell',
+    driver: 'James Mitchelldddddddddddddddddd ddddddddddddddddd',
     vehicle: '2019 Subaru Outback',
     vin: 'JTDBRFUJ93059307',
     type: 'Car',
