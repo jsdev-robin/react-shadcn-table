@@ -19,7 +19,7 @@ const GridEndBody = () => {
   ) : (
     <Table
       style={{
-        minWidth: table.getEndTotalSize(),
+        width: table.getEndTotalSize(),
       }}
     >
       <TableBody>

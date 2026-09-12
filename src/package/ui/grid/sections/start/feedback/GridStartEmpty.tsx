@@ -9,7 +9,7 @@ const GridStartEmpty = () => {
   return (
     <Table
       style={{
-        minWidth: table.getStartTotalSize(),
+        width: table.getStartTotalSize(),
       }}
     >
       <TableBody>

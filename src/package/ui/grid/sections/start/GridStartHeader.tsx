@@ -9,7 +9,7 @@ const GridStartHeader = () => {
   return (
     <Table
       style={{
-        minWidth: table.getStartTotalSize(),
+        width: table.getStartTotalSize(),
       }}
     >
       <TableHeader>
