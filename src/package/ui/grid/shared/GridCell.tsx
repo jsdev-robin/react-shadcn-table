@@ -39,6 +39,7 @@ const GridCell = ({ cell }: { cell: Cell<GridFeatures, RowData, unknown> }) => {
     textOverflow: 'ellipsis',
     border: '1px solid',
     borderColor: 'var(--border)',
+    boxSizing: 'border-box' as const,
     userSelect: 'none' as const,
     cursor: cell.getCanSelect() ? 'cell' : undefined,
     transition: 'padding 0.2s',

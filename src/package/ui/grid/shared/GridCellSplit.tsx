@@ -41,6 +41,7 @@ const GridCellSplit = ({
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
+    boxSizing: 'border-box' as const,
     border: '1px solid',
     borderColor: 'var(--border)',
     height: 'var(--cell-h)',
