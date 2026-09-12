@@ -20,6 +20,7 @@ const GridHead = ({
   const style: CSSProperties = {
     position: 'relative',
     whiteSpace: 'nowrap',
+    boxSizing: 'border-box' as const,
     width: header.getSize(),
     minWidth: header.getSize(),
     maxWidth: header.getSize(),
@@ -48,7 +49,7 @@ const GridHead = ({
           <HeaderFilter column={header.column} />
         </div>
       )}
-      <HeaderResizing header={header} />
+      {header.column.getCanResize() && <HeaderResizing header={header} />}
     </TableHead>
   );
 };
