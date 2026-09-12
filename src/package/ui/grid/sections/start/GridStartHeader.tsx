@@ -7,7 +7,11 @@ const GridStartHeader = () => {
   const { table } = useGrid();
 
   return (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getStartTotalSize(),
+      }}
+    >
       <TableHeader>
         {table.getStartHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>

@@ -17,7 +17,11 @@ const GridStartBody = () => {
   ) : table.getRowModel().rows.length === 0 ? (
     <GridStartEmpty />
   ) : (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getStartTotalSize(),
+      }}
+    >
       <TableBody>
         {table.getTopRows().map((row) => (
           <GridStartRowPin key={row.id} row={row} />

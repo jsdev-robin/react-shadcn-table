@@ -18,7 +18,11 @@ const GridEndSkeleton = () => {
     .flat();
 
   return (
-    <Table>
+    <Table
+      style={{
+        minWidth: table.getEndTotalSize(),
+      }}
+    >
       <TableBody>
         {[...Array(20)].map((_, i) => (
           <TableRow key={i}>
