@@ -417,6 +417,8 @@ const App = () => {
           isFetching={isFetching}
           isError={false}
           refetch={handleRefetch}
+          // isToobarRight={false}
+          // isToobarTop={false}
           topRightSlot={
             <div>
               <Button>Custom Slot</Button>

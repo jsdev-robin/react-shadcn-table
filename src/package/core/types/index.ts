@@ -40,4 +40,6 @@ export interface GridProps<TData extends RowData> {
   enableCellSpanning?: boolean;
   enableRowSelection?: boolean;
   topRightSlot?: React.ReactNode;
+  isToobarTop?: boolean;
+  isToobarRight?: boolean;
 }
