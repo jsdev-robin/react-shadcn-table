@@ -6,6 +6,22 @@ import type {
 } from '@tanstack/react-table';
 import React from 'react';
 
+export interface UseGridStateOptions {
+  /**
+   * Initial zero-based page index.
+   *
+   * @defaultValue `0`
+   */
+  pageIndex?: number;
+
+  /**
+   * Initial number of rows per page.
+   *
+   * @defaultValue `20`
+   */
+  pageSize?: number;
+}
+
 /**
  * A React hook that manages all controlled state required to drive a
  * TanStack Table instance (column filters, pagination, sorting, row
@@ -16,6 +32,9 @@ import React from 'react';
  * Internally, each piece of state is backed by its own `useState`, so
  * updating one (e.g. `sorting`) does not cause unrelated state (e.g.
  * `rowSelection`) to reset.
+ *
+ * @param options - Optional initial values. Use `pageSize` to change the
+ * number of rows per page.
  *
  * @returns An object containing:
  * - `state` - The combined table state object
@@ -39,18 +58,23 @@ import React from 'react';
  *   state={state}
  *   {...handlers}
  * />
+ * ```
  *
- * // Use rowSelection directly elsewhere, e.g.:
- * const selectedIds = pluckSelected(data, rowSelection, 'id');
+ * @example
+ * ```tsx
+ * const { state, handlers } = useGridState({ pageSize: 100 });
  * ```
  */
-export const useGridState = () => {
+export const useGridState = ({
+  pageIndex = 0,
+  pageSize = 20,
+}: UseGridStateOptions = {}) => {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
   const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 20,
+    pageIndex,
+    pageSize,
   });
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
