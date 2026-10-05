@@ -35,10 +35,11 @@ const Grid = <T extends RowData>({
   enableCellSelection,
   enableCellSpanning,
   enableRowSelection,
-  enableWheelPagination = true,
+  enableWheelPagination = false,
   topRightSlot,
   isToobarTop = true,
   isToobarRight = true,
+  isPagination = true,
 }: GridProps<T>) => {
   'use no memo';
   return (
@@ -68,7 +69,11 @@ const Grid = <T extends RowData>({
       enableWheelPagination={enableWheelPagination}
       topRightSlot={topRightSlot}
     >
-      <GridInner isToobarTop={isToobarTop} isToobarRight={isToobarRight} />
+      <GridInner
+        isToobarTop={isToobarTop}
+        isToobarRight={isToobarRight}
+        isPagination={isPagination}
+      />
     </GridContextProvider>
   );
 };
@@ -76,9 +81,11 @@ const Grid = <T extends RowData>({
 const GridInner = ({
   isToobarTop,
   isToobarRight,
+  isPagination,
 }: {
   isToobarTop: boolean;
   isToobarRight: boolean;
+  isPagination: boolean;
 }) => {
   'use no memo';
   const { gridWrapperRef } = useGrid();
@@ -148,7 +155,7 @@ const GridInner = ({
         </div>
         {isToobarRight && <ToolbarRight height={tableHeight} />}
       </div>
-      <Pagination />
+      {isPagination && <Pagination />}
     </div>
   );
 };

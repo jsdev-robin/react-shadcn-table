@@ -355,7 +355,7 @@ export interface GridProps<TData extends RowData> {
    * when it is at the top edge, scrolling up goes to the previous page.
    * Wheel events are ignored while data is loading or fetching.
    *
-   * @defaultValue `true`
+   * @defaultValue `false`
    *
    * @example
    * ```tsx
@@ -416,4 +416,17 @@ export interface GridProps<TData extends RowData> {
    * ```
    */
   isToobarRight?: boolean;
+
+  /**
+   * Shows or hides the pagination bar at the bottom of the grid, which
+   * holds the page navigation and page size controls.
+   *
+   * @defaultValue `true`
+   *
+   * @example
+   * ```tsx
+   * <Grid isPagitiona={false} ... />
+   * ```
+   */
+  isPagination?: boolean;
 }
