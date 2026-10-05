@@ -7,7 +7,7 @@ import type { GridFeatures } from '@/package/features';
 import { useGrid } from '@/package/hooks/useGrid';
 import type { Column, RowData } from '@tanstack/react-table';
 import { ChevronRight, RotateCcw } from 'lucide-react';
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const ToolbarFilter = ({
   column,
@@ -175,20 +175,15 @@ const ToolbarFilters = () => {
             gap: '16px',
           }}
         >
-          {table.getHeaderGroups().map((headerGroup) => (
-            <React.Fragment key={headerGroup.id}>
-              {headerGroup.headers
-                .filter(
-                  (header) =>
-                    !['rowNumber', 'select', 'pin', 'actions'].includes(
-                      header.column.id,
-                    ),
-                )
-                .map((header) => (
-                  <ToolbarFilter key={header.id} column={header.column} />
-                ))}
-            </React.Fragment>
-          ))}
+          {table
+            .getAllLeafColumns()
+            .filter(
+              (column) =>
+                !['rowNumber', 'select', 'pin', 'actions'].includes(column.id),
+            )
+            .map((column) => (
+              <ToolbarFilter key={column.id} column={column} />
+            ))}
         </div>
       </div>
       <div style={{ paddingInline: '8px' }}>
