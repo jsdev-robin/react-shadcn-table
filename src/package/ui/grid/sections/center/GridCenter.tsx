@@ -1,11 +1,26 @@
 import { useGrid } from '@/package/hooks/useGrid';
+import { useWheelPagination } from '@/package/hooks/useWheelPagination';
 import React from 'react';
 import GridCenterBody from './GridCenterBody';
 import GridCenterHeader from './GridCenterHeader';
 
 const GridCenter = () => {
   'use no memo';
-  const { paneRef1, paneRef2, height } = useGrid();
+  const {
+    paneRef1,
+    paneRef2,
+    height,
+    table,
+    isLoading,
+    isFetching,
+    enableWheelPagination,
+  } = useGrid();
+
+  const { onWheel } = useWheelPagination({
+    table,
+    scrollRef: paneRef2,
+    disabled: !enableWheelPagination || isLoading || isFetching,
+  });
 
   return (
     <React.Fragment>
@@ -27,6 +42,7 @@ const GridCenter = () => {
           height: height,
         }}
         ref={paneRef2}
+        onWheel={onWheel}
       >
         <GridCenterBody />
       </div>

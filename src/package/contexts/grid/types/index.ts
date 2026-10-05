@@ -36,6 +36,7 @@ export interface GridContextProps<TableData extends RowData = RowData> {
   }) => React.ReactElement;
   name?: string;
   topRightSlot?: React.ReactNode;
+  enableWheelPagination?: boolean;
 }
 
 export interface GridContextProviderProps<TData extends RowData> {
@@ -69,5 +70,6 @@ export interface GridContextProviderProps<TData extends RowData> {
   enableCellSelection?: boolean;
   enableCellSpanning?: boolean;
   enableRowSelection?: boolean;
+  enableWheelPagination?: boolean;
   topRightSlot?: React.ReactNode;
 }

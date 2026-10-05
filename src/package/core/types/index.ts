@@ -350,6 +350,21 @@ export interface GridProps<TData extends RowData> {
   enableRowSelection?: boolean;
 
   /**
+   * Enables page changes with the mouse wheel. When the table body is
+   * scrolled to the bottom edge, scrolling down goes to the next page;
+   * when it is at the top edge, scrolling up goes to the previous page.
+   * Wheel events are ignored while data is loading or fetching.
+   *
+   * @defaultValue `true`
+   *
+   * @example
+   * ```tsx
+   * <Grid enableWheelPagination={false} ... />
+   * ```
+   */
+  enableWheelPagination?: boolean;
+
+  /**
    * Additional content rendered on the right side of the built-in toolbar,
    * next to the global search field (e.g. custom action buttons like
    * Add, Filter, Refresh, or Export).

@@ -35,6 +35,7 @@ const Grid = <T extends RowData>({
   enableCellSelection,
   enableCellSpanning,
   enableRowSelection,
+  enableWheelPagination = true,
   topRightSlot,
   isToobarTop = true,
   isToobarRight = true,
@@ -64,6 +65,7 @@ const Grid = <T extends RowData>({
       enableCellSelection={enableCellSelection}
       enableCellSpanning={enableCellSpanning}
       enableRowSelection={enableRowSelection}
+      enableWheelPagination={enableWheelPagination}
       topRightSlot={topRightSlot}
     >
       <GridInner isToobarTop={isToobarTop} isToobarRight={isToobarRight} />

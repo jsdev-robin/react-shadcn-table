@@ -48,6 +48,7 @@ export const GridContextProvider = <TableData extends RowData>({
   enableCellSelection = true,
   enableCellSpanning = true,
   enableRowSelection = true,
+  enableWheelPagination = true,
   topRightSlot,
 }: GridContextProviderProps<TableData>) => {
   'use no memo';
@@ -223,6 +224,7 @@ export const GridContextProvider = <TableData extends RowData>({
       renderSubComponent,
       name,
       topRightSlot,
+      enableWheelPagination,
     }),
     [
       paneRef1,
@@ -244,6 +246,7 @@ export const GridContextProvider = <TableData extends RowData>({
       renderSubComponent,
       name,
       topRightSlot,
+      enableWheelPagination,
     ],
   );
 
