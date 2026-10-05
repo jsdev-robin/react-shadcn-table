@@ -1,5 +1,4 @@
 import { useGrid } from '@/package/hooks/useGrid';
-import TopToolbar from '@/package/ui/toolbar/top';
 import React from 'react';
 import GridCenterBody from './GridCenterBody';
 import GridCenterHeader from './GridCenterHeader';
@@ -10,7 +9,6 @@ const GridCenter = () => {
 
   return (
     <React.Fragment>
-      <TopToolbar />
       <div
         style={{
           width: '100%',

@@ -372,4 +372,33 @@ export interface GridProps<TData extends RowData> {
    * ```
    */
   topRightSlot?: React.ReactNode;
+
+  /**
+   * Shows or hides the top toolbar, the bar above the table that holds
+   * the global search field and the `topRightSlot` content.
+   *
+   * @defaultValue `true`
+   *
+   * @example
+   * ```tsx
+   * // Hide the top toolbar entirely
+   * <Grid isToobarTop={false} ... />
+   * ```
+   */
+  isToobarTop?: boolean;
+
+  /**
+   * Shows or hides the right-side toolbar panel, the collapsible sidebar
+   * with per-column filters, the global search field, and the
+   * "Reset Filters" button.
+   *
+   * @defaultValue `true`
+   *
+   * @example
+   * ```tsx
+   * // Hide the right-side filter panel
+   * <Grid isToobarRight={false} ... />
+   * ```
+   */
+  isToobarRight?: boolean;
 }

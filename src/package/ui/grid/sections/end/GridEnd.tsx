@@ -19,12 +19,6 @@ const GridEnd = () => {
         >
           <div
             style={{
-              height: '64px',
-              borderBottom: '1px solid var(--border)',
-            }}
-          />
-          <div
-            style={{
               width: '100%',
               overflowY: 'scroll',
               overflowX: 'hidden',
