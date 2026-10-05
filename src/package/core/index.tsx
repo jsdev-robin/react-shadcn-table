@@ -9,6 +9,7 @@ import GridEnd from '../ui/grid/sections/end/GridEnd';
 import GridStart from '../ui/grid/sections/start/GridStart';
 import Pagination from '../ui/pagination';
 import ToolbarRight from '../ui/toolbar/right';
+import TopToolbar from '../ui/toolbar/top';
 import type { GridProps } from './types';
 
 const Grid = <T extends RowData>({
@@ -109,26 +110,32 @@ const GridInner = () => {
       }}
       ref={gridWrapperRef}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-start',
-
-          overflow: 'hidden',
-          width: '100%',
-        }}
-      >
-        <GridStart />
+      <div style={{ display: 'flex', alignItems: 'stretch', width: '100%' }}>
         <div
           style={{
-            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
             flex: 1,
+            minWidth: 0,
           }}
           ref={tableWrapperRef}
         >
-          <GridCenter />
+          <TopToolbar />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              overflow: 'hidden',
+              width: '100%',
+            }}
+          >
+            <GridStart />
+            <div style={{ overflow: 'hidden', flex: 1, minWidth: 0 }}>
+              <GridCenter />
+            </div>
+            <GridEnd />
+          </div>
         </div>
-        <GridEnd />
         <ToolbarRight height={tableHeight} />
       </div>
       <Pagination />

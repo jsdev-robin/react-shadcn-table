@@ -29,6 +29,7 @@ const ToolbarRight = ({ height }: { height: number }) => {
         display: 'flex',
         overflow: 'hidden',
         height: height,
+        flexShrink: 0,
         borderBottom: '1px solid var(--border)',
       }}
     >
