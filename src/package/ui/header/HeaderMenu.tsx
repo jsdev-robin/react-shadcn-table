@@ -62,61 +62,67 @@ const HeaderMenu = ({
             </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
         {!header.isPlaceholder && header.column.getCanPin() && (
-          <DropdownMenuGroup>
-            {header.column.getIsPinned() !== 'start' && (
-              <DropdownMenuItem
-                onClick={() => {
-                  header.column.pin('start');
-                }}
-              >
-                Pin to left
-                <DropdownMenuShortcut>
-                  <PinIcon style={{ transform: 'rotate(45deg)' }} />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-            )}
-            {header.column.getIsPinned() && (
-              <DropdownMenuItem
-                onClick={() => {
-                  header.column.pin(false);
-                }}
-              >
-                Unpin
-                <DropdownMenuShortcut>
-                  <PinOff />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-            )}
-            {header.column.getIsPinned() !== 'end' && (
-              <DropdownMenuItem
-                onClick={() => {
-                  header.column.pin('end');
-                }}
-              >
-                Pin to right
-                <DropdownMenuShortcut>
-                  <PinIcon style={{ transform: 'rotate(-45deg)' }} />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuGroup>
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              {header.column.getIsPinned() !== 'start' && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    header.column.pin('start');
+                  }}
+                >
+                  Pin to left
+                  <DropdownMenuShortcut>
+                    <PinIcon style={{ transform: 'rotate(45deg)' }} />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              )}
+              {header.column.getIsPinned() && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    header.column.pin(false);
+                  }}
+                >
+                  Unpin
+                  <DropdownMenuShortcut>
+                    <PinOff />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              )}
+              {header.column.getIsPinned() !== 'end' && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    header.column.pin('end');
+                  }}
+                >
+                  Pin to right
+                  <DropdownMenuShortcut>
+                    <PinIcon style={{ transform: 'rotate(-45deg)' }} />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuGroup>
+          </>
         )}
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={() => {
-              header.column.toggleVisibility(false);
-            }}
-            disabled={!header.column.getCanHide()}
-          >
-            Hide column
-            <DropdownMenuShortcut>
-              <EyeOff />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+
+        {header.column.getCanHide() && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                onClick={() => {
+                  header.column.toggleVisibility(false);
+                }}
+              >
+                Hide column
+                <DropdownMenuShortcut>
+                  <EyeOff />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   ) : null;

@@ -42,7 +42,7 @@ const ToolbarRightSettings = () => {
     table.resetSorting();
     table.resetRowSelection();
     table.resetCellSelection(true);
-    table.resetPagination();
+    table.setPagination({ pageIndex: 0, pageSize: 20 });
     table.setDensity('md');
     setIsSplit(false);
     if (setGlobalFilter) {
