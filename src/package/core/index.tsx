@@ -1,5 +1,6 @@
 'use client';
 
+import { Spinner } from '@/components/ui/spinner';
 import type { RowData } from '@tanstack/react-table';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { GridContextProvider } from '../contexts/grid/GridContext';
@@ -88,7 +89,7 @@ const GridInner = ({
   isPagination: boolean;
 }) => {
   'use no memo';
-  const { gridWrapperRef } = useGrid();
+  const { gridWrapperRef, enableWheelPagination, isFetching } = useGrid();
   const tableWrapperRef = useRef<HTMLDivElement>(null);
   const [tableHeight, setTableHeight] = useState<number>(0);
 
@@ -127,6 +128,18 @@ const GridInner = ({
       }}
       ref={gridWrapperRef}
     >
+      {enableWheelPagination && isFetching && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <Spinner />
+        </div>
+      )}
       <div style={{ display: 'flex', alignItems: 'stretch', width: '100%' }}>
         <div
           style={{
