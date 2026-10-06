@@ -89,7 +89,7 @@ const GridInner = ({
   isPagination: boolean;
 }) => {
   'use no memo';
-  const { gridWrapperRef, enableWheelPagination, isFetching } = useGrid();
+  const { gridWrapperRef, enableWheelPagination, isFetching, isLoading } = useGrid();
   const tableWrapperRef = useRef<HTMLDivElement>(null);
   const [tableHeight, setTableHeight] = useState<number>(0);
 
@@ -128,7 +128,7 @@ const GridInner = ({
       }}
       ref={gridWrapperRef}
     >
-      {enableWheelPagination && isFetching && (
+      {enableWheelPagination && isFetching && !isLoading && (
         <div
           style={{
             position: 'absolute',
