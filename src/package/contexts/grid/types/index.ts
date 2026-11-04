@@ -49,6 +49,12 @@ export interface GridContextProviderProps<TData extends RowData> {
   name?: string;
   height?: string;
 
+  initialState?: {
+    columnVisibility?: TableState<GridFeatures>['columnVisibility'];
+    columnPinning?: TableState<GridFeatures>['columnPinning'];
+    density?: TableState<GridFeatures>['density'];
+  };
+
   state?: Partial<TableState<GridFeatures>>;
   onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
   onPaginationChange?: OnChangeFn<PaginationState>;

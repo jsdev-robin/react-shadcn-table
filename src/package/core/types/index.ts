@@ -123,6 +123,33 @@ export interface GridProps<TData extends RowData> {
   name?: string;
 
   /**
+   * Default layout used only when nothing is persisted for this grid
+   * `name`. Once the user changes visibility, pinning, or density, the
+   * persisted value takes precedence. Read on first render only.
+   *
+   * @example
+   * ```tsx
+   * <Grid
+   *   name="users-grid"
+   *   initialState={{
+   *     columnVisibility: { email: false, createdAt: false },
+   *     columnPinning: { left: ['select', 'id'], right: ['actions'] },
+   *     density: 'sm',
+   *   }}
+   *   ...
+   * />
+   * ```
+   */
+  initialState?: {
+    /** Which columns are visible. `{ email: false }` hides `email`. */
+    columnVisibility?: TableState<GridFeatures>['columnVisibility'];
+    /** Pinned column ids, e.g. `{ left: ['id'], right: ['actions'] }`. */
+    columnPinning?: TableState<GridFeatures>['columnPinning'];
+    /** Row density of the grid. */
+    density?: TableState<GridFeatures>['density'];
+  };
+
+  /**
    * Fixed height for the table's scrollable body, as a CSS value.
    *
    * @defaultValue `'65vh'`
@@ -425,7 +452,7 @@ export interface GridProps<TData extends RowData> {
    *
    * @example
    * ```tsx
-   * <Grid isPagitiona={false} ... />
+   * <Grid isPagination={false} ... />
    * ```
    */
   isPagination?: boolean;

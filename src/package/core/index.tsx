@@ -17,6 +17,7 @@ const Grid = <T extends RowData>({
   payload,
   columns,
   name,
+  initialState,
   state,
   onColumnFiltersChange,
   onPaginationChange,
@@ -48,6 +49,7 @@ const Grid = <T extends RowData>({
       payload={payload}
       columns={columns}
       name={name}
+      initialState={initialState}
       state={state}
       onColumnFiltersChange={onColumnFiltersChange}
       onPaginationChange={onPaginationChange}

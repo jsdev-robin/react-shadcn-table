@@ -1,21 +1,28 @@
 import type { ColumnVisibilityState } from '@tanstack/react-table';
-import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 
 const COLUMN_VISIBILITY_STORAGE_KEY = 'grid-column-visibility';
 
 export function getStoredColumnVisibility(
   gridId: string,
+  fallback: ColumnVisibilityState = {},
 ): ColumnVisibilityState {
   if (typeof window === 'undefined') {
-    return {};
+    return fallback;
   }
   try {
     const stored = window.localStorage.getItem(
       `${gridId}:${COLUMN_VISIBILITY_STORAGE_KEY}`,
     );
-    return stored ? JSON.parse(stored) : {};
+    return stored ? JSON.parse(stored) : fallback;
   } catch {
-    return {};
+    return fallback;
   }
 }
 
@@ -34,12 +41,22 @@ export function setStoredColumnVisibility(
   } catch {}
 }
 
-export function useColumnVisibilityState(gridId: string) {
+export function useColumnVisibilityState(
+  gridId: string,
+  initial: ColumnVisibilityState = {},
+) {
+  const initialRef = useRef(initial);
+  initialRef.current = initial;
+
   const [columnVisibility, setColumnVisibilityState] =
-    useState<ColumnVisibilityState>(() => getStoredColumnVisibility(gridId));
+    useState<ColumnVisibilityState>(() =>
+      getStoredColumnVisibility(gridId, initial),
+    );
 
   useEffect(() => {
-    setColumnVisibilityState(getStoredColumnVisibility(gridId));
+    setColumnVisibilityState(
+      getStoredColumnVisibility(gridId, initialRef.current),
+    );
   }, [gridId]);
 
   const onColumnVisibilityChange: Dispatch<

@@ -29,6 +29,7 @@ export const GridContextProvider = <TableData extends RowData>({
   columns,
   payload,
   name = 'munza',
+  initialState,
   state = {},
   onColumnFiltersChange,
   onPaginationChange,
@@ -60,14 +61,17 @@ export const GridContextProvider = <TableData extends RowData>({
   const paneRef6 = useRef<HTMLDivElement>(null);
   const gridWrapperRef = useRef<HTMLDivElement>(null);
   const cellSelectionAtom = useCreateAtom<CellSelectionState>([]);
-  const [density, setDensity] = useDensityState(name);
+  const [density, setDensity] = useDensityState(name, initialState?.density);
   const [columnVisibility, onColumnVisibilityChange] =
-    useColumnVisibilityState(name);
+    useColumnVisibilityState(name, initialState?.columnVisibility);
   const [columnOrder, onColumnOrderChange] = useColumnOrderState(
     name,
     useMemo(() => columns.map((c) => c.id!), [columns]),
   );
-  const [columnPinning, onColumnPinningChange] = useColumnPinningState(name);
+  const [columnPinning, onColumnPinningChange] = useColumnPinningState(
+    name,
+    initialState?.columnPinning,
+  );
   const [columnSizing, onColumnSizingChange] = useColumnSizingState(name);
   const [isSplit, setIsSplit] = useSplitViewState(name);
   const [rowPinning, onRowPinningChange] = useRowPinningState(name);
