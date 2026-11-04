@@ -1,4 +1,4 @@
-import type { ColumnPinningState } from '@tanstack/react-table';
+import type { ColumnVisibilityState } from '@tanstack/react-table';
 import {
   useEffect,
   useRef,
@@ -7,112 +7,67 @@ import {
   type SetStateAction,
 } from 'react';
 
-const COLUMN_PINNING_STORAGE_KEY = 'grid-column-pinning';
+const COLUMN_VISIBILITY_STORAGE_KEY = 'grid-column-visibility';
 
-const EMPTY_PINNING: ColumnPinningState = { start: [], end: [] };
-
-const isStringArray = (value: unknown): value is string[] =>
-  Array.isArray(value) && value.every((id) => typeof id === 'string');
-
-const isValidPinningState = (value: unknown): value is ColumnPinningState => {
-  if (typeof value !== 'object' || value === null) return false;
-  const { start, end } = value as ColumnPinningState;
-  return isStringArray(start) && isStringArray(end);
-};
-
-const normalizePinning = (value: ColumnPinningState): ColumnPinningState => ({
-  start: value.start ?? [],
-  end: value.end ?? [],
-});
-
-export function getStoredColumnPinning(
+export function getStoredColumnVisibility(
   gridId: string,
-  columnIds?: string[],
-  fallback: ColumnPinningState = EMPTY_PINNING,
-): ColumnPinningState {
-  const base = normalizePinning(fallback);
+  fallback: ColumnVisibilityState = {},
+): ColumnVisibilityState {
   if (typeof window === 'undefined') {
-    return base;
+    return fallback;
   }
   try {
     const stored = window.localStorage.getItem(
-      `${gridId}:${COLUMN_PINNING_STORAGE_KEY}`,
+      `${gridId}:${COLUMN_VISIBILITY_STORAGE_KEY}`,
     );
-    if (!stored) return base;
-    const parsed = JSON.parse(stored);
-    if (!isValidPinningState(parsed)) return base;
-
-    const savedIds = new Set([...parsed.start!, ...parsed.end!]);
-    const merged: ColumnPinningState = {
-      start: [
-        ...base.start!.filter((id) => !savedIds.has(id)),
-        ...parsed.start!,
-      ],
-      end: [...base.end!.filter((id) => !savedIds.has(id)), ...parsed.end!],
-    };
-
-    if (!columnIds) return merged;
-
-    const columnIdSet = new Set(columnIds);
-    const filterKnown = (ids: string[]) =>
-      ids.filter((id) => columnIdSet.has(id));
-
-    return {
-      start: filterKnown(merged.start!),
-      end: filterKnown(merged.end!),
-    };
+    return stored ? { ...fallback, ...JSON.parse(stored) } : fallback;
   } catch {
-    return base;
+    return fallback;
   }
 }
 
-export function setStoredColumnPinning(
+export function setStoredColumnVisibility(
   gridId: string,
-  pinning: ColumnPinningState,
+  visibility: ColumnVisibilityState,
 ) {
   if (typeof window === 'undefined') {
     return;
   }
   try {
     window.localStorage.setItem(
-      `${gridId}:${COLUMN_PINNING_STORAGE_KEY}`,
-      JSON.stringify(pinning),
+      `${gridId}:${COLUMN_VISIBILITY_STORAGE_KEY}`,
+      JSON.stringify(visibility),
     );
   } catch {}
 }
 
-export function useColumnPinningState(
+export function useColumnVisibilityState(
   gridId: string,
-  initial: ColumnPinningState = EMPTY_PINNING,
-  columnIds?: string[],
+  initial: ColumnVisibilityState = {},
 ) {
   const initialRef = useRef(initial);
   initialRef.current = initial;
 
-  const columnIdsRef = useRef(columnIds);
-  columnIdsRef.current = columnIds;
-
-  const [columnPinning, setColumnPinningState] = useState<ColumnPinningState>(
-    () => getStoredColumnPinning(gridId, undefined, initial),
-  );
-
-  const columnIdsKey = columnIds?.join('|');
+  const [columnVisibility, setColumnVisibilityState] =
+    useState<ColumnVisibilityState>(() =>
+      getStoredColumnVisibility(gridId, initial),
+    );
 
   useEffect(() => {
-    setColumnPinningState(
-      getStoredColumnPinning(gridId, columnIdsRef.current, initialRef.current),
+    setColumnVisibilityState(
+      getStoredColumnVisibility(gridId, initialRef.current),
     );
-  }, [gridId, columnIdsKey]);
+  }, [gridId]);
 
-  const onColumnPinningChange: Dispatch<SetStateAction<ColumnPinningState>> = (
-    updater,
-  ) => {
-    setColumnPinningState((old) => {
+  const onColumnVisibilityChange: Dispatch<
+    SetStateAction<ColumnVisibilityState>
+  > = (updater) => {
+    setColumnVisibilityState((old) => {
       const next = typeof updater === 'function' ? updater(old) : updater;
-      setStoredColumnPinning(gridId, next);
+      setStoredColumnVisibility(gridId, next);
       return next;
     });
   };
 
-  return [columnPinning, onColumnPinningChange] as const;
+  return [columnVisibility, onColumnVisibilityChange] as const;
 }
